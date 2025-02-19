@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: oklch(0.623 0.214 259.815);
+
+  --animate-rotate: rotate 1s linear;
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+@layer base {
+  body {
+    font-family: "Poppins", serif;
+    font-size: var(--text-sm);
+  }
+}

@@ -4,7 +4,7 @@ import ProfileBadge from "./ProfileBadge";
 
 export default function Header() {
   return (
-    <header className="grid grid-cols-3 items-center bg-blue-500 px-4 py-2">
+    <header className="bg-primary grid grid-cols-3 items-center px-4 py-2">
       <div className="justify-self-start">
         <Logo />
       </div>

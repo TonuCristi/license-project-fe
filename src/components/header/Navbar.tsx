@@ -24,7 +24,10 @@ export default function Navbar() {
     <nav>
       <ul className="flex items-center gap-3 text-xl text-blue-200">
         {icons.map(({ name, element }) => (
-          <li key={name} className="hover:text-white">
+          <li
+            key={name}
+            className="transition-300 transition-colors ease-initial hover:text-white"
+          >
             <button className="cursor-pointer">{element}</button>
           </li>
         ))}
