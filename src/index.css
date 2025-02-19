@@ -2,6 +2,7 @@
 
 @theme {
   --color-primary: oklch(0.623 0.214 259.815);
+  --color-primary-hover: oklch(0.707 0.165 254.624);
 
   --animate-rotate: rotate 1s linear;
 
