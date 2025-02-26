@@ -4,21 +4,36 @@
   --color-primary: oklch(0.623 0.214 259.815);
   --color-primary-hover: oklch(0.707 0.165 254.624);
 
+  --font-primary: "Poppins", serif;
+
   --animate-rotate: rotate 1s linear;
 
   @keyframes rotate {
     0% {
-      transform: rotate(0deg);
+      @apply rotate-0;
     }
     100% {
-      transform: rotate(180deg);
+      @apply rotate-180;
     }
   }
 }
 
 @layer base {
   body {
-    font-family: "Poppins", serif;
-    font-size: var(--text-sm);
+    @apply font-primary text-sm;
+  }
+}
+
+@utility scrollbar {
+  &::-webkit-scrollbar {
+    @apply w-2.5;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply rounded-md bg-blue-200;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-primary rounded-md;
   }
 }

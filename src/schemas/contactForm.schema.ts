@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const createContactFormSchema = z.object({
+export const contactFormSchema = z.object({
   name: z
     .string()
     .min(1, { message: "This field should't be empty!" })

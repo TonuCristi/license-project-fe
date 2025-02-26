@@ -31,14 +31,14 @@ const inputs = [
   },
 ] as const;
 
-type CreateContactForm = z.infer<typeof contactFormSchema>;
+type EditContactForm = z.infer<typeof contactFormSchema>;
 
-export default function CreateContactForm() {
-  const methods = useForm<CreateContactForm>({
+export default function EditContactForm() {
+  const methods = useForm<EditContactForm>({
     resolver: zodResolver(contactFormSchema),
   });
 
-  const onSubmit: SubmitHandler<CreateContactForm> = (data) => {
+  const onSubmit: SubmitHandler<EditContactForm> = (data) => {
     console.log(data);
   };
 
@@ -53,7 +53,7 @@ export default function CreateContactForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="border-primary absolute top-full right-0 z-50 mt-3 flex w-80 flex-col rounded-xl border-2 bg-white p-3"
       >
-        <h2 className="mb-1 text-lg font-medium">Create contact</h2>
+        <h2 className="mb-1 text-lg font-medium">Edit contact</h2>
         <div className="mb-3 flex flex-col gap-3">
           {inputs.map(({ value, id, name, placeholder }) => (
             <InputContainer key={id}>
@@ -65,7 +65,7 @@ export default function CreateContactForm() {
             </InputContainer>
           ))}
         </div>
-        <Button>Create</Button>
+        <Button>Save</Button>
       </form>
     </FormProvider>
   );
