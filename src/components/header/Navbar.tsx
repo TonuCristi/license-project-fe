@@ -26,7 +26,7 @@ export default function Navbar() {
         {icons.map(({ name, element }) => (
           <li
             key={name}
-            className="transition-300 transition-colors ease-initial hover:text-white"
+            className="transition-colors ease-initial hover:text-white"
           >
             <button className="cursor-pointer">{element}</button>
           </li>

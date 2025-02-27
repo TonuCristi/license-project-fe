@@ -1,3 +1,9 @@
-import { Ref } from "react";
+import { RefObject } from "react";
 
-function useClickOutside(container: Ref) {}
+export function useClickOutside(ref: RefObject<HTMLElement>, cb: () => void) {
+  document.addEventListener("click", (e) => {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
+      cb();
+    }
+  });
+}
