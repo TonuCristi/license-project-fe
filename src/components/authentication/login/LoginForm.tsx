@@ -48,7 +48,7 @@ export default function LoginForm() {
           error={errors.password && errors.password.message}
         />
 
-        <Button className="mt-2">Logi</Button>
+        <Button className="mt-2">Login</Button>
 
         <Link
           to="/forgot-password"
