@@ -4,6 +4,7 @@ import Input from "./Input";
 import Label from "../Label";
 import Message from "../Message";
 import { HiMiniEye, HiMiniEyeSlash } from "react-icons/hi2";
+import InputContainer from "./InputContainer";
 
 type Props = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -24,7 +25,7 @@ export default function HidePasswordInput({
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
   return (
-    <div className="flex flex-col gap-1">
+    <InputContainer>
       <Label htmlFor={htmlFor}>{label}</Label>
       <Input
         {...props}
@@ -33,6 +34,6 @@ export default function HidePasswordInput({
         onRightIconClick={() => setIsHidden((prev) => !prev)}
       />
       {error && <Message variant="error">{error}</Message>}
-    </div>
+    </InputContainer>
   );
 }
