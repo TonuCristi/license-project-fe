@@ -8,18 +8,24 @@ import Input from "../../input/Input";
 import Message from "../../Message";
 import HidePasswordInput from "../../input/HidePasswordInput";
 import Button from "../../Button";
+import Select from "../../Select";
 
-import { loginSchema } from "../../../schemas/login.schema";
 import { Link } from "react-router";
+import { registerSchema } from "../../../schemas/register.schema";
 
-type LoginForm = z.infer<typeof loginSchema>;
+const options = [
+  { value: "chief", text: "Chief" },
+  { value: "assistant", text: "Assistant" },
+];
 
-export default function LoginForm() {
-  const methods = useForm<LoginForm>({
-    resolver: zodResolver(loginSchema),
+type RegisterForm = z.infer<typeof registerSchema>;
+
+export default function RegisterForm() {
+  const methods = useForm<RegisterForm>({
+    resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit: SubmitHandler<LoginForm> = (data) => {
+  const onSubmit: SubmitHandler<RegisterForm> = (data) => {
     console.log(data);
   };
 
@@ -48,13 +54,19 @@ export default function LoginForm() {
           error={errors.password && errors.password.message}
         />
 
-        <Button className="mt-2">Login</Button>
+        <InputContainer>
+          <Label>Role</Label>
+          <Select
+            name="role"
+            placeholder="Select your role"
+            options={options}
+          />
+        </InputContainer>
 
-        <Link
-          to="/forgot-password"
-          className="self-center text-xs font-semibold"
-        >
-          Forgot password?
+        <Button className="mt-2">Register</Button>
+
+        <Link to="/login" className="self-center text-xs font-semibold">
+          Already have an account? Login
         </Link>
       </form>
     </FormProvider>
