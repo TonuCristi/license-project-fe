@@ -1,19 +1,14 @@
-import Header from "./components/header/Header";
-import Contacts from "./components/contacts/Contacts";
-import { Outlet } from "react-router";
+import { useContext } from "react";
+
+import AppLayout from "./components/AppLayout";
+import AuthLayout from "./components/AuthLayout";
+
+import { AuthContext } from "./contexts/AuthContext";
 
 function App() {
-  return (
-    <div className="flex h-screen flex-col">
-      <Outlet />
-      {/* <Header />
-      <main className="grid h-full grid-cols-[25fr_50fr_25fr] overflow-hidden">
-        <div className="">Chat</div>
-        <div className="border-primary border-x-2">Calendar</div>
-        <Contacts />
-      </main> */}
-    </div>
-  );
+  const { isLogged } = useContext(AuthContext);
+
+  return isLogged ? <AppLayout /> : <AuthLayout />;
 }
 
 export default App;
