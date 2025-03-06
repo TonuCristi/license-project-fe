@@ -3,13 +3,16 @@ import { twMerge } from "tailwind-merge";
 
 import { HiMiniChevronDown } from "react-icons/hi2";
 import { Link } from "react-router";
+import Button from "../Button";
 
 import { useClickOutside } from "../../hooks/useClickOutside";
+import { useLogout } from "../../hooks/useLogout";
 
 export default function ProfileBadge() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
+  const { logout } = useLogout();
 
   return (
     <div ref={containerRef} className="relative">
@@ -35,9 +38,13 @@ export default function ProfileBadge() {
             </Link>
           </li>
           <li className="rounded-lg transition-colors ease-initial hover:bg-blue-100">
-            <button className="w-full cursor-pointer p-1 text-left">
+            <Button
+              variant="empty"
+              onClick={logout}
+              className="w-full cursor-pointer p-1 text-left"
+            >
               Log out
-            </button>
+            </Button>
           </li>
         </ul>
       )}
