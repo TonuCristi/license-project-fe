@@ -52,15 +52,16 @@ export default function LoginForm() {
           error={errors.password && errors.password.message}
         />
 
+        <Link to="/forgot-password" className="self-end text-xs font-semibold">
+          Forgot password?
+        </Link>
+
         <Button className="mt-2" disabled={isLoading}>
           Login
         </Button>
 
-        <Link
-          to="/forgot-password"
-          className="self-center text-xs font-semibold"
-        >
-          Forgot password?
+        <Link to="/register" className="self-center text-xs font-semibold">
+          Don't have an account? Register
         </Link>
       </form>
     </FormProvider>
