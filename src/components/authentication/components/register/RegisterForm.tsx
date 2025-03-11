@@ -2,16 +2,17 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-import InputContainer from "../../input/InputContainer";
-import Label from "../../Label";
-import Input from "../../input/Input";
-import Message from "../../Message";
-import HidePasswordInput from "../../input/HidePasswordInput";
-import Button from "../../Button";
-import Select from "../../Select";
-
 import { Link } from "react-router";
-import { registerSchema } from "../../../schemas/register.schema";
+import InputContainer from "../../../input/InputContainer";
+import Label from "../../../Label";
+import Input from "../../../input/Input";
+import Message from "../../../Message";
+import HidePasswordInput from "../../../input/HidePasswordInput";
+import Select from "../../../Select";
+import Button from "../../../Button";
+
+import { registerSchema } from "../../../../schemas/register.schema";
+import { useRegister } from "../../hooks/useRegister";
 
 const options = [
   { value: "chief", text: "Chief" },
@@ -24,10 +25,9 @@ export default function RegisterForm() {
   const methods = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
+  const { register, isLoading } = useRegister();
 
-  const onSubmit: SubmitHandler<RegisterForm> = (data) => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<RegisterForm> = (data) => register(data);
 
   const {
     handleSubmit,
@@ -37,7 +37,15 @@ export default function RegisterForm() {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-        <InputContainer key="email">
+        <InputContainer>
+          <Label htmlFor="username">Username</Label>
+          <Input id="username" name="username" placeholder="Username..." />
+          {errors.username && (
+            <Message variant="error">{errors.username.message}</Message>
+          )}
+        </InputContainer>
+
+        <InputContainer>
           <Label htmlFor="email">Email</Label>
           <Input id="email" name="email" placeholder="Email..." />
           {errors.email && (
@@ -63,7 +71,9 @@ export default function RegisterForm() {
           />
         </InputContainer>
 
-        <Button className="mt-2">Register</Button>
+        <Button className="mt-2" disabled={isLoading}>
+          Register
+        </Button>
 
         <Link to="/login" className="self-center text-xs font-semibold">
           Already have an account? Login
