@@ -18,7 +18,7 @@ type LoginForm = z.infer<typeof loginSchema>;
 export default function LoginForm() {
   const methods = useForm<LoginForm>({
     defaultValues: {
-      email: "example@example.example",
+      email: "ddd@eee.fff",
       password: "P@rola1234",
     },
     resolver: zodResolver(loginSchema),
