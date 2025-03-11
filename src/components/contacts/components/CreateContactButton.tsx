@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 
-import { HiMiniPencil } from "react-icons/hi2";
-import Button from "../Button";
-import EditContactForm from "./EditContactForm";
+import { HiMiniPlusSmall } from "react-icons/hi2";
+import Button from "../../Button";
+import CreateContactForm from "./CreateContactForm";
 
-import { useClickOutside } from "../../hooks/useClickOutside";
+import { useClickOutside } from "../../../hooks/useClickOutside";
 
-export default function EditContactButton() {
+export default function CreateContactButton() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
@@ -18,10 +18,10 @@ export default function EditContactButton() {
         onClick={() => setIsOpen((prev) => !prev)}
         className="flex items-center justify-center"
       >
-        <HiMiniPencil className="text-md hover:text-primary stroke-1 transition-colors" />
+        <HiMiniPlusSmall className="text-primary stroke-1 text-2xl" />
       </Button>
 
-      {isOpen && <EditContactForm />}
+      {isOpen && <CreateContactForm />}
     </div>
   );
 }

@@ -2,18 +2,27 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { HiMiniChevronDown, HiMiniXMark } from "react-icons/hi2";
-import Button from "../Button";
+import Button from "../../Button";
 import EditContactButton from "./EditContactButton";
 
-export default function Contact() {
+import { Contact } from "../../../types/contact.type";
+
+type Props = {
+  index: number;
+  contact: Contact;
+};
+
+export default function ContactItem({ index, contact }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { name, phoneNumber, description } = contact;
 
   return (
     <li className="border-primary flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-1">
-      <div className="flex items-center gap-2">
-        <p className="font-medium">Your name here</p>
-        <span>-</span>
-        <p className="font-medium">0796810051</p>
+      <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap">
+        <span>{`${index + 1}.)`}</span>
+        <p className="w-full overflow-hidden font-medium text-ellipsis whitespace-nowrap">
+          {name}
+        </p>
         <Button variant="empty" className="ml-auto">
           <HiMiniXMark className="hover:text-primary stroke-1 text-lg transition-colors" />
         </Button>
@@ -28,12 +37,10 @@ export default function Contact() {
         </Button>
       </div>
       {isOpen && (
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque in
-          adipisci distinctio voluptate cumque labore perferendis cupiditate
-          reiciendis? Provident quos libero accusamus aperiam iure quae
-          temporibus accusantium, cum deleniti vero.
-        </p>
+        <div className="flex flex-col gap-2">
+          <p>Phone number: {phoneNumber}</p>
+          <p>Description: {description}</p>
+        </div>
       )}
     </li>
   );

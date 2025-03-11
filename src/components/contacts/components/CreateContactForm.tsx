@@ -2,13 +2,13 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-import Input from "../input/Input";
-import Label from "../Label";
-import Message from "../Message";
-import Button from "../Button";
-import InputContainer from "../input/InputContainer";
+import Input from "../../input/Input";
+import Label from "../../Label";
+import Message from "../../Message";
+import Button from "../../Button";
+import InputContainer from "../../input/InputContainer";
 
-import { contactFormSchema } from "../../schemas/contactForm.schema";
+import { contactFormSchema } from "../../../schemas/contactForm.schema";
 
 const inputs = [
   {
