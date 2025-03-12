@@ -5,8 +5,15 @@ import CreateContactButton from "./CreateContactButton";
 import { useContacts } from "../hooks/useContacts";
 
 export default function Contacts() {
-  const { getContacts, createContact, contacts, isContactsLoading, isLoading } =
-    useContacts();
+  const {
+    getContacts,
+    createContact,
+    deleteContact,
+    editContact,
+    contacts,
+    isContactsLoading,
+    isLoading,
+  } = useContacts();
 
   return (
     <div className="flex h-full flex-col overflow-hidden bg-blue-50 p-4">
@@ -17,7 +24,13 @@ export default function Contacts() {
           isLoading={isLoading}
         />
       </div>
-      <ContactsList contacts={contacts} isLoading={isContactsLoading} />
+      <ContactsList
+        deleteContact={deleteContact}
+        editContact={editContact}
+        contacts={contacts}
+        isLoading={isLoading}
+        isContactsLoading={isContactsLoading}
+      />
     </div>
   );
 }

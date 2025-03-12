@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -9,6 +8,7 @@ import Button from "../../Button";
 import InputContainer from "../../input/InputContainer";
 
 import { contactFormSchema } from "../../../schemas/contactForm.schema";
+import { Contact, EditContact } from "../../../types/contact.type";
 
 const inputs = [
   {
@@ -31,16 +31,28 @@ const inputs = [
   },
 ] as const;
 
-type EditContactForm = z.infer<typeof contactFormSchema>;
+type Props = {
+  contact: Contact;
+  editContact: (contactId: string, editedContactChanges: EditContact) => void;
+  isLoading: boolean;
+};
 
-export default function EditContactForm() {
-  const methods = useForm<EditContactForm>({
+export default function EditContactForm({
+  contact,
+  editContact,
+  isLoading,
+}: Props) {
+  const methods = useForm<EditContact>({
+    defaultValues: {
+      name: contact.name,
+      phoneNumber: contact.phoneNumber,
+      description: contact.description,
+    },
     resolver: zodResolver(contactFormSchema),
   });
 
-  const onSubmit: SubmitHandler<EditContactForm> = (data) => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<EditContact> = (data) =>
+    editContact(contact.id, data);
 
   const {
     handleSubmit,
@@ -65,7 +77,7 @@ export default function EditContactForm() {
             </InputContainer>
           ))}
         </div>
-        <Button>Save</Button>
+        <Button disabled={isLoading}>Save</Button>
       </form>
     </FormProvider>
   );

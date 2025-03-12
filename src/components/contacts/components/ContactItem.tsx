@@ -5,28 +5,46 @@ import { HiMiniChevronDown, HiMiniXMark } from "react-icons/hi2";
 import Button from "../../Button";
 import EditContactButton from "./EditContactButton";
 
-import { Contact } from "../../../types/contact.type";
+import { Contact, EditContact } from "../../../types/contact.type";
 
 type Props = {
   index: number;
   contact: Contact;
+  isLoading: boolean;
+  deleteContact: (contactId: string) => void;
+  editContact: (contactId: string, editedContactChanges: EditContact) => void;
 };
 
-export default function ContactItem({ index, contact }: Props) {
+export default function ContactItem({
+  index,
+  contact,
+  isLoading,
+  deleteContact,
+  editContact,
+}: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { name, phoneNumber, description } = contact;
 
   return (
     <li className="border-primary flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-1">
-      <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap">
+      <div className="flex items-center gap-2">
         <span>{`${index + 1}.)`}</span>
         <p className="w-full overflow-hidden font-medium text-ellipsis whitespace-nowrap">
           {name}
         </p>
-        <Button variant="empty" className="ml-auto">
+        <Button
+          variant="empty"
+          disabled={isLoading}
+          onClick={() => deleteContact(contact.id)}
+          className="ml-auto"
+        >
           <HiMiniXMark className="hover:text-primary stroke-1 text-lg transition-colors" />
         </Button>
-        <EditContactButton />
+        <EditContactButton
+          contact={contact}
+          editContact={editContact}
+          isLoading={isLoading}
+        />
         <Button variant="empty" onClick={() => setIsOpen((prev) => !prev)}>
           <HiMiniChevronDown
             className={twMerge(

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { Contact, CreateContact } from "../../../types/contact.type";
+import {
+  Contact,
+  CreateContact,
+  EditContact,
+} from "../../../types/contact.type";
 import { ContactsApi } from "../../../services/ContactsApi";
 import { mapContact } from "../../../utlis/mapContact";
 
@@ -31,6 +35,42 @@ export function useContacts() {
       .finally(() => setIsLoading(false));
   }
 
+  function deleteContact(contactId: string) {
+    setIsLoading(true);
+    ContactsApi.deleteContact(contactId)
+      .then(() => {
+        setContacts((prev) => [
+          ...prev.filter((contact) => contact.id !== contactId),
+        ]);
+      })
+      .catch((error) => setError(error.response.data.message))
+      .finally(() => setIsLoading(false));
+  }
+
+  function editContact(contactId: string, editedContactChanges: EditContact) {
+    setIsLoading(true);
+    ContactsApi.editContact(contactId, editedContactChanges)
+      .then((res) => {
+        const contact = mapContact(res);
+        const contactIndex = contacts.findIndex(
+          (contact) => contact.id === contactId,
+        );
+
+        setContacts((prev) => {
+          const filteredContacts = prev.filter(
+            (contact) => contact.id !== contactId,
+          );
+          return [
+            ...filteredContacts.slice(0, contactIndex),
+            contact,
+            ...filteredContacts.slice(contactIndex, filteredContacts.length),
+          ];
+        });
+      })
+      .catch((error) => setError(error.response.data.message))
+      .finally(() => setIsLoading(false));
+  }
+
   useEffect(() => {
     getContacts("");
   }, []);
@@ -38,6 +78,8 @@ export function useContacts() {
   return {
     getContacts,
     createContact,
+    deleteContact,
+    editContact,
     contacts,
     isContactsLoading,
     isLoading,

@@ -3,6 +3,8 @@ import { contactFormSchema } from "../schemas/contactForm.schema";
 
 export type CreateContact = z.infer<typeof contactFormSchema>;
 
+export type EditContact = z.infer<typeof contactFormSchema>;
+
 export type ContactResponse = {
   _id: string;
   name: string;
