@@ -10,10 +10,9 @@ export function useFetchContacts() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-  const [offset, setOffset] = useState<number>(0);
 
-  function getContacts(offset: number, limit: number, search: string) {
-    ContactsApi.getContacts(offset, limit, search)
+  function getContacts(search: string) {
+    ContactsApi.getContacts(search)
       .then((res) => {
         const contacts = res.map((contact) => mapContact(contact));
         setContacts(contacts);
@@ -23,8 +22,8 @@ export function useFetchContacts() {
   }
 
   useEffect(() => {
-    getContacts(offset, CONTACTS_LIMIT, "");
-  }, [offset]);
+    getContacts("");
+  }, []);
 
   return {
     getContacts,
@@ -32,6 +31,5 @@ export function useFetchContacts() {
     isLoading,
     setContacts,
     setIsLoading,
-    setOffset,
   };
 }

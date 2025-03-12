@@ -4,7 +4,10 @@ import { useEffect } from "react";
 import Header from "./header/Header";
 import Loader from "./Loader";
 
+import { useFetchLoggedUser } from "../hooks/useFetchLoggedUser";
+
 export default function AppLayout() {
+  const { isLoading } = useFetchLoggedUser();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -19,7 +22,7 @@ export default function AppLayout() {
     }
   }, [navigate, pathnames]);
 
-  if (pathnames) {
+  if (pathnames || isLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
         <Loader />

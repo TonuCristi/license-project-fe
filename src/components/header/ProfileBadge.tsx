@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { HiMiniChevronDown } from "react-icons/hi2";
@@ -7,11 +7,13 @@ import Button from "../Button";
 
 import { useClickOutside } from "../../hooks/useClickOutside";
 import { useLogout } from "../../hooks/useLogout";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function ProfileBadge() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
+  const { user } = useContext(UserContext);
   const { logout } = useLogout();
 
   return (
@@ -20,7 +22,7 @@ export default function ProfileBadge() {
         onClick={() => setIsOpen((prev) => !prev)}
         className="flex cursor-pointer items-center gap-2 rounded-lg bg-white p-2"
       >
-        <p>Tonu Cristian</p>
+        <p>{user?.username}</p>
         <div className="bg-primary h-8 w-8 rounded-full"></div>
         <HiMiniChevronDown
           className={twMerge(
