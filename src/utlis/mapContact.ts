@@ -1,5 +1,6 @@
 import { ContactResponse } from "../types/contact.type";
 
 export function mapContact(contact: ContactResponse) {
-  return { id: contact._id, ...contact };
+  const { _id, ...rest } = contact;
+  return { id: contact._id, ...rest };
 }
