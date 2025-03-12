@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { api } from "../config/api";
-import { ContactResponse } from "../types/contact.type";
+import { ContactResponse, CreateContact } from "../types/contact.type";
 
 const URL = "/api/contacts";
 
@@ -11,6 +11,13 @@ export const ContactsApi = {
       .then(
         ({ data }: AxiosResponse<{ contacts: ContactResponse[] }>) =>
           data.contacts,
+      );
+  },
+  createContact(contact: CreateContact) {
+    return api
+      .post(`${URL}/create-contact`, contact)
+      .then(
+        ({ data }: AxiosResponse<{ contact: ContactResponse }>) => data.contact,
       );
   },
 };

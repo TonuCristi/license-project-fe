@@ -1,5 +1,5 @@
-import { Outlet, useLocation, useNavigate } from "react-router";
 import { useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router";
 
 import Header from "./header/Header";
 import Loader from "./Loader";

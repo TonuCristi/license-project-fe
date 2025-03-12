@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -13,21 +12,20 @@ import Button from "../../../Button";
 
 import { registerSchema } from "../../../../schemas/register.schema";
 import { useRegister } from "../../hooks/useRegister";
+import { Register } from "../../../../types/user.type";
 
 const options = [
   { value: "chief", text: "Chief" },
   { value: "assistant", text: "Assistant" },
 ];
 
-type RegisterForm = z.infer<typeof registerSchema>;
-
 export default function RegisterForm() {
-  const methods = useForm<RegisterForm>({
+  const methods = useForm<Register>({
     resolver: zodResolver(registerSchema),
   });
   const { register, isLoading } = useRegister();
 
-  const onSubmit: SubmitHandler<RegisterForm> = (data) => register(data);
+  const onSubmit: SubmitHandler<Register> = (data) => register(data);
 
   const {
     handleSubmit,

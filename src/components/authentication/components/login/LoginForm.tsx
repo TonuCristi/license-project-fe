@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -12,11 +11,10 @@ import { Link } from "react-router";
 
 import { loginSchema } from "../../../../schemas/login.schema";
 import { useLogin } from "../../hooks/useLogin";
-
-type LoginForm = z.infer<typeof loginSchema>;
+import { Login } from "../../../../types/user.type";
 
 export default function LoginForm() {
-  const methods = useForm<LoginForm>({
+  const methods = useForm<Login>({
     defaultValues: {
       email: "ddd@eee.fff",
       password: "P@rola1234",
@@ -25,7 +23,7 @@ export default function LoginForm() {
   });
   const { login, isLoading } = useLogin();
 
-  const onSubmit: SubmitHandler<LoginForm> = (data) => login(data);
+  const onSubmit: SubmitHandler<Login> = (data) => login(data);
 
   const {
     handleSubmit,

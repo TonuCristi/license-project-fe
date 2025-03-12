@@ -7,12 +7,11 @@ import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { contactsSearchBarSchema } from "../../../schemas/contactsSearchBar.schema";
-import { CONTACTS_LIMIT } from "../hooks/useFetchContacts";
 
 type ContactsSearchBar = z.infer<typeof contactsSearchBarSchema>;
 
 type Props = {
-  getContacts: (offset: number, limit: number, search: string) => void;
+  getContacts: (search: string) => void;
 };
 
 export default function ContactsSearchBar({ getContacts }: Props) {
@@ -27,7 +26,7 @@ export default function ContactsSearchBar({ getContacts }: Props) {
 
   useEffect(() => {
     const { unsubscribe } = watch(({ contactName }) => {
-      getContacts(0, CONTACTS_LIMIT, contactName ? contactName : "");
+      getContacts(contactName ? contactName : "");
     });
 
     return () => unsubscribe();

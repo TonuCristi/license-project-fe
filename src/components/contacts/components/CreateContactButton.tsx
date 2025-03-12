@@ -5,8 +5,17 @@ import Button from "../../Button";
 import CreateContactForm from "./CreateContactForm";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
+import { CreateContact } from "../../../types/contact.type";
 
-export default function CreateContactButton() {
+type Props = {
+  createContact: (contact: CreateContact) => void;
+  isLoading: boolean;
+};
+
+export default function CreateContactButton({
+  createContact,
+  isLoading,
+}: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
@@ -21,7 +30,12 @@ export default function CreateContactButton() {
         <HiMiniPlusSmall className="text-primary stroke-1 text-2xl" />
       </Button>
 
-      {isOpen && <CreateContactForm />}
+      {isOpen && (
+        <CreateContactForm
+          createContact={createContact}
+          isLoading={isLoading}
+        />
+      )}
     </div>
   );
 }
