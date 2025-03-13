@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -9,6 +8,7 @@ import Button from "../../Button";
 import InputContainer from "../../input/InputContainer";
 
 import { contactFormSchema } from "../../../schemas/contactForm.schema";
+import { CreateContact } from "../../../types/contact.type";
 
 const inputs = [
   {
@@ -31,16 +31,17 @@ const inputs = [
   },
 ] as const;
 
-type CreateContactForm = z.infer<typeof contactFormSchema>;
+type Props = {
+  createContact: (contact: CreateContact) => void;
+  isLoading: boolean;
+};
 
-export default function CreateContactForm() {
-  const methods = useForm<CreateContactForm>({
+export default function CreateContactForm({ createContact, isLoading }: Props) {
+  const methods = useForm<CreateContact>({
     resolver: zodResolver(contactFormSchema),
   });
 
-  const onSubmit: SubmitHandler<CreateContactForm> = (data) => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<CreateContact> = (data) => createContact(data);
 
   const {
     handleSubmit,
@@ -65,7 +66,7 @@ export default function CreateContactForm() {
             </InputContainer>
           ))}
         </div>
-        <Button>Create</Button>
+        <Button disabled={isLoading}>Create</Button>
       </form>
     </FormProvider>
   );
