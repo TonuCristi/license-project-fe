@@ -11,7 +11,7 @@ const URL = "/api/contacts";
 export const ContactsApi = {
   getContacts(search: string) {
     return api
-      .get(`${URL}/retrieve-contacts?search=${search}`)
+      .get(`${URL}/retrieve-contacts?search=${encodeURIComponent(search)}`)
       .then(
         ({ data }: AxiosResponse<{ contacts: ContactResponse[] }>) =>
           data.contacts,

@@ -6,6 +6,7 @@ import Button from "../../Button";
 import EditContactButton from "./EditContactButton";
 
 import { Contact, EditContact } from "../../../types/contact.type";
+import ConfirmationModal from "../../ConfirmationModal";
 
 type Props = {
   index: number;
@@ -22,7 +23,8 @@ export default function ContactItem({
   deleteContact,
   editContact,
 }: Props) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isEditFormOpen, setIsEditFormOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const { name, phoneNumber, description } = contact;
 
   return (
@@ -34,8 +36,7 @@ export default function ContactItem({
         </p>
         <Button
           variant="empty"
-          disabled={isLoading}
-          onClick={() => deleteContact(contact.id)}
+          onClick={() => setIsDeleteModalOpen(true)}
           className="ml-auto"
         >
           <HiMiniXMark className="hover:text-primary stroke-1 text-lg transition-colors" />
@@ -45,16 +46,30 @@ export default function ContactItem({
           editContact={editContact}
           isLoading={isLoading}
         />
-        <Button variant="empty" onClick={() => setIsOpen((prev) => !prev)}>
+        <Button
+          variant="empty"
+          onClick={() => setIsEditFormOpen((prev) => !prev)}
+        >
           <HiMiniChevronDown
             className={twMerge(
               "hover:text-primary stroke-1 text-lg transition-all ease-initial",
-              isOpen && "rotate-180",
+              isEditFormOpen && "rotate-180",
             )}
           />
         </Button>
       </div>
-      {isOpen && (
+
+      {isDeleteModalOpen && (
+        <ConfirmationModal
+          onAprove={() => deleteContact(contact.id)}
+          onReject={() => setIsDeleteModalOpen(false)}
+          isLoading={isLoading}
+        >
+          Are you sure about deleting this contact?
+        </ConfirmationModal>
+      )}
+
+      {isEditFormOpen && (
         <div className="flex flex-col gap-2">
           <p>Phone number: {phoneNumber}</p>
           <p>Description: {description}</p>
