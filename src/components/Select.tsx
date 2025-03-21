@@ -40,15 +40,18 @@ export default function Select({
 }: Props) {
   const { register } = useFormContext();
 
+  const placeholderOption = { value: "", placeholder };
+
   return (
     <select
       {...register(name)}
       {...props}
+      defaultValue={placeholderOption.value}
       className={twMerge(selectVariants({ variant, className }))}
     >
-      {placeholder && (
-        <option value="" disabled hidden>
-          {placeholder}
+      {placeholderOption.placeholder && (
+        <option value={placeholderOption.value} disabled hidden>
+          {placeholderOption.placeholder}
         </option>
       )}
       {options.map(({ value, text }) => (

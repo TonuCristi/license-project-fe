@@ -8,8 +8,8 @@ import AuthProvider from "./contexts/AuthContext.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 
-import { createBrowserRouter, RouterProvider } from "react-router";
 import UserProvider from "./contexts/UserContext.tsx";
+import { createBrowserRouter, RouterProvider } from "react-router";
 
 const router = createBrowserRouter([
   {
