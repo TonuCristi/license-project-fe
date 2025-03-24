@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Appointments } from "../../../types/appointment.type";
 import { AppointmentsApi } from "../../../services/AppointmentsApi";
@@ -9,9 +9,17 @@ export function useAppointments() {
     year: null,
     appointmentsPerMonths: [],
   });
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  function getAppointments(year?: number, month?: number, day?: number) {
+  function getAppointments(year?: string, month?: string, day?: string) {
+    if (year === "" && month === "" && day === "") {
+      return setAppointments({
+        year: null,
+        appointmentsPerMonths: [],
+      });
+    }
+
+    setIsLoading(true);
     AppointmentsApi.getAppointments(year, month, day)
       .then((res) => {
         const mappedAppointments = res.appointmentsPerMonths.map(
@@ -29,9 +37,5 @@ export function useAppointments() {
       .finally(() => setIsLoading(false));
   }
 
-  useEffect(() => {
-    getAppointments(2025);
-  }, []);
-
-  return { appointments, isLoading };
+  return { getAppointments, appointments, isLoading };
 }

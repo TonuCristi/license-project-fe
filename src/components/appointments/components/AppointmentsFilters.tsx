@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import InputContainer from "../../input/InputContainer";
 import Label from "../../Label";
 import Select from "../../Select";
+import Button from "../../Button";
+
+import { appointmentsFiltersSchema } from "../../../schemas/appointmentsFilters.schema";
 
 const yearOptions = [
   { value: "2025", text: "2025" },
@@ -34,12 +39,38 @@ const dayOptions = [
   { value: "6", text: "Sunday" },
 ];
 
-export default function AppointmentsFilters() {
-  const methods = useForm();
+type Props = {
+  getAppointments: (year?: string, month?: string, day?: string) => void;
+};
+
+export default function AppointmentsFilters({ getAppointments }: Props) {
+  const methods = useForm({
+    defaultValues: {
+      year: "",
+      month: "",
+      day: "",
+    },
+    resolver: zodResolver(appointmentsFiltersSchema),
+  });
+
+  const { watch, reset } = methods;
+
+  function handleReset(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    reset();
+  }
+
+  useEffect(() => {
+    const { unsubscribe } = watch(({ year, month, day }) => {
+      getAppointments(year, month, day);
+    });
+
+    return () => unsubscribe();
+  }, [watch, getAppointments]);
 
   return (
     <FormProvider {...methods}>
-      <form className="flex items-center justify-between gap-3">
+      <form className="flex items-end justify-between gap-3">
         <InputContainer>
           <Label>Year</Label>
           <Select
@@ -60,6 +91,7 @@ export default function AppointmentsFilters() {
           <Label>Day</Label>
           <Select name="day" placeholder="Select a day" options={dayOptions} />
         </InputContainer>
+        <Button onClick={handleReset}>Reset</Button>
       </form>
     </FormProvider>
   );
