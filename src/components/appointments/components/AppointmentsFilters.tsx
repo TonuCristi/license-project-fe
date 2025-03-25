@@ -9,11 +9,6 @@ import Button from "../../Button";
 
 import { appointmentsFiltersSchema } from "../../../schemas/appointmentsFilters.schema";
 
-const yearOptions = [
-  { value: "2025", text: "2025" },
-  { value: "2026", text: "2026" },
-];
-
 const monthOptions = [
   { value: "0", text: "January" },
   { value: "1", text: "February" },
@@ -41,9 +36,17 @@ const dayOptions = [
 
 type Props = {
   getAppointments: (year?: string, month?: string, day?: string) => void;
+  getAppointmentsYears: () => void;
+  appointmentsYears: string[];
+  isFiltersDataLoading: boolean;
 };
 
-export default function AppointmentsFilters({ getAppointments }: Props) {
+export default function AppointmentsFilters({
+  getAppointments,
+  getAppointmentsYears,
+  appointmentsYears,
+  isFiltersDataLoading,
+}: Props) {
   const methods = useForm({
     defaultValues: {
       year: "",
@@ -55,10 +58,19 @@ export default function AppointmentsFilters({ getAppointments }: Props) {
 
   const { watch, reset } = methods;
 
+  const yearOptions = appointmentsYears.map((year) => ({
+    value: year,
+    text: year,
+  }));
+
   function handleReset(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     reset();
   }
+
+  useEffect(() => {
+    getAppointmentsYears();
+  }, [getAppointmentsYears]);
 
   useEffect(() => {
     const { unsubscribe } = watch(({ year, month, day }) => {
@@ -77,6 +89,7 @@ export default function AppointmentsFilters({ getAppointments }: Props) {
             name="year"
             placeholder="Select a year"
             options={yearOptions}
+            disabled={isFiltersDataLoading}
           />
         </InputContainer>
         <InputContainer>
@@ -85,11 +98,17 @@ export default function AppointmentsFilters({ getAppointments }: Props) {
             name="month"
             placeholder="Select a month"
             options={monthOptions}
+            disabled={isFiltersDataLoading}
           />
         </InputContainer>
         <InputContainer>
           <Label>Day</Label>
-          <Select name="day" placeholder="Select a day" options={dayOptions} />
+          <Select
+            name="day"
+            placeholder="Select a day"
+            options={dayOptions}
+            disabled={isFiltersDataLoading}
+          />
         </InputContainer>
         <Button onClick={handleReset}>Reset</Button>
       </form>

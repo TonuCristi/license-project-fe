@@ -8,18 +8,10 @@ import {
 
 const URL = "/api/contacts";
 
-const controller = new AbortController();
-
 export const ContactsApi = {
   getContacts(search: string) {
-    if (controller) {
-      controller.abort();
-    }
-
     return api
-      .get(`${URL}/retrieve-contacts?search=${encodeURIComponent(search)}`, {
-        signal: controller.signal,
-      })
+      .get(`${URL}/retrieve-contacts?search=${encodeURIComponent(search)}`)
       .then(
         ({ data }: AxiosResponse<{ contacts: ContactResponse[] }>) =>
           data.contacts,

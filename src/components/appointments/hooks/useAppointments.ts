@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { Appointments } from "../../../types/appointment.type";
 import { AppointmentsApi } from "../../../services/AppointmentsApi";
@@ -9,7 +9,10 @@ export function useAppointments() {
     year: null,
     appointmentsPerMonths: [],
   });
+  const [appointmentsYears, setAppointmentsYears] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFiltersDataLoading, setIsFiltersDataLoading] =
+    useState<boolean>(true);
 
   function getAppointments(year?: string, month?: string, day?: string) {
     if (year === "" && month === "" && day === "") {
@@ -37,5 +40,19 @@ export function useAppointments() {
       .finally(() => setIsLoading(false));
   }
 
-  return { getAppointments, appointments, isLoading };
+  const getAppointmentsYears = useCallback(function () {
+    AppointmentsApi.getAppointmentsYears()
+      .then((res) => setAppointmentsYears(res))
+      .catch((error) => console.log(error))
+      .finally(() => setIsFiltersDataLoading(false));
+  }, []);
+
+  return {
+    getAppointments,
+    getAppointmentsYears,
+    appointments,
+    appointmentsYears,
+    isLoading,
+    isFiltersDataLoading,
+  };
 }
