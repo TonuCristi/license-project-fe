@@ -1,3 +1,8 @@
+import { z } from "zod";
+import { createAppointmentSchema } from "../schemas/createAppointment.schema";
+
+export type CreateAppointment = z.infer<typeof createAppointmentSchema>;
+
 export type AppointmentResponse = {
   _id: string;
   attendee: string;

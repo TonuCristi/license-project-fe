@@ -1,6 +1,9 @@
 import { useCallback, useState } from "react";
 
-import { Appointments } from "../../../types/appointment.type";
+import {
+  Appointments,
+  CreateAppointment,
+} from "../../../types/appointment.type";
 import { AppointmentsApi } from "../../../services/AppointmentsApi";
 import { mapAppointment } from "../../../utlis/mapAppointment";
 
@@ -11,8 +14,6 @@ export function useAppointments() {
   });
   const [appointmentsYears, setAppointmentsYears] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFiltersDataLoading, setIsFiltersDataLoading] =
-    useState<boolean>(true);
 
   function getAppointments(year?: string, month?: string, day?: string) {
     if (year === "" && month === "" && day === "") {
@@ -44,15 +45,25 @@ export function useAppointments() {
     AppointmentsApi.getAppointmentsYears()
       .then((res) => setAppointmentsYears(res))
       .catch((error) => console.log(error))
-      .finally(() => setIsFiltersDataLoading(false));
+      .finally(() => setIsLoading(false));
   }, []);
+
+  function createAppointment(appointment: CreateAppointment) {
+    setIsLoading(true);
+    AppointmentsApi.createAppointment(appointment)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
+  }
 
   return {
     getAppointments,
     getAppointmentsYears,
+    createAppointment,
     appointments,
     appointmentsYears,
     isLoading,
-    isFiltersDataLoading,
   };
 }

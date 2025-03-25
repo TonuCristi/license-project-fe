@@ -1,6 +1,9 @@
 import { AxiosResponse } from "axios";
 import { api } from "../config/api";
-import { AppointmentsResponse } from "../types/appointment.type";
+import {
+  AppointmentsResponse,
+  CreateAppointment,
+} from "../types/appointment.type";
 
 const URL = "/api/appointments";
 
@@ -26,5 +29,13 @@ export const AppointmentsApi = {
         appointmentsYears: string[];
       }>) => data.appointmentsYears,
     );
+  },
+  createAppointment(appointment: CreateAppointment) {
+    return api
+      .post(`${URL}/create-appointment`, appointment)
+      .then(
+        ({ data }: AxiosResponse<{ appointment: AppointmentsResponse }>) =>
+          data.appointment,
+      );
   },
 };

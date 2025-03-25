@@ -38,14 +38,14 @@ type Props = {
   getAppointments: (year?: string, month?: string, day?: string) => void;
   getAppointmentsYears: () => void;
   appointmentsYears: string[];
-  isFiltersDataLoading: boolean;
+  isLoading: boolean;
 };
 
 export default function AppointmentsFilters({
   getAppointments,
   getAppointmentsYears,
   appointmentsYears,
-  isFiltersDataLoading,
+  isLoading,
 }: Props) {
   const methods = useForm({
     defaultValues: {
@@ -89,7 +89,7 @@ export default function AppointmentsFilters({
             name="year"
             placeholder="Select a year"
             options={yearOptions}
-            disabled={isFiltersDataLoading}
+            disabled={isLoading}
           />
         </InputContainer>
         <InputContainer>
@@ -98,7 +98,7 @@ export default function AppointmentsFilters({
             name="month"
             placeholder="Select a month"
             options={monthOptions}
-            disabled={isFiltersDataLoading}
+            disabled={isLoading}
           />
         </InputContainer>
         <InputContainer>
@@ -107,7 +107,7 @@ export default function AppointmentsFilters({
             name="day"
             placeholder="Select a day"
             options={dayOptions}
-            disabled={isFiltersDataLoading}
+            disabled={isLoading}
           />
         </InputContainer>
         <Button onClick={handleReset}>Reset</Button>

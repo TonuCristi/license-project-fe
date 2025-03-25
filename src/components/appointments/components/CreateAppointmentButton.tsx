@@ -5,8 +5,13 @@ import Button from "../../Button";
 import { HiMiniPlusSmall } from "react-icons/hi2";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
+import { CreateAppointment } from "../../../types/appointment.type";
 
-export default function CreateAppointmentButton() {
+type Props = {
+  createAppointment: (appointment: CreateAppointment) => void;
+};
+
+export default function CreateAppointmentButton({ createAppointment }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
@@ -21,7 +26,9 @@ export default function CreateAppointmentButton() {
         <HiMiniPlusSmall className="stroke-1 text-2xl text-white" />
       </Button>
 
-      {isOpen && <CreateAppointmentForm />}
+      {isOpen && (
+        <CreateAppointmentForm createAppointment={createAppointment} />
+      )}
     </div>
   );
 }

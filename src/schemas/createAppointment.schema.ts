@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const contactFormSchema = z.object({
+export const createAppointmentSchema = z.object({
   attendee: z
     .string()
     .min(1, { message: "This field should't be empty!" })
@@ -20,8 +20,10 @@ export const contactFormSchema = z.object({
     .max(60, {
       message: "The location should't be longer than 60 characters!",
     }),
-  date: z.string(),
-  duration: z.string(),
+  date: z.string().refine((val) => (val ? val + ":00Z" : false), {
+    message: "Invalid date!",
+  }),
+  duration: z.string().min(1, "You should select the duration!"),
   note: z
     .string()
     .min(1, { message: "This field should't be empty!" })

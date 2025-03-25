@@ -8,23 +8,23 @@ export default function Appointments() {
   const {
     getAppointments,
     getAppointmentsYears,
+    createAppointment,
     appointments,
     appointmentsYears,
     isLoading,
-    isFiltersDataLoading,
   } = useAppointments();
 
   return (
     <div className="flex h-full flex-col gap-5 p-4">
       <div className="flex items-center justify-between gap-4">
         <h1 className="text-xl font-medium">Appointments</h1>
-        <CreateAppointmentButton />
+        <CreateAppointmentButton createAppointment={createAppointment} />
       </div>
       <AppointmentsFilters
         getAppointments={getAppointments}
         getAppointmentsYears={getAppointmentsYears}
         appointmentsYears={appointmentsYears}
-        isFiltersDataLoading={isFiltersDataLoading}
+        isLoading={isLoading}
       />
       <AppointmentsList appointments={appointments} isLoading={isLoading} />
     </div>
