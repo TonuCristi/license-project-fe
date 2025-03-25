@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import { api } from "../config/api";
 import {
+  AppointmentResponse,
   AppointmentsResponse,
   CreateAppointment,
 } from "../types/appointment.type";
@@ -34,7 +35,7 @@ export const AppointmentsApi = {
     return api
       .post(`${URL}/create-appointment`, appointment)
       .then(
-        ({ data }: AxiosResponse<{ appointment: AppointmentsResponse }>) =>
+        ({ data }: AxiosResponse<{ appointment: AppointmentResponse }>) =>
           data.appointment,
       );
   },

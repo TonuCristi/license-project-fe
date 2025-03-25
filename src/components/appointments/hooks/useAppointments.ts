@@ -7,6 +7,21 @@ import {
 import { AppointmentsApi } from "../../../services/AppointmentsApi";
 import { mapAppointment } from "../../../utlis/mapAppointment";
 
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 export function useAppointments() {
   const [appointments, setAppointments] = useState<Appointments>({
     year: null,
@@ -52,11 +67,47 @@ export function useAppointments() {
     setIsLoading(true);
     AppointmentsApi.createAppointment(appointment)
       .then((res) => {
+        const newAppointment = mapAppointment(res);
+        const newAppointmentYear = new Date(
+          newAppointment.startTime,
+        ).getFullYear();
+
+        if (appointments.year === newAppointmentYear) {
+          const newAppointmentMonth = new Date(
+            newAppointment.startTime,
+          ).getMonth();
+
+          const newAppointmentIndex =
+            appointments.appointmentsPerMonths.findIndex(
+              ({ month }) => month === months[newAppointmentMonth],
+            );
+
+          setAppointments((prev) => {
+            return {
+              ...prev,
+              appointmentsPerMonths: [
+                {
+                  ...prev.appointmentsPerMonths[newAppointmentIndex],
+                  appointments: [
+                    ...prev.appointmentsPerMonths[newAppointmentIndex]
+                      .appointments,
+                    newAppointment,
+                  ],
+                },
+                ...prev.appointmentsPerMonths.filter(
+                  (_, i) => i !== newAppointmentIndex,
+                ),
+              ],
+            };
+          });
+        }
         console.log(res);
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
   }
+
+  console.log(appointments);
 
   return {
     getAppointments,
