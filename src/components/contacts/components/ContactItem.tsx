@@ -71,8 +71,12 @@ export default function ContactItem({
 
       {isEditFormOpen && (
         <div className="flex flex-col gap-2">
-          <p>Phone number: {phoneNumber}</p>
-          <p>Description: {description}</p>
+          <p>
+            <span className="font-medium">Phone number:</span> {phoneNumber}
+          </p>
+          <p>
+            <span className="font-medium">Description:</span> {description}
+          </p>
         </div>
       )}
     </li>

@@ -1,0 +1,39 @@
+export type AppointmentResponse = {
+  _id: string;
+  attendee: string;
+  attendeePhoneNumber: string;
+  location: string;
+  date: string;
+  duration: number;
+  endTime: string;
+  note: string;
+  user_id: string;
+};
+
+export type Appointment = {
+  id: string;
+  attendee: string;
+  attendeePhoneNumber: string;
+  location: string;
+  startTime: string;
+  duration: number;
+  endTime: string;
+  note: string;
+  userId: string;
+};
+
+export type AppointmentsResponse = {
+  year: number | null;
+  appointmentsPerMonths: {
+    month: string;
+    appointments: AppointmentResponse[];
+  }[];
+};
+
+export type Appointments = {
+  year: number | null;
+  appointmentsPerMonths: {
+    month: string;
+    appointments: Appointment[];
+  }[];
+};
