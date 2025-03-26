@@ -5,11 +5,14 @@ import { Appointments } from "../../../types/appointment.type";
 
 type Props = {
   appointments: Appointments;
-  isLoading: boolean;
+  isAppointmentsLoading: boolean;
 };
 
-export default function AppointmentsList({ appointments, isLoading }: Props) {
-  if (isLoading) {
+export default function AppointmentsList({
+  appointments,
+  isAppointmentsLoading,
+}: Props) {
+  if (isAppointmentsLoading) {
     return (
       <div className="flex justify-center">
         <Loader />
@@ -21,7 +24,7 @@ export default function AppointmentsList({ appointments, isLoading }: Props) {
     !appointments.appointmentsPerMonths.find(
       (appointmentsPerMonth) => appointmentsPerMonth.appointments.length,
     ) &&
-    !isLoading
+    !isAppointmentsLoading
   ) {
     return <p className="font-medium">Select a year please</p>;
   }

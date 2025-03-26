@@ -36,16 +36,16 @@ const dayOptions = [
 
 type Props = {
   getAppointments: (year?: string, month?: string, day?: string) => void;
-  getAppointmentsYears: () => void;
+  getAppointmentsFiltersData: () => void;
   appointmentsYears: string[];
-  isLoading: boolean;
+  isAppointmentsFiltersDataLoading: boolean;
 };
 
 export default function AppointmentsFilters({
   getAppointments,
-  getAppointmentsYears,
+  getAppointmentsFiltersData,
   appointmentsYears,
-  isLoading,
+  isAppointmentsFiltersDataLoading,
 }: Props) {
   const methods = useForm({
     defaultValues: {
@@ -69,8 +69,8 @@ export default function AppointmentsFilters({
   }
 
   useEffect(() => {
-    getAppointmentsYears();
-  }, [getAppointmentsYears]);
+    getAppointmentsFiltersData();
+  }, [getAppointmentsFiltersData]);
 
   useEffect(() => {
     const { unsubscribe } = watch(({ year, month, day }) => {
@@ -89,7 +89,7 @@ export default function AppointmentsFilters({
             name="year"
             placeholder="Select a year"
             options={yearOptions}
-            disabled={isLoading}
+            disabled={isAppointmentsFiltersDataLoading}
           />
         </InputContainer>
         <InputContainer>
@@ -98,7 +98,7 @@ export default function AppointmentsFilters({
             name="month"
             placeholder="Select a month"
             options={monthOptions}
-            disabled={isLoading}
+            disabled={isAppointmentsFiltersDataLoading}
           />
         </InputContainer>
         <InputContainer>
@@ -107,7 +107,7 @@ export default function AppointmentsFilters({
             name="day"
             placeholder="Select a day"
             options={dayOptions}
-            disabled={isLoading}
+            disabled={isAppointmentsFiltersDataLoading}
           />
         </InputContainer>
         <Button onClick={handleReset}>Reset</Button>

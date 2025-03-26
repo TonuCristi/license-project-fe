@@ -9,9 +9,13 @@ import { CreateAppointment } from "../../../types/appointment.type";
 
 type Props = {
   createAppointment: (appointment: CreateAppointment) => void;
+  isLoading: boolean;
 };
 
-export default function CreateAppointmentButton({ createAppointment }: Props) {
+export default function CreateAppointmentButton({
+  createAppointment,
+  isLoading,
+}: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
@@ -27,7 +31,10 @@ export default function CreateAppointmentButton({ createAppointment }: Props) {
       </Button>
 
       {isOpen && (
-        <CreateAppointmentForm createAppointment={createAppointment} />
+        <CreateAppointmentForm
+          createAppointment={createAppointment}
+          isLoading={isLoading}
+        />
       )}
     </div>
   );

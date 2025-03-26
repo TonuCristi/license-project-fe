@@ -50,9 +50,13 @@ const durationOptions = [
 
 type Props = {
   createAppointment: (appointment: CreateAppointment) => void;
+  isLoading: boolean;
 };
 
-export default function CreateAppointmentForm({ createAppointment }: Props) {
+export default function CreateAppointmentForm({
+  createAppointment,
+  isLoading,
+}: Props) {
   const methods = useForm<CreateAppointment>({
     resolver: zodResolver(createAppointmentSchema),
   });
@@ -65,7 +69,6 @@ export default function CreateAppointmentForm({ createAppointment }: Props) {
   const onSubmit: SubmitHandler<CreateAppointment> = (data) => {
     const date = data.date + ":00Z";
     createAppointment({ ...data, date });
-    // console.log(date);
   };
 
   return (
@@ -124,7 +127,7 @@ export default function CreateAppointmentForm({ createAppointment }: Props) {
             </InputContainer>
           </div>
         </div>
-        <Button>Create</Button>
+        <Button disabled={isLoading}>Create</Button>
       </form>
     </FormProvider>
   );
