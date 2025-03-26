@@ -14,7 +14,7 @@ export const contactFormSchema = z.object({
   description: z
     .string()
     .min(1, { message: "This field should't be empty!" })
-    .max(70, {
-      message: "The description should't be longer than 70 characters!",
+    .max(60, {
+      message: "The description should't be longer than 60 characters!",
     }),
 });

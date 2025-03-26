@@ -1,28 +1,40 @@
 import AppointmentsFilters from "./AppointmentsFilters";
 import AppointmentsList from "./AppointmentsList";
+import CreateAppointmentButton from "./CreateAppointmentButton";
 
 import { useAppointments } from "../hooks/useAppointments";
 
 export default function Appointments() {
   const {
     getAppointments,
-    getAppointmentsYears,
+    getAppointmentsFiltersData,
+    createAppointment,
     appointments,
     appointmentsYears,
+    isAppointmentsLoading,
+    isAppointmentsFiltersDataLoading,
     isLoading,
-    isFiltersDataLoading,
   } = useAppointments();
 
   return (
     <div className="flex h-full flex-col gap-5 p-4">
-      <h1 className="text-xl font-medium">Appointments</h1>
+      <div className="flex items-center justify-between gap-4">
+        <h1 className="text-xl font-medium">Appointments</h1>
+        <CreateAppointmentButton
+          createAppointment={createAppointment}
+          isLoading={isLoading}
+        />
+      </div>
       <AppointmentsFilters
         getAppointments={getAppointments}
-        getAppointmentsYears={getAppointmentsYears}
+        getAppointmentsFiltersData={getAppointmentsFiltersData}
         appointmentsYears={appointmentsYears}
-        isFiltersDataLoading={isFiltersDataLoading}
+        isAppointmentsFiltersDataLoading={isAppointmentsFiltersDataLoading}
       />
-      <AppointmentsList appointments={appointments} isLoading={isLoading} />
+      <AppointmentsList
+        appointments={appointments}
+        isAppointmentsLoading={isAppointmentsLoading}
+      />
     </div>
   );
 }

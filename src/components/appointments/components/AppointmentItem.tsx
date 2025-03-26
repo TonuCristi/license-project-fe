@@ -7,8 +7,22 @@ type Props = {
 };
 
 export default function AppointmentItem({ appointment }: Props) {
-  const { attendee, attendeePhoneNumber, startTime, endTime, location, note } =
-    appointment;
+  const { attendee, attendeePhoneNumber, location, note } = appointment;
+
+  const timeZoneOffset =
+    new Date(appointment.startTime).getTimezoneOffset() / 60;
+
+  const startTime = new Date(
+    new Date(appointment.startTime).setHours(
+      new Date(appointment.startTime).getHours() + timeZoneOffset,
+    ),
+  ).toLocaleString();
+
+  const endTime = new Date(
+    new Date(appointment.endTime).setHours(
+      new Date(appointment.endTime).getHours() + timeZoneOffset,
+    ),
+  ).toLocaleString();
 
   return (
     <li className="border-primary flex rounded-lg border-2 p-2">
@@ -24,12 +38,10 @@ export default function AppointmentItem({ appointment }: Props) {
           <span className="font-medium">Location:</span> {location}
         </p>
         <p>
-          <span className="font-medium">Start time:</span>{" "}
-          {new Date(startTime).toLocaleString()}
+          <span className="font-medium">Start time:</span> {startTime}
         </p>
         <p>
-          <span className="font-medium">End time:</span>{" "}
-          {new Date(endTime).toLocaleString()}
+          <span className="font-medium">End time:</span> {endTime}
         </p>
       </div>
       {note.length && (
