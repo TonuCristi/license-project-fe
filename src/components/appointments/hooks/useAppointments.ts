@@ -71,7 +71,7 @@ export function useAppointments() {
       .finally(() => setIsAppointmentsFiltersDataLoading(false));
   }, []);
 
-  // Creates the appointment
+  // Creates an appointment
   function createAppointment(appointment: CreateAppointment) {
     setIsLoading(true);
     AppointmentsApi.createAppointment(appointment)
@@ -87,20 +87,20 @@ export function useAppointments() {
             newAppointment.startTime,
           ).getMonth();
 
-          const newAppointmentIndex =
+          const newAppointmentMonthIndex =
             appointments.appointmentsPerMonths.findIndex(
               ({ month }) => month === months[newAppointmentMonth],
             );
 
           setAppointments((prev) => {
             const firstHalf = prev.appointmentsPerMonths
-              .slice(0, newAppointmentIndex)
+              .slice(0, newAppointmentMonthIndex)
               .filter(
                 (appointmentsPerMonth) =>
                   appointmentsPerMonth.month !== months[newAppointmentMonth],
               );
             const secondHalf = prev.appointmentsPerMonths
-              .slice(newAppointmentIndex)
+              .slice(newAppointmentMonthIndex)
               .filter(
                 (appointmentsPerMonth) =>
                   appointmentsPerMonth.month !== months[newAppointmentMonth],
@@ -111,9 +111,9 @@ export function useAppointments() {
               appointmentsPerMonths: [
                 ...firstHalf,
                 {
-                  ...prev.appointmentsPerMonths[newAppointmentIndex],
+                  ...prev.appointmentsPerMonths[newAppointmentMonthIndex],
                   appointments: [
-                    ...prev.appointmentsPerMonths[newAppointmentIndex]
+                    ...prev.appointmentsPerMonths[newAppointmentMonthIndex]
                       .appointments,
                     newAppointment,
                   ],
@@ -136,10 +136,63 @@ export function useAppointments() {
       .finally(() => setIsLoading(false));
   }
 
+  // Delete an appointment
+  function deleteAppointment(appointmentId: string) {
+    setIsLoading(true);
+    AppointmentsApi.deleteAppointment(appointmentId)
+      .then((res) => {
+        const deletedAppointment = mapAppointment(res.deletedAppointment);
+
+        const deletedAppointmentMonth = new Date(
+          deletedAppointment.startTime,
+        ).getMonth();
+
+        const deletedAppointmentMonthIndex =
+          appointments.appointmentsPerMonths.findIndex(
+            ({ month }) => month === months[deletedAppointmentMonth],
+          );
+
+        setAppointments((prev) => {
+          const firstHalf = prev.appointmentsPerMonths
+            .slice(0, deletedAppointmentMonthIndex)
+            .filter(
+              (appointmentsPerMonth) =>
+                appointmentsPerMonth.month !== months[deletedAppointmentMonth],
+            );
+
+          const secondHalf = prev.appointmentsPerMonths
+            .slice(deletedAppointmentMonthIndex)
+            .filter(
+              (appointmentsPerMonth) =>
+                appointmentsPerMonth.month !== months[deletedAppointmentMonth],
+            );
+
+          return {
+            ...prev,
+            appointmentsPerMonths: [
+              ...firstHalf,
+              {
+                ...prev.appointmentsPerMonths[deletedAppointmentMonthIndex],
+                appointments: prev.appointmentsPerMonths[
+                  deletedAppointmentMonthIndex
+                ].appointments.filter(
+                  (appointment) => appointment.id !== appointmentId,
+                ),
+              },
+              ...secondHalf,
+            ],
+          };
+        });
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
+  }
+
   return {
     getAppointments,
     getAppointmentsFiltersData,
     createAppointment,
+    deleteAppointment,
     appointments,
     appointmentsYears,
     isAppointmentsLoading,

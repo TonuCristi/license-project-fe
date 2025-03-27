@@ -39,4 +39,14 @@ export const AppointmentsApi = {
           data.appointment,
       );
   },
+  deleteAppointment(appointmentId: string) {
+    return api.delete(`${URL}/delete-appointment/${appointmentId}`).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        deletedAppointment: AppointmentResponse;
+        message: string;
+      }>) => data,
+    );
+  },
 };
