@@ -3,21 +3,27 @@ import { useState } from "react";
 import { HiMiniInformationCircle, HiMiniXMark } from "react-icons/hi2";
 import Button from "../../Button";
 import ConfirmationModal from "../../ConfirmationModal";
+import EditAppointmentButton from "./EditAppointmentButton";
 
-import { Appointment } from "../../../types/appointment.type";
+import { Appointment, EditAppointment } from "../../../types/appointment.type";
 
 type Props = {
   appointment: Appointment;
   deleteAppointment: (appointmentId: string) => void;
+  editAppointment: (
+    appointmentId: string,
+    appointment: EditAppointment,
+  ) => void;
   isLoading: boolean;
 };
 
 export default function AppointmentItem({
   appointment,
   deleteAppointment,
+  editAppointment,
   isLoading,
 }: Props) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const { id, attendee, attendeePhoneNumber, location, note } = appointment;
 
   const timeZoneOffset =
@@ -55,14 +61,21 @@ export default function AppointmentItem({
           <span className="font-medium">End time:</span> {endTime}
         </p>
       </div>
-      <div className="flex flex-col items-center gap-1">
+      <div className="flex flex-col items-center gap-2">
         <Button
           variant="empty"
-          onClick={() => setIsOpen((prev) => !prev)}
+          onClick={() => setIsDeleteModalOpen((prev) => !prev)}
           className="mt-auto"
         >
           <HiMiniXMark className="text-primary stroke-1 text-xl" />
         </Button>
+
+        <EditAppointmentButton
+          appointment={appointment}
+          editAppointment={editAppointment}
+          isLoading={isLoading}
+        />
+
         {note.length && (
           <div className="group relative self-end">
             <HiMiniInformationCircle className="text-primary cursor-pointer text-xl" />
@@ -71,10 +84,11 @@ export default function AppointmentItem({
             </p>
           </div>
         )}
-        {isOpen && (
+
+        {isDeleteModalOpen && (
           <ConfirmationModal
             onAprove={() => deleteAppointment(id)}
-            onReject={() => setIsOpen(false)}
+            onReject={() => setIsDeleteModalOpen(false)}
             isLoading={isLoading}
           >
             Are you sure about deleting this appointment?

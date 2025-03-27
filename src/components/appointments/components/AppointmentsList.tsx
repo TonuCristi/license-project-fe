@@ -1,12 +1,16 @@
 import AppointmentItem from "./AppointmentItem";
 import Loader from "../../Loader";
 
-import { Appointments } from "../../../types/appointment.type";
+import { Appointments, EditAppointment } from "../../../types/appointment.type";
 
 type Props = {
   appointments: Appointments;
   isAppointmentsLoading: boolean;
   deleteAppointment: (appointmentId: string) => void;
+  editAppointment: (
+    appointmentId: string,
+    appointment: EditAppointment,
+  ) => void;
   isLoading: boolean;
 };
 
@@ -14,6 +18,7 @@ export default function AppointmentsList({
   appointments,
   isAppointmentsLoading,
   deleteAppointment,
+  editAppointment,
   isLoading,
 }: Props) {
   if (isAppointmentsLoading) {
@@ -52,6 +57,7 @@ export default function AppointmentsList({
                   key={appointment.id}
                   appointment={appointment}
                   deleteAppointment={deleteAppointment}
+                  editAppointment={editAppointment}
                   isLoading={isLoading}
                 />
               ))}

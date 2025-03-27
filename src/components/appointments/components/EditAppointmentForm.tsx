@@ -9,8 +9,8 @@ import Button from "../../Button";
 import Select from "../../Select";
 import Textarea from "../../Textarea";
 
-import { CreateAppointment } from "../../../types/appointment.type";
 import { appointmentSchema } from "../../../schemas/createAppointment.schema";
+import { Appointment, EditAppointment } from "../../../types/appointment.type";
 
 const inputs = [
   {
@@ -51,15 +51,28 @@ const durationOptions = [
 ];
 
 type Props = {
-  createAppointment: (appointment: CreateAppointment) => void;
+  appointment: Appointment;
+  editAppointment: (
+    appointmentId: string,
+    appointment: EditAppointment,
+  ) => void;
   isLoading: boolean;
 };
 
-export default function CreateAppointmentForm({
-  createAppointment,
+export default function EditAppointmentForm({
+  appointment,
+  editAppointment,
   isLoading,
 }: Props) {
-  const methods = useForm<CreateAppointment>({
+  const methods = useForm<EditAppointment>({
+    defaultValues: {
+      attendee: appointment.attendee,
+      attendeePhoneNumber: appointment.attendeePhoneNumber,
+      location: appointment.location,
+      date: appointment.startTime,
+      duration: String(appointment.duration),
+      note: appointment.note,
+    },
     resolver: zodResolver(appointmentSchema),
   });
 
@@ -68,9 +81,9 @@ export default function CreateAppointmentForm({
     formState: { errors },
   } = methods;
 
-  const onSubmit: SubmitHandler<CreateAppointment> = (data) => {
+  const onSubmit: SubmitHandler<EditAppointment> = (data) => {
     const date = data.date + ":00Z";
-    createAppointment({ ...data, date });
+    editAppointment(appointment.id, { ...data, date });
   };
 
   return (

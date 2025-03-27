@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import {
   Appointments,
   CreateAppointment,
+  EditAppointment,
 } from "../../../types/appointment.type";
 import { AppointmentsApi } from "../../../services/AppointmentsApi";
 import { mapAppointment } from "../../../utlis/mapAppointment";
@@ -188,11 +189,70 @@ export function useAppointments() {
       .finally(() => setIsLoading(false));
   }
 
+  // Edits an appointment
+  function editAppointment(
+    appointmentId: string,
+    newEditedAppointment: EditAppointment,
+  ) {
+    setIsLoading(true);
+    AppointmentsApi.editAppointment(appointmentId, newEditedAppointment)
+      .then((res) => {
+        const editedAppointment = mapAppointment(res.editedAppointment);
+
+        const editedAppointmentMonth = new Date(
+          editedAppointment.startTime,
+        ).getMonth();
+
+        const editedAppointmentMonthIndex =
+          appointments.appointmentsPerMonths.findIndex(
+            ({ month }) => month === months[editedAppointmentMonth],
+          );
+
+        setAppointments((prev) => {
+          const firstHalf = prev.appointmentsPerMonths
+            .slice(0, editedAppointmentMonthIndex)
+            .filter(
+              (appointmentsPerMonth) =>
+                appointmentsPerMonth.month !== months[editedAppointmentMonth],
+            );
+          const secondHalf = prev.appointmentsPerMonths
+            .slice(editedAppointmentMonthIndex)
+            .filter(
+              (appointmentsPerMonth) =>
+                appointmentsPerMonth.month !== months[editedAppointmentMonth],
+            );
+
+          return {
+            ...prev,
+            appointmentsPerMonths: [
+              ...firstHalf,
+              {
+                ...prev.appointmentsPerMonths[editedAppointmentMonthIndex],
+                appointments: [
+                  ...prev.appointmentsPerMonths[editedAppointmentMonthIndex]
+                    .appointments,
+                  editedAppointment,
+                ].sort(
+                  (a, b) =>
+                    new Date(a.startTime).getTime() -
+                    new Date(b.startTime).getTime(),
+                ),
+              },
+              ...secondHalf,
+            ],
+          };
+        });
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
+  }
+
   return {
     getAppointments,
     getAppointmentsFiltersData,
     createAppointment,
     deleteAppointment,
+    editAppointment,
     appointments,
     appointmentsYears,
     isAppointmentsLoading,

@@ -10,6 +10,7 @@ export default function Appointments() {
     getAppointmentsFiltersData,
     createAppointment,
     deleteAppointment,
+    editAppointment,
     appointments,
     appointmentsYears,
     isAppointmentsLoading,
@@ -36,6 +37,7 @@ export default function Appointments() {
         appointments={appointments}
         isAppointmentsLoading={isAppointmentsLoading}
         deleteAppointment={deleteAppointment}
+        editAppointment={editAppointment}
         isLoading={isLoading}
       />
     </div>
