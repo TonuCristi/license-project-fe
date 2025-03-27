@@ -61,6 +61,7 @@ export const AppointmentsApi = {
           data,
         }: AxiosResponse<{
           editedAppointment: AppointmentResponse;
+          oldAppointment: AppointmentResponse;
           message: string;
         }>) => data,
       );

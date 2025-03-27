@@ -69,7 +69,10 @@ export default function EditAppointmentForm({
       attendee: appointment.attendee,
       attendeePhoneNumber: appointment.attendeePhoneNumber,
       location: appointment.location,
-      date: appointment.startTime,
+      date:
+        appointment.startTime.split(":")[0] +
+        ":" +
+        appointment.startTime.split(":")[1],
       duration: String(appointment.duration),
       note: appointment.note,
     },

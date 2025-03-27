@@ -198,39 +198,65 @@ export function useAppointments() {
     AppointmentsApi.editAppointment(appointmentId, newEditedAppointment)
       .then((res) => {
         const editedAppointment = mapAppointment(res.editedAppointment);
+        const oldAppointment = mapAppointment(res.oldAppointment);
 
-        const editedAppointmentMonth = new Date(
+        const editedAppointmentYear = new Date(
           editedAppointment.startTime,
-        ).getMonth();
+        ).getFullYear();
 
-        const editedAppointmentMonthIndex =
-          appointments.appointmentsPerMonths.findIndex(
-            ({ month }) => month === months[editedAppointmentMonth],
-          );
+        const editedAppointmentMonth =
+          months[new Date(editedAppointment.startTime).getMonth()];
+
+        const oldAppointmentMonth =
+          months[new Date(oldAppointment.startTime).getMonth()];
 
         setAppointments((prev) => {
-          const firstHalf = prev.appointmentsPerMonths
+          const appointmentsPerMonths = prev.appointmentsPerMonths;
+
+          const editedAppointmentMonthIndex = appointmentsPerMonths.findIndex(
+            ({ month }) => month === editedAppointmentMonth,
+          );
+
+          const firstHalf = appointmentsPerMonths
             .slice(0, editedAppointmentMonthIndex)
             .filter(
               (appointmentsPerMonth) =>
-                appointmentsPerMonth.month !== months[editedAppointmentMonth],
+                appointmentsPerMonth.month !== editedAppointmentMonth,
             );
-          const secondHalf = prev.appointmentsPerMonths
+
+          const secondHalf = appointmentsPerMonths
             .slice(editedAppointmentMonthIndex)
             .filter(
               (appointmentsPerMonth) =>
-                appointmentsPerMonth.month !== months[editedAppointmentMonth],
+                appointmentsPerMonth.month !== editedAppointmentMonth,
             );
+
+          if (!appointmentsPerMonths[editedAppointmentMonthIndex]) {
+            return {
+              ...prev,
+              appointmentsPerMonths: [
+                ...firstHalf,
+                {
+                  month: editedAppointmentMonth,
+                  appointments: [editedAppointment],
+                },
+                ...secondHalf,
+              ].filter(({ month }) => month !== oldAppointmentMonth),
+            };
+          }
 
           return {
             ...prev,
             appointmentsPerMonths: [
               ...firstHalf,
               {
-                ...prev.appointmentsPerMonths[editedAppointmentMonthIndex],
+                ...appointmentsPerMonths[editedAppointmentMonthIndex],
                 appointments: [
-                  ...prev.appointmentsPerMonths[editedAppointmentMonthIndex]
-                    .appointments,
+                  ...appointmentsPerMonths[
+                    editedAppointmentMonthIndex
+                  ].appointments.filter(
+                    (appointment) => appointment.id !== appointmentId,
+                  ),
                   editedAppointment,
                 ].sort(
                   (a, b) =>
