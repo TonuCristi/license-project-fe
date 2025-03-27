@@ -1,4 +1,6 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import InputContainer from "../../input/InputContainer";
 import Label from "../../Label";
 import Input from "../../input/Input";
@@ -6,7 +8,7 @@ import Message from "../../Message";
 import Button from "../../Button";
 import Select from "../../Select";
 import Textarea from "../../Textarea";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { createAppointmentSchema } from "../../../schemas/createAppointment.schema";
 import { CreateAppointment } from "../../../types/appointment.type";
 

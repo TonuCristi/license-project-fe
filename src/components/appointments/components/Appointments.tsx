@@ -9,6 +9,7 @@ export default function Appointments() {
     getAppointments,
     getAppointmentsFiltersData,
     createAppointment,
+    deleteAppointment,
     appointments,
     appointmentsYears,
     isAppointmentsLoading,
@@ -34,6 +35,8 @@ export default function Appointments() {
       <AppointmentsList
         appointments={appointments}
         isAppointmentsLoading={isAppointmentsLoading}
+        deleteAppointment={deleteAppointment}
+        isLoading={isLoading}
       />
     </div>
   );

@@ -6,11 +6,15 @@ import { Appointments } from "../../../types/appointment.type";
 type Props = {
   appointments: Appointments;
   isAppointmentsLoading: boolean;
+  deleteAppointment: (appointmentId: string) => void;
+  isLoading: boolean;
 };
 
 export default function AppointmentsList({
   appointments,
   isAppointmentsLoading,
+  deleteAppointment,
+  isLoading,
 }: Props) {
   if (isAppointmentsLoading) {
     return (
@@ -47,6 +51,8 @@ export default function AppointmentsList({
                 <AppointmentItem
                   key={appointment.id}
                   appointment={appointment}
+                  deleteAppointment={deleteAppointment}
+                  isLoading={isLoading}
                 />
               ))}
             </ul>
