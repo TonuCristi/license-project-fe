@@ -8,6 +8,8 @@ import Select from "../../Select";
 import Button from "../../Button";
 
 import { appointmentsFiltersSchema } from "../../../schemas/appointmentsFilters.schema";
+import { useFetchAppointments } from "../hooks/useFetchAppointments";
+import { useFetchAppointmentsFiltersData } from "../hooks/useFetchAppointmentsFiltersData";
 
 const monthOptions = [
   { value: "0", text: "January" },
@@ -34,19 +36,7 @@ const dayOptions = [
   { value: "6", text: "Sunday" },
 ];
 
-type Props = {
-  getAppointments: (year?: string, month?: string, day?: string) => void;
-  getAppointmentsFiltersData: () => void;
-  appointmentsYears: string[];
-  isAppointmentsFiltersDataLoading: boolean;
-};
-
-export default function AppointmentsFilters({
-  getAppointments,
-  getAppointmentsFiltersData,
-  appointmentsYears,
-  isAppointmentsFiltersDataLoading,
-}: Props) {
+export default function AppointmentsFilters() {
   const methods = useForm({
     defaultValues: {
       year: "",
@@ -55,12 +45,18 @@ export default function AppointmentsFilters({
     },
     resolver: zodResolver(appointmentsFiltersSchema),
   });
+  const { getAppointments } = useFetchAppointments();
+  const {
+    appointmentsYears,
+    isAppointmentsFiltersDataLoading,
+    getAppointmentsFiltersData,
+  } = useFetchAppointmentsFiltersData();
 
   const { watch, reset } = methods;
 
   const yearOptions = appointmentsYears.map((year) => ({
-    value: year,
-    text: year,
+    value: String(year),
+    text: String(year),
   }));
 
   function handleReset(e: React.MouseEvent<HTMLButtonElement>) {

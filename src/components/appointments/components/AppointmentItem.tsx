@@ -5,18 +5,14 @@ import Button from "../../Button";
 import ConfirmationModal from "../../ConfirmationModal";
 
 import { Appointment } from "../../../types/appointment.type";
+import { useDeleteAppointment } from "../hooks/useDeleteAppointment";
 
 type Props = {
   appointment: Appointment;
-  deleteAppointment: (appointmentId: string) => void;
-  isLoading: boolean;
 };
 
-export default function AppointmentItem({
-  appointment,
-  deleteAppointment,
-  isLoading,
-}: Props) {
+export default function AppointmentItem({ appointment }: Props) {
+  const { deleteAppointment, isLoading } = useDeleteAppointment();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { id, attendee, attendeePhoneNumber, location, note } = appointment;
 
