@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const createAppointmentSchema = z.object({
+export const appointmentSchema = z.object({
   attendee: z
     .string()
     .min(1, { message: "This field should't be empty!" })

@@ -4,6 +4,7 @@ import {
   AppointmentResponse,
   AppointmentsResponse,
   CreateAppointment,
+  EditAppointment,
 } from "../types/appointment.type";
 
 const URL = "/api/appointments";
@@ -48,5 +49,21 @@ export const AppointmentsApi = {
         message: string;
       }>) => data,
     );
+  },
+  editAppointment(
+    appointmentId: string,
+    newEditedAppointment: EditAppointment,
+  ) {
+    return api
+      .put(`${URL}/edit-appointment/${appointmentId}`, newEditedAppointment)
+      .then(
+        ({
+          data,
+        }: AxiosResponse<{
+          editedAppointment: AppointmentResponse;
+          oldAppointment: AppointmentResponse;
+          message: string;
+        }>) => data,
+      );
   },
 };

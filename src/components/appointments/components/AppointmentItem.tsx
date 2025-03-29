@@ -1,19 +1,13 @@
-import { useState } from "react";
-
-import { HiMiniInformationCircle, HiMiniXMark } from "react-icons/hi2";
-import Button from "../../Button";
-import ConfirmationModal from "../../ConfirmationModal";
+import DeleteAppointmentButton from "./DeleteAppointmentButton";
+import { HiMiniInformationCircle } from "react-icons/hi2";
 
 import { Appointment } from "../../../types/appointment.type";
-import { useDeleteAppointment } from "../hooks/useDeleteAppointment";
 
 type Props = {
   appointment: Appointment;
 };
 
 export default function AppointmentItem({ appointment }: Props) {
-  const { deleteAppointment, isLoading } = useDeleteAppointment();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { id, attendee, attendeePhoneNumber, location, note } = appointment;
 
   const timeZoneOffset =
@@ -51,14 +45,9 @@ export default function AppointmentItem({ appointment }: Props) {
           <span className="font-medium">End time:</span> {endTime}
         </p>
       </div>
-      <div className="flex flex-col items-center gap-1">
-        <Button
-          variant="empty"
-          onClick={() => setIsOpen((prev) => !prev)}
-          className="mt-auto"
-        >
-          <HiMiniXMark className="text-primary stroke-1 text-xl" />
-        </Button>
+      <div className="flex flex-col items-center gap-2">
+        <DeleteAppointmentButton appointmentId={id} />
+
         {note.length && (
           <div className="group relative self-end">
             <HiMiniInformationCircle className="text-primary cursor-pointer text-xl" />
@@ -66,15 +55,6 @@ export default function AppointmentItem({ appointment }: Props) {
               {note}
             </p>
           </div>
-        )}
-        {isOpen && (
-          <ConfirmationModal
-            onAprove={() => deleteAppointment(id)}
-            onReject={() => setIsOpen(false)}
-            isLoading={isLoading}
-          >
-            Are you sure about deleting this appointment?
-          </ConfirmationModal>
         )}
       </div>
     </li>
