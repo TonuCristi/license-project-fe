@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import toast from "react-hot-toast";
 
 import { CreateAppointment } from "../../../types/appointment.type";
 import { AppointmentsContext } from "../../../contexts/AppointmentsContext";
@@ -49,6 +50,8 @@ export function useCreateAppointment() {
             [...prev, newAppointmentYear].sort((a, b) => a - b),
           );
         }
+
+        toast.success("Appointment created successfully!");
 
         // Here we check if a year is selected
         if (!appointments.year) return;
@@ -110,7 +113,7 @@ export function useCreateAppointment() {
           };
         });
       })
-      .catch((error) => console.log(error))
+      .catch((error) => toast.error(error.response.data.message))
       .finally(() => setIsLoading(false));
   }
 

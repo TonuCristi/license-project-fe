@@ -12,12 +12,15 @@ export function useFetchAppointmentsFiltersData() {
   } = useContext(AppointmentsContext);
 
   // Get appointements filters data
-  const getAppointmentsFiltersData = useCallback(function () {
-    AppointmentsApi.getAppointmentsYears()
-      .then((res) => setAppointmentsYears(res))
-      .catch((error) => console.log(error))
-      .finally(() => setIsAppointmentsFiltersDataLoading(false));
-  }, []);
+  const getAppointmentsFiltersData = useCallback(
+    function () {
+      AppointmentsApi.getAppointmentsYears()
+        .then((res) => setAppointmentsYears(res))
+        .catch((error) => console.log(error))
+        .finally(() => setIsAppointmentsFiltersDataLoading(false));
+    },
+    [setAppointmentsYears, setIsAppointmentsFiltersDataLoading],
+  );
 
   return {
     appointmentsYears,

@@ -1,26 +1,24 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 import { HiMiniPencil } from "react-icons/hi2";
 import Button from "../../Button";
 import EditContactForm from "./EditContactForm";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
-import { Contact, EditContact } from "../../../types/contact.type";
+import { Contact } from "../../../types/contact.type";
+import { useEditContact } from "../hooks/useEditContact";
+import { ContactsContext } from "../../../contexts/ContactsContext";
 
 type Props = {
   contact: Contact;
-  editContact: (contactId: string, editedContactChanges: EditContact) => void;
-  isLoading: boolean;
 };
 
-export default function EditContactButton({
-  contact,
-  editContact,
-  isLoading,
-}: Props) {
+export default function EditContactButton({ contact }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
+  const { isLoading } = useContext(ContactsContext);
+  const { editContact } = useEditContact();
 
   return (
     <div ref={containerRef} className="relative">

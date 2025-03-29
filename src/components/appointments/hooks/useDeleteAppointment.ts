@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AppointmentsContext } from "../../../contexts/AppointmentsContext";
 import { AppointmentsApi } from "../../../services/AppointmentsApi";
 import { mapAppointment } from "../../../utlis/mapAppointment";
+import toast from "react-hot-toast";
 
 const months = [
   "January",
@@ -74,8 +75,10 @@ export function useDeleteAppointment() {
                   ],
           };
         });
+
+        toast.success("Appointment deleted successfully!");
       })
-      .catch((error) => console.log(error))
+      .catch((error) => toast.error(error.response.data.message))
       .finally(() => setIsLoading(false));
   }
 
