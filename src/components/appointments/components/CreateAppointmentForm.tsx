@@ -10,6 +10,7 @@ import Select from "../../Select";
 import Textarea from "../../Textarea";
 
 import { CreateAppointment } from "../../../types/appointment.type";
+import { useCreateAppointment } from "../hooks/useCreateAppointment";
 import { appointmentSchema } from "../../../schemas/createAppointment.schema";
 
 const inputs = [
@@ -50,18 +51,11 @@ const durationOptions = [
   { value: "14", text: "14" },
 ];
 
-type Props = {
-  createAppointment: (appointment: CreateAppointment) => void;
-  isLoading: boolean;
-};
-
-export default function CreateAppointmentForm({
-  createAppointment,
-  isLoading,
-}: Props) {
+export default function CreateAppointmentForm() {
   const methods = useForm<CreateAppointment>({
     resolver: zodResolver(appointmentSchema),
   });
+  const { createAppointment, isLoading } = useCreateAppointment();
 
   const {
     handleSubmit,

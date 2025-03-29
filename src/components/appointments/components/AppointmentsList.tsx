@@ -1,26 +1,13 @@
 import AppointmentItem from "./AppointmentItem";
 import Loader from "../../Loader";
 
-import { Appointments, EditAppointment } from "../../../types/appointment.type";
+import { useContext } from "react";
+import { AppointmentsContext } from "../../../contexts/AppointmentsContext";
 
-type Props = {
-  appointments: Appointments;
-  isAppointmentsLoading: boolean;
-  deleteAppointment: (appointmentId: string) => void;
-  editAppointment: (
-    appointmentId: string,
-    appointment: EditAppointment,
-  ) => void;
-  isLoading: boolean;
-};
+export default function AppointmentsList() {
+  const { appointments, isAppointmentsLoading } =
+    useContext(AppointmentsContext);
 
-export default function AppointmentsList({
-  appointments,
-  isAppointmentsLoading,
-  deleteAppointment,
-  editAppointment,
-  isLoading,
-}: Props) {
   if (isAppointmentsLoading) {
     return (
       <div className="flex justify-center">
@@ -56,9 +43,6 @@ export default function AppointmentsList({
                 <AppointmentItem
                   key={appointment.id}
                   appointment={appointment}
-                  deleteAppointment={deleteAppointment}
-                  editAppointment={editAppointment}
-                  isLoading={isLoading}
                 />
               ))}
             </ul>

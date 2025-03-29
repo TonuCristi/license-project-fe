@@ -1,29 +1,13 @@
-import { useState } from "react";
+import DeleteAppointmentButton from "./DeleteAppointmentButton";
+import { HiMiniInformationCircle } from "react-icons/hi2";
 
-import { HiMiniInformationCircle, HiMiniXMark } from "react-icons/hi2";
-import Button from "../../Button";
-import ConfirmationModal from "../../ConfirmationModal";
-import EditAppointmentButton from "./EditAppointmentButton";
-
-import { Appointment, EditAppointment } from "../../../types/appointment.type";
+import { Appointment } from "../../../types/appointment.type";
 
 type Props = {
   appointment: Appointment;
-  deleteAppointment: (appointmentId: string) => void;
-  editAppointment: (
-    appointmentId: string,
-    appointment: EditAppointment,
-  ) => void;
-  isLoading: boolean;
 };
 
-export default function AppointmentItem({
-  appointment,
-  deleteAppointment,
-  editAppointment,
-  isLoading,
-}: Props) {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+export default function AppointmentItem({ appointment }: Props) {
   const { id, attendee, attendeePhoneNumber, location, note } = appointment;
 
   const timeZoneOffset =
@@ -62,19 +46,7 @@ export default function AppointmentItem({
         </p>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Button
-          variant="empty"
-          onClick={() => setIsDeleteModalOpen((prev) => !prev)}
-          className="mt-auto"
-        >
-          <HiMiniXMark className="text-primary stroke-1 text-xl" />
-        </Button>
-
-        <EditAppointmentButton
-          appointment={appointment}
-          editAppointment={editAppointment}
-          isLoading={isLoading}
-        />
+        <DeleteAppointmentButton appointmentId={id} />
 
         {note.length && (
           <div className="group relative self-end">
@@ -83,16 +55,6 @@ export default function AppointmentItem({
               {note}
             </p>
           </div>
-        )}
-
-        {isDeleteModalOpen && (
-          <ConfirmationModal
-            onAprove={() => deleteAppointment(id)}
-            onReject={() => setIsDeleteModalOpen(false)}
-            isLoading={isLoading}
-          >
-            Are you sure about deleting this appointment?
-          </ConfirmationModal>
         )}
       </div>
     </li>
