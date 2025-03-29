@@ -27,7 +27,7 @@ export function useAppointments() {
     year: null,
     appointmentsPerMonths: [],
   });
-  const [appointmentsYears, setAppointmentsYears] = useState<string[]>([]);
+  const [appointmentsYears, setAppointmentsYears] = useState<number[]>([]);
   const [
     isAppointmentsFiltersDataLoading,
     setIsAppointmentsFiltersDataLoading,
@@ -81,56 +81,75 @@ export function useAppointments() {
           newAppointment.startTime,
         ).getFullYear();
 
-        // Checks if the selected year is the same as the new appointment's year and then adds the appointment
-        if (appointments.year === newAppointmentYear) {
-          const newAppointmentMonth = new Date(
-            newAppointment.startTime,
-          ).getMonth();
+        // Here we check if the new appointment's year exists in the years list
+        if (
+          // appointments.year !== newAppointmentYear &&
+          !appointmentsYears.includes(newAppointmentYear)
+        ) {
+          setAppointmentsYears((prev) =>
+            [...prev, newAppointmentYear].sort((a, b) => a - b),
+          );
+        }
+
+        // Here we check if a year is selected
+        if (!appointments.year) return;
+
+        setAppointments((prev) => {
+          const newAppointmentMonth =
+            months[new Date(newAppointment.startTime).getMonth()];
 
           const newAppointmentMonthIndex =
             appointments.appointmentsPerMonths.findIndex(
-              ({ month }) => month === months[newAppointmentMonth],
+              ({ month }) => month === newAppointmentMonth,
+            );
+          const appointmentsPerMonths = prev.appointmentsPerMonths;
+
+          // Here are the months with appointments without the new appointment's month
+          const appointmentsPerMonthsWithoutNewAppointmentMonth =
+            appointmentsPerMonths.filter(
+              (appointmentsPerMonth) =>
+                appointmentsPerMonth.month !== newAppointmentMonth,
             );
 
-          setAppointments((prev) => {
-            const firstHalf = prev.appointmentsPerMonths
-              .slice(0, newAppointmentMonthIndex)
-              .filter(
-                (appointmentsPerMonth) =>
-                  appointmentsPerMonth.month !== months[newAppointmentMonth],
-              );
-            const secondHalf = prev.appointmentsPerMonths
-              .slice(newAppointmentMonthIndex)
-              .filter(
-                (appointmentsPerMonth) =>
-                  appointmentsPerMonth.month !== months[newAppointmentMonth],
-              );
+          // Here is the new month and new appointment when the new appointment's month doesn't exist
+          const newMonthWithNewAppointment = {
+            month: newAppointmentMonth,
+            appointments: [newAppointment],
+          };
 
-            return {
-              ...prev,
-              appointmentsPerMonths: [
-                ...firstHalf,
+          // Here we check if the new appointment's month exists
+          const result = appointmentsPerMonths[newAppointmentMonthIndex]
+            ? // Here are all the previous months with the new appointment in the already existing month
+              [
+                ...appointmentsPerMonthsWithoutNewAppointmentMonth,
                 {
-                  ...prev.appointmentsPerMonths[newAppointmentMonthIndex],
+                  ...appointmentsPerMonths[newAppointmentMonthIndex],
                   appointments: [
-                    ...prev.appointmentsPerMonths[newAppointmentMonthIndex]
+                    ...appointmentsPerMonths[newAppointmentMonthIndex]
                       .appointments,
                     newAppointment,
-                  ],
+                  ].sort(
+                    (a, b) =>
+                      new Date(a.startTime).getTime() -
+                      new Date(b.startTime).getTime(),
+                  ),
                 },
-                ...secondHalf,
-              ],
-            };
-          });
-        }
+              ].sort(
+                (a, b) => months.indexOf(a.month) - months.indexOf(b.month),
+              )
+            : // Here are all the previuos months with the new month with the new appointment in it
+              [
+                ...appointmentsPerMonthsWithoutNewAppointmentMonth,
+                newMonthWithNewAppointment,
+              ].sort(
+                (a, b) => months.indexOf(a.month) - months.indexOf(b.month),
+              );
 
-        // Checks if the selected year is not the same as the new appointment's year and then adds the new year
-        if (
-          appointments.year !== newAppointmentYear &&
-          !appointmentsYears.includes(String(newAppointmentYear))
-        ) {
-          setAppointmentsYears((prev) => [...prev, String(newAppointmentYear)]);
-        }
+          return {
+            ...prev,
+            appointmentsPerMonths: result,
+          };
+        });
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
@@ -143,13 +162,12 @@ export function useAppointments() {
       .then((res) => {
         const deletedAppointment = mapAppointment(res.deletedAppointment);
 
-        const deletedAppointmentMonth = new Date(
-          deletedAppointment.startTime,
-        ).getMonth();
+        const deletedAppointmentMonth =
+          months[new Date(deletedAppointment.startTime).getMonth()];
 
         const deletedAppointmentMonthIndex =
           appointments.appointmentsPerMonths.findIndex(
-            ({ month }) => month === months[deletedAppointmentMonth],
+            ({ month }) => month === deletedAppointmentMonth,
           );
 
         setAppointments((prev) => {
@@ -159,17 +177,15 @@ export function useAppointments() {
             .slice(0, deletedAppointmentMonthIndex)
             .filter(
               (appointmentsPerMonth) =>
-                appointmentsPerMonth.month !== months[deletedAppointmentMonth],
+                appointmentsPerMonth.month !== deletedAppointmentMonth,
             );
 
           const secondHalf = appointmentsPerMonths
             .slice(deletedAppointmentMonthIndex)
             .filter(
               (appointmentsPerMonth) =>
-                appointmentsPerMonth.month !== months[deletedAppointmentMonth],
+                appointmentsPerMonth.month !== deletedAppointmentMonth,
             );
-
-          // const
 
           return {
             ...prev,

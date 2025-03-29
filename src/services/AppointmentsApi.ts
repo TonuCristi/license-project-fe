@@ -27,7 +27,7 @@ export const AppointmentsApi = {
       ({
         data,
       }: AxiosResponse<{
-        appointmentsYears: string[];
+        appointmentsYears: number[];
       }>) => data.appointmentsYears,
     );
   },
