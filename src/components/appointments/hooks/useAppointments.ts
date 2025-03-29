@@ -200,10 +200,6 @@ export function useAppointments() {
         const editedAppointment = mapAppointment(res.editedAppointment);
         const oldAppointment = mapAppointment(res.oldAppointment);
 
-        const editedAppointmentYear = new Date(
-          editedAppointment.startTime,
-        ).getFullYear();
-
         const editedAppointmentMonth =
           months[new Date(editedAppointment.startTime).getMonth()];
 
@@ -216,9 +212,111 @@ export function useAppointments() {
           const editedAppointmentMonthIndex = appointmentsPerMonths.findIndex(
             ({ month }) => month === editedAppointmentMonth,
           );
+          const oldAppointmentMonthIndex = appointmentsPerMonths.findIndex(
+            ({ month }) => month === oldAppointmentMonth,
+          );
+
+          if (
+            !appointmentsPerMonths[editedAppointmentMonthIndex] &&
+            !appointmentsPerMonths[oldAppointmentMonthIndex].appointments.length
+          ) {
+            const restOfAppointmentsPerMonths = appointmentsPerMonths.filter(
+              (appointmentsPerMonth) =>
+                appointmentsPerMonth.month !== oldAppointmentMonth,
+            );
+
+            console.log("Aici 1");
+
+            return {
+              ...prev,
+              appointmentsPerMonths: [
+                ...restOfAppointmentsPerMonths,
+                {
+                  month: editedAppointmentMonth,
+                  appointments: [editedAppointment],
+                },
+              ].sort(
+                (a, b) => months.indexOf(a.month) - months.indexOf(b.month),
+              ),
+            };
+          }
+
+          if (
+            !appointmentsPerMonths[editedAppointmentMonthIndex] &&
+            appointmentsPerMonths[oldAppointmentMonthIndex].appointments.length
+          ) {
+            const restOfAppointmentsPerMonths = appointmentsPerMonths.filter(
+              (appointmentsPerMonth) =>
+                appointmentsPerMonth.month !== oldAppointmentMonth,
+            );
+
+            const restOfAppointmentPerMonth = {
+              ...appointmentsPerMonths[oldAppointmentMonthIndex],
+              appointments: appointmentsPerMonths[
+                oldAppointmentMonthIndex
+              ].appointments.filter(
+                (appointment) => appointment.id !== appointmentId,
+              ),
+            };
+
+            console.log("Aici 2");
+
+            return {
+              ...prev,
+              appointmentsPerMonths: [
+                ...restOfAppointmentsPerMonths,
+                restOfAppointmentPerMonth,
+                {
+                  month: editedAppointmentMonth,
+                  appointments: [editedAppointment],
+                },
+              ].sort(
+                (a, b) => months.indexOf(a.month) - months.indexOf(b.month),
+              ),
+            };
+          }
+
+          if (editedAppointmentMonth === oldAppointmentMonth) {
+            const restOfAppointmentsPerMonths = appointmentsPerMonths.filter(
+              (appointmentsPerMonth) =>
+                appointmentsPerMonth.month !== oldAppointmentMonth,
+            );
+
+            const restOfAppointmentPerMonth = {
+              ...appointmentsPerMonths[oldAppointmentMonthIndex],
+              appointments: [
+                ...appointmentsPerMonths[
+                  oldAppointmentMonthIndex
+                ].appointments.filter(
+                  (appointment) => appointment.id !== appointmentId,
+                ),
+                editedAppointment,
+              ].sort(
+                (a, b) =>
+                  new Date(a.startTime).getTime() -
+                  new Date(b.startTime).getTime(),
+              ),
+            };
+
+            console.log("Aici 3");
+
+            return {
+              ...prev,
+              appointmentsPerMonths: [
+                ...restOfAppointmentsPerMonths,
+                restOfAppointmentPerMonth,
+              ].sort(
+                (a, b) => months.indexOf(a.month) - months.indexOf(b.month),
+              ),
+            };
+          }
 
           const firstHalf = appointmentsPerMonths
             .slice(0, editedAppointmentMonthIndex)
+            .filter(
+              (appointmentsPerMonth) =>
+                appointmentsPerMonth.month !== oldAppointmentMonth,
+            )
             .filter(
               (appointmentsPerMonth) =>
                 appointmentsPerMonth.month !== editedAppointmentMonth,
@@ -228,27 +326,27 @@ export function useAppointments() {
             .slice(editedAppointmentMonthIndex)
             .filter(
               (appointmentsPerMonth) =>
+                appointmentsPerMonth.month !== oldAppointmentMonth,
+            )
+            .filter(
+              (appointmentsPerMonth) =>
                 appointmentsPerMonth.month !== editedAppointmentMonth,
             );
 
-          if (!appointmentsPerMonths[editedAppointmentMonthIndex]) {
-            return {
-              ...prev,
-              appointmentsPerMonths: [
-                ...firstHalf,
-                {
-                  month: editedAppointmentMonth,
-                  appointments: [editedAppointment],
-                },
-                ...secondHalf,
-              ].filter(({ month }) => month !== oldAppointmentMonth),
-            };
-          }
+          const restOfAppointmentPerMonth = {
+            ...appointmentsPerMonths[oldAppointmentMonthIndex],
+            appointments: appointmentsPerMonths[
+              oldAppointmentMonthIndex
+            ].appointments.filter(
+              (appointment) => appointment.id !== appointmentId,
+            ),
+          };
 
           return {
             ...prev,
             appointmentsPerMonths: [
               ...firstHalf,
+              restOfAppointmentPerMonth,
               {
                 ...appointmentsPerMonths[editedAppointmentMonthIndex],
                 appointments: [
@@ -272,6 +370,8 @@ export function useAppointments() {
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
   }
+
+  // console.log(months.map((month, i) => ({ month, key: i })));
 
   return {
     getAppointments,
