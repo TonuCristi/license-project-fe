@@ -153,34 +153,42 @@ export function useAppointments() {
           );
 
         setAppointments((prev) => {
-          const firstHalf = prev.appointmentsPerMonths
+          const appointmentsPerMonths = prev.appointmentsPerMonths;
+
+          const firstHalf = appointmentsPerMonths
             .slice(0, deletedAppointmentMonthIndex)
             .filter(
               (appointmentsPerMonth) =>
                 appointmentsPerMonth.month !== months[deletedAppointmentMonth],
             );
 
-          const secondHalf = prev.appointmentsPerMonths
+          const secondHalf = appointmentsPerMonths
             .slice(deletedAppointmentMonthIndex)
             .filter(
               (appointmentsPerMonth) =>
                 appointmentsPerMonth.month !== months[deletedAppointmentMonth],
             );
 
+          // const
+
           return {
             ...prev,
-            appointmentsPerMonths: [
-              ...firstHalf,
-              {
-                ...prev.appointmentsPerMonths[deletedAppointmentMonthIndex],
-                appointments: prev.appointmentsPerMonths[
-                  deletedAppointmentMonthIndex
-                ].appointments.filter(
-                  (appointment) => appointment.id !== appointmentId,
-                ),
-              },
-              ...secondHalf,
-            ],
+            appointmentsPerMonths:
+              appointmentsPerMonths[deletedAppointmentMonthIndex].appointments
+                .length === 1
+                ? [...firstHalf, ...secondHalf]
+                : [
+                    ...firstHalf,
+                    {
+                      ...appointmentsPerMonths[deletedAppointmentMonthIndex],
+                      appointments: appointmentsPerMonths[
+                        deletedAppointmentMonthIndex
+                      ].appointments.filter(
+                        (appointment) => appointment.id !== appointmentId,
+                      ),
+                    },
+                    ...secondHalf,
+                  ],
           };
         });
       })
