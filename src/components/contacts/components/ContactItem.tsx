@@ -1,31 +1,22 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { HiMiniChevronDown, HiMiniXMark } from "react-icons/hi2";
+import { HiMiniChevronDown } from "react-icons/hi2";
 import Button from "../../Button";
 import EditContactButton from "./EditContactButton";
+import DeleteContactButton from "./DeleteContactButton";
 
-import { Contact, EditContact } from "../../../types/contact.type";
-import ConfirmationModal from "../../ConfirmationModal";
+import { Contact } from "../../../types/contact.type";
 
 type Props = {
   index: number;
   contact: Contact;
-  isLoading: boolean;
-  deleteContact: (contactId: string) => void;
-  editContact: (contactId: string, editedContactChanges: EditContact) => void;
 };
 
-export default function ContactItem({
-  index,
-  contact,
-  isLoading,
-  deleteContact,
-  editContact,
-}: Props) {
+export default function ContactItem({ index, contact }: Props) {
   const [isEditFormOpen, setIsEditFormOpen] = useState<boolean>(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-  const { name, phoneNumber, description } = contact;
+
+  const { id, name, phoneNumber, description } = contact;
 
   return (
     <li className="border-primary flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-1">
@@ -34,18 +25,11 @@ export default function ContactItem({
         <p className="w-full overflow-hidden font-medium text-ellipsis whitespace-nowrap">
           {name}
         </p>
-        <Button
-          variant="empty"
-          onClick={() => setIsDeleteModalOpen(true)}
-          className="ml-auto"
-        >
-          <HiMiniXMark className="hover:text-primary stroke-1 text-lg transition-colors" />
-        </Button>
-        <EditContactButton
-          contact={contact}
-          editContact={editContact}
-          isLoading={isLoading}
-        />
+
+        <DeleteContactButton contactId={id} />
+
+        <EditContactButton contact={contact} />
+
         <Button
           variant="empty"
           onClick={() => setIsEditFormOpen((prev) => !prev)}
@@ -58,16 +42,6 @@ export default function ContactItem({
           />
         </Button>
       </div>
-
-      {isDeleteModalOpen && (
-        <ConfirmationModal
-          onAprove={() => deleteContact(contact.id)}
-          onReject={() => setIsDeleteModalOpen(false)}
-          isLoading={isLoading}
-        >
-          Are you sure about deleting this contact?
-        </ConfirmationModal>
-      )}
 
       {isEditFormOpen && (
         <div className="flex flex-col gap-2">

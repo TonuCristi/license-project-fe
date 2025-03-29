@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -9,6 +10,8 @@ import InputContainer from "../../input/InputContainer";
 
 import { contactFormSchema } from "../../../schemas/contactForm.schema";
 import { CreateContact } from "../../../types/contact.type";
+import { ContactsContext } from "../../../contexts/ContactsContext";
+import { useCreateContact } from "../hooks/useCreateContact";
 
 const inputs = [
   {
@@ -31,15 +34,12 @@ const inputs = [
   },
 ] as const;
 
-type Props = {
-  createContact: (contact: CreateContact) => void;
-  isLoading: boolean;
-};
-
-export default function CreateContactForm({ createContact, isLoading }: Props) {
+export default function CreateContactForm() {
   const methods = useForm<CreateContact>({
     resolver: zodResolver(contactFormSchema),
   });
+  const { isLoading } = useContext(ContactsContext);
+  const { createContact } = useCreateContact();
 
   const onSubmit: SubmitHandler<CreateContact> = (data) => createContact(data);
 
