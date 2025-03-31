@@ -9,21 +9,24 @@ import {
 import { User } from "../types/user.type";
 
 type UserContext = {
-  user: User | null;
+  user: User;
   isLoading: boolean;
-  error: string;
-  setUser: Dispatch<SetStateAction<User | null>>;
+  setUser: Dispatch<SetStateAction<User>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
-  setError: Dispatch<SetStateAction<string>>;
+};
+
+const defaultUser: User = {
+  id: "",
+  username: "",
+  email: "",
+  role: "",
 };
 
 export const UserContext = createContext<UserContext>({
-  user: null,
+  user: defaultUser,
   isLoading: true,
-  error: "",
   setUser: () => undefined,
   setIsLoading: () => undefined,
-  setError: () => undefined,
 });
 
 type Props = {
@@ -31,14 +34,11 @@ type Props = {
 };
 
 export default function UserProvider({ children }: Props) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>(defaultUser);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
 
   return (
-    <UserContext.Provider
-      value={{ user, isLoading, error, setUser, setIsLoading, setError }}
-    >
+    <UserContext.Provider value={{ user, isLoading, setUser, setIsLoading }}>
       {children}
     </UserContext.Provider>
   );

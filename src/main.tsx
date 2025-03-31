@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage.tsx";
 import AuthProvider from "./contexts/AuthContext.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
+import ProfilePage from "./pages/ProfilePage.tsx";
 
 import UserProvider from "./contexts/UserContext.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "/profile", element: <div>Profile</div> },
+      { path: "/profile", element: <ProfilePage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
     ],

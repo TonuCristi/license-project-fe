@@ -11,4 +11,17 @@ export const UserApi = {
       .get(`${URL}/retrieve-logged-user`)
       .then(({ data }: AxiosResponse<{ user: UserResponse }>) => data.user);
   },
+  deleteAccount() {
+    return api
+      .delete(`${URL}/delete-account`)
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+  },
+  changeUsername(username: string) {
+    return api
+      .put(`${URL}/change-username`, { username })
+      .then(
+        ({ data }: AxiosResponse<{ newUsername: string; message: string }>) =>
+          data,
+      );
+  },
 };

@@ -10,22 +10,18 @@ type AuthContext = {
   isLogged: boolean;
   token: string | null;
   isLoading: boolean;
-  error: string;
   setIsLogged: Dispatch<SetStateAction<boolean>>;
   setToken: Dispatch<SetStateAction<string | null>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
-  setError: Dispatch<SetStateAction<string>>;
 };
 
 export const AuthContext = createContext<AuthContext>({
   isLogged: false,
   token: null,
   isLoading: false,
-  error: "",
   setIsLogged: () => undefined,
   setToken: () => undefined,
   setIsLoading: () => undefined,
-  setError: () => undefined,
 });
 
 type Props = {
@@ -40,7 +36,6 @@ export default function AuthProvider({ children }: Props) {
     localStorage.getItem("token"),
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
 
   return (
     <AuthContext.Provider
@@ -48,11 +43,9 @@ export default function AuthProvider({ children }: Props) {
         isLogged,
         token,
         isLoading,
-        error,
         setIsLogged,
         setToken,
         setIsLoading,
-        setError,
       }}
     >
       {children}
