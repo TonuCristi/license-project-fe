@@ -3,8 +3,8 @@ import { DetailedHTMLProps, InputHTMLAttributes, useState } from "react";
 import Input from "./Input";
 import Label from "../Label";
 import Message from "../Message";
-import { HiMiniEye, HiMiniEyeSlash } from "react-icons/hi2";
 import InputContainer from "./InputContainer";
+import { HiMiniEye, HiMiniEyeSlash } from "react-icons/hi2";
 
 type Props = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
