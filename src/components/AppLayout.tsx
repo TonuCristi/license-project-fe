@@ -5,9 +5,11 @@ import Header from "./header/Header";
 import Loader from "./Loader";
 
 import { useFetchLoggedUser } from "../hooks/useFetchLoggedUser";
+import { useFetchRoom } from "./profile/hooks/useFetchRoom";
 
 export default function AppLayout() {
-  const { isLoading } = useFetchLoggedUser();
+  const { isLoading: isLoggedUserLoading } = useFetchLoggedUser();
+  const { isLoading: isRoomLoading } = useFetchRoom();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,7 +24,7 @@ export default function AppLayout() {
     }
   }, [navigate, pathnames]);
 
-  if (pathnames || isLoading) {
+  if (pathnames || isLoggedUserLoading || isRoomLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
         <Loader />

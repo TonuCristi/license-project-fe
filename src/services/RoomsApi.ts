@@ -21,4 +21,14 @@ export const RoomsApi = {
         }>) => data,
       );
   },
+  getRoom() {
+    return api.get(`${URL}/retrieve-room`).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        room: RoomResponse;
+        assistant: UserResponse;
+      }>) => data,
+    );
+  },
 };
