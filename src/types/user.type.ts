@@ -18,6 +18,7 @@ export type UserResponse = {
   username: string;
   email: string;
   role: "chief" | "assistant" | "";
+  room_id: string;
 };
 
 export type User = {
@@ -25,4 +26,5 @@ export type User = {
   username: string;
   email: string;
   role: "chief" | "assistant" | "";
+  roomId: string;
 };

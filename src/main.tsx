@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 
 import UserProvider from "./contexts/UserContext.tsx";
+import RoomProvider from "./contexts/RoomContext.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Toaster } from "react-hot-toast";
 
@@ -30,7 +31,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>
       <UserProvider>
-        <RouterProvider router={router} />
+        <RoomProvider>
+          <RouterProvider router={router} />
+        </RoomProvider>
       </UserProvider>
     </AuthProvider>
     <Toaster

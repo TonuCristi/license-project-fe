@@ -37,7 +37,7 @@ export default function ChangeUsernameForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="border-primary grid grid-cols-2 gap-2 rounded-lg border-2 p-2"
       >
-        <InputContainer key="username">
+        <InputContainer>
           <Label htmlFor="username">Username</Label>
           <Input id="username" name="username" placeholder="Username..." />
           {errors.username && (

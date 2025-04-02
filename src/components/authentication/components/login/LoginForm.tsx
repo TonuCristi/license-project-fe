@@ -16,7 +16,7 @@ import { Login } from "../../../../types/user.type";
 export default function LoginForm() {
   const methods = useForm<Login>({
     defaultValues: {
-      email: "ddd@eee.fff",
+      email: "andrei.ionescu@mail.com",
       password: "P@rola1234",
     },
     resolver: zodResolver(loginSchema),

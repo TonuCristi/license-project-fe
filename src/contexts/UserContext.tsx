@@ -15,11 +15,12 @@ type UserContext = {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
-const defaultUser: User = {
+export const defaultUser: User = {
   id: "",
   username: "",
   email: "",
   role: "",
+  roomId: "",
 };
 
 export const UserContext = createContext<UserContext>({
