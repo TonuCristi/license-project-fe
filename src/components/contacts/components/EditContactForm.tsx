@@ -12,19 +12,19 @@ import { Contact, EditContact } from "../../../types/contact.type";
 
 const inputs = [
   {
-    value: "Name",
+    label: "Name",
     id: "name",
     name: "name",
     placeholder: "Name...",
   },
   {
-    value: "Phone number",
+    label: "Phone number",
     id: "phoneNumber",
     name: "phoneNumber",
     placeholder: "Phone number...",
   },
   {
-    value: "Description",
+    label: "Description",
     id: "description",
     name: "description",
     placeholder: "Description...",
@@ -67,9 +67,9 @@ export default function EditContactForm({
       >
         <h2 className="mb-1 text-lg font-medium">Edit contact</h2>
         <div className="mb-3 flex flex-col gap-3">
-          {inputs.map(({ value, id, name, placeholder }) => (
+          {inputs.map(({ label, id, name, placeholder }) => (
             <InputContainer key={id}>
-              <Label htmlFor={id}>{value}</Label>
+              <Label htmlFor={id}>{label}</Label>
               <Input id={id} name={name} placeholder={placeholder} />
               {errors[name] && (
                 <Message variant="error">{errors[name].message}</Message>

@@ -20,7 +20,7 @@
 
 @layer base {
   body {
-    @apply font-primary text-sm;
+    @apply font-primary bg-blue-50 text-sm;
   }
 }
 

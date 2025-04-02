@@ -1,7 +1,7 @@
 import { UserResponse } from "../types/user.type";
 
 export function mapUser(user: UserResponse) {
-  const { _id, ...rest } = user;
+  const { _id: id, room_id: roomId, ...rest } = user;
 
-  return { id: user._id, ...rest };
+  return { id, roomId: roomId || "", ...rest };
 }

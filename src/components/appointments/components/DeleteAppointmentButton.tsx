@@ -12,22 +12,22 @@ type Props = {
 
 export default function DeleteAppointmentButton({ appointmentId }: Props) {
   const { deleteAppointment, isLoading } = useDeleteAppointment();
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <>
       <Button
         variant="empty"
-        onClick={() => setIsDeleteModalOpen((prev) => !prev)}
+        onClick={() => setIsOpen((prev) => !prev)}
         className="mt-auto"
       >
         <HiMiniXMark className="text-primary stroke-1 text-xl" />
       </Button>
 
-      {isDeleteModalOpen && (
+      {isOpen && (
         <ConfirmationModal
           onAprove={() => deleteAppointment(appointmentId)}
-          onReject={() => setIsDeleteModalOpen(false)}
+          onReject={() => setIsOpen(false)}
           isLoading={isLoading}
         >
           Are you sure about deleting this appointment?

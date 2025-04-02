@@ -15,19 +15,19 @@ import { appointmentSchema } from "../../../schemas/createAppointment.schema";
 
 const inputs = [
   {
-    value: "Attendeee",
+    label: "Attendeee",
     id: "attendee",
     name: "attendee",
     placeholder: "Attendee...",
   },
   {
-    value: "Attendee phone number",
+    label: "Attendee phone number",
     id: "attendeePhoneNumber",
     name: "attendeePhoneNumber",
     placeholder: "Attendee phone number...",
   },
   {
-    value: "Location",
+    label: "Location",
     id: "location",
     name: "location",
     placeholder: "Location...",
@@ -75,9 +75,9 @@ export default function CreateAppointmentForm() {
       >
         <h2 className="mb-1 text-lg font-medium">Create appointment</h2>
         <div className="mb-3 grid grid-cols-2 gap-3">
-          {inputs.map(({ value, id, name, placeholder }) => (
+          {inputs.map(({ label, id, name, placeholder }) => (
             <InputContainer key={id}>
-              <Label htmlFor={id}>{value}</Label>
+              <Label htmlFor={id}>{label}</Label>
               <Input id={id} name={name} placeholder={placeholder} />
               {errors[name] && (
                 <Message variant="error">{errors[name].message}</Message>

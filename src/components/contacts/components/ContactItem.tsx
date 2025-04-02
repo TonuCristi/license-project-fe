@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function ContactItem({ index, contact }: Props) {
-  const [isEditFormOpen, setIsEditFormOpen] = useState<boolean>(false);
+  const [isContactInfoOpen, setIsContactInfoOpen] = useState<boolean>(false);
 
   const { id, name, phoneNumber, description } = contact;
 
@@ -32,18 +32,18 @@ export default function ContactItem({ index, contact }: Props) {
 
         <Button
           variant="empty"
-          onClick={() => setIsEditFormOpen((prev) => !prev)}
+          onClick={() => setIsContactInfoOpen((prev) => !prev)}
         >
           <HiMiniChevronDown
             className={twMerge(
               "hover:text-primary stroke-1 text-lg transition-all ease-initial",
-              isEditFormOpen && "rotate-180",
+              isContactInfoOpen && "rotate-180",
             )}
           />
         </Button>
       </div>
 
-      {isEditFormOpen && (
+      {isContactInfoOpen && (
         <div className="flex flex-col gap-2">
           <p>
             <span className="font-medium">Phone number:</span> {phoneNumber}
