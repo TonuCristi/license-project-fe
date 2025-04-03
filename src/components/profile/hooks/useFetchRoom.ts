@@ -13,8 +13,8 @@ export function useFetchRoom() {
   useEffect(() => {
     RoomsApi.getRoom()
       .then((res) => {
-        const room = mapRoom(res.room);
-        const assistant = mapUser(res.assistant);
+        const room = res.room ? mapRoom(res.room) : null;
+        const assistant = res.assistant ? mapUser(res.assistant) : null;
         setRoom(room);
         setAssistant(assistant);
       })
