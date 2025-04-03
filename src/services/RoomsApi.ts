@@ -26,9 +26,14 @@ export const RoomsApi = {
       ({
         data,
       }: AxiosResponse<{
-        room: RoomResponse;
-        assistant: UserResponse;
+        room: RoomResponse | null;
+        assistant: UserResponse | null;
       }>) => data,
     );
+  },
+  deleteRoom() {
+    return api
+      .delete(`${URL}/delete-room`)
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
 };

@@ -8,20 +8,19 @@ import {
 
 import { Room } from "../types/room.type";
 import { User } from "../types/user.type";
-import { defaultUser } from "./UserContext";
 
 type RoomContext = {
   room: Room | null;
-  assistant: User;
+  assistant: User | null;
   isLoading: boolean;
   setRoom: Dispatch<SetStateAction<Room | null>>;
-  setAssistant: Dispatch<SetStateAction<User>>;
+  setAssistant: Dispatch<SetStateAction<User | null>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 export const RoomContext = createContext<RoomContext>({
   room: null,
-  assistant: defaultUser,
+  assistant: null,
   isLoading: true,
   setRoom: () => undefined,
   setAssistant: () => undefined,
@@ -34,7 +33,7 @@ type Props = {
 
 export default function RoomProvider({ children }: Props) {
   const [room, setRoom] = useState<Room | null>(null);
-  const [assistant, setAssistant] = useState<User>(defaultUser);
+  const [assistant, setAssistant] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   return (

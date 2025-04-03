@@ -1,30 +1,27 @@
 import { useContext } from "react";
 
-import Button from "../../Button";
+import DeleteRoomButton from "./DeleteRoomButton";
 
 import { RoomContext } from "../../../contexts/RoomContext";
 
 export default function RoomInfo() {
   const { assistant } = useContext(RoomContext);
-  const { username, email, role } = assistant;
 
   return (
     <div className="border-primary flex items-end rounded-lg border-2 p-2">
       <div className="flex w-full flex-col gap-2">
         <p>
-          <span className="font-medium">Username:</span> {username}
+          <span className="font-medium">Username:</span> {assistant?.username}
         </p>
         <p>
-          <span className="font-medium">Email:</span> {email}
+          <span className="font-medium">Email:</span> {assistant?.email}
         </p>
         <p>
-          <span className="font-medium">Role:</span> {role}
+          <span className="font-medium">Role:</span> {assistant?.role}
         </p>
       </div>
 
-      <Button variant="reject" className="whitespace-nowrap">
-        Delete room
-      </Button>
+      <DeleteRoomButton />
     </div>
   );
 }

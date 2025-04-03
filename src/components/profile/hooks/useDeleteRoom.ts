@@ -1,0 +1,27 @@
+import { useContext, useState } from "react";
+import toast from "react-hot-toast";
+
+import { RoomsApi } from "../../../services/RoomsApi";
+import { UserContext } from "../../../contexts/UserContext";
+import { RoomContext } from "../../../contexts/RoomContext";
+
+export function useDeleteRoom() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { setUser } = useContext(UserContext);
+  const { setRoom, setAssistant } = useContext(RoomContext);
+
+  function deleteRoom() {
+    setIsLoading(true);
+    RoomsApi.deleteRoom()
+      .then((res) => {
+        setUser((prev) => (prev ? { ...prev, roomId: "" } : null));
+        setRoom(null);
+        setAssistant(null);
+        toast.success(res);
+      })
+      .catch((error) => toast.error(error.response.data.error))
+      .finally(() => setIsLoading(false));
+  }
+
+  return { deleteRoom, isLoading };
+}
