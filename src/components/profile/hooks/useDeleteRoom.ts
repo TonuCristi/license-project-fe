@@ -8,7 +8,7 @@ import { RoomContext } from "../../../contexts/RoomContext";
 export function useDeleteRoom() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setUser } = useContext(UserContext);
-  const { setRoom, setAssistant } = useContext(RoomContext);
+  const { setRoom, setAssistant, setChief } = useContext(RoomContext);
 
   function deleteRoom() {
     setIsLoading(true);
@@ -17,6 +17,7 @@ export function useDeleteRoom() {
         setUser((prev) => (prev ? { ...prev, roomId: "" } : null));
         setRoom(null);
         setAssistant(null);
+        setChief(null);
         toast.success(res);
       })
       .catch((error) => toast.error(error.response.data.error))

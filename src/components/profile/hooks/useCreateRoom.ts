@@ -9,7 +9,7 @@ import { UserContext } from "../../../contexts/UserContext";
 
 export function useCreateRoom() {
   const { setUser } = useContext(UserContext);
-  const { setRoom, setAssistant } = useContext(RoomContext);
+  const { setRoom, setAssistant, setChief } = useContext(RoomContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function createRoom(assistantEmail: string) {
@@ -18,9 +18,11 @@ export function useCreateRoom() {
       .then((res) => {
         const room = mapRoom(res.room);
         const assistant = mapUser(res.assistant);
+        const chief = mapUser(res.chief);
         setRoom(room);
         setAssistant(assistant);
-        setUser((prev) => ({ ...prev, roomId: room.id }));
+        setChief(chief);
+        setUser((prev) => (prev ? { ...prev, roomId: room.id } : null));
         toast.success(res.message);
       })
       .catch((error) => toast.error(error.response.data.message))
