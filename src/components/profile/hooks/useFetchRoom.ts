@@ -7,7 +7,7 @@ import { mapRoom } from "../../../utlis/mapRoom";
 import { mapUser } from "../../../utlis/mapUser";
 
 export function useFetchRoom() {
-  const { isLoading, setRoom, setAssistant, setIsLoading } =
+  const { isLoading, setRoom, setAssistant, setChief, setIsLoading } =
     useContext(RoomContext);
 
   useEffect(() => {
@@ -15,12 +15,14 @@ export function useFetchRoom() {
       .then((res) => {
         const room = res.room ? mapRoom(res.room) : null;
         const assistant = res.assistant ? mapUser(res.assistant) : null;
+        const chief = res.chief ? mapUser(res.chief) : null;
         setRoom(room);
         setAssistant(assistant);
+        setChief(chief);
       })
       .catch((error) => toast.error(error.response.data.message))
       .finally(() => setIsLoading(false));
-  }, [setRoom, setAssistant, setIsLoading]);
+  }, [setRoom, setAssistant, setChief, setIsLoading]);
 
   return { isLoading };
 }
