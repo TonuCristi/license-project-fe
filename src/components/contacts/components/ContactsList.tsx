@@ -17,7 +17,7 @@ export default function ContactsList() {
   }
 
   return (
-    <ul className="scrollbar flex h-full flex-col gap-2 pr-2">
+    <ul className="scrollbar flex h-full flex-col gap-2 overflow-y-auto pr-2">
       {contacts.map((contact, i) => (
         <ContactItem key={contact.id} index={i} contact={contact} />
       ))}

@@ -1,11 +1,12 @@
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext } from "react";
 
 import { ContactsApi } from "../../../services/ContactsApi";
 import { ContactsContext } from "../../../contexts/ContactsContext";
 import { mapContact } from "../../../utlis/mapContact";
 
 export function useFetchContacts() {
-  const { setContacts, setIsContactsLoading } = useContext(ContactsContext);
+  const { isContactsLoading, setContacts, setIsContactsLoading } =
+    useContext(ContactsContext);
 
   const getContacts = useCallback(
     function (search: string) {
@@ -14,15 +15,10 @@ export function useFetchContacts() {
           const contacts = res.map((contact) => mapContact(contact));
           setContacts(contacts);
         })
-        .catch((error) => console.log(error.response.data.message))
         .finally(() => setIsContactsLoading(false));
     },
     [setContacts, setIsContactsLoading],
   );
 
-  useEffect(() => {
-    getContacts("");
-  }, [getContacts]);
-
-  return { getContacts };
+  return { getContacts, isContactsLoading };
 }
