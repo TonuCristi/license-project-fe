@@ -1,7 +1,15 @@
 import Button from "../../Button";
 import { HiMiniXMark } from "react-icons/hi2";
 
-export default function Notification() {
+import { Notification } from "../../../types/notification.type";
+
+type Props = {
+  notification: Notification;
+};
+
+export default function NotificationItem({ notification }: Props) {
+  const { content } = notification;
+
   return (
     <li className="border-primary rounded-lg border-2 p-2">
       <div className="mb-1 flex items-center justify-between gap-2">
@@ -14,9 +22,7 @@ export default function Notification() {
           <HiMiniXMark className="text-primary stroke-1 text-xl" />
         </Button>
       </div>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, eius?
-      </p>
+      <p>{content}</p>
     </li>
   );
 }

@@ -1,20 +1,21 @@
 import { useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 
-import { RoomContext } from "../../../contexts/RoomContext";
+import { UserContext } from "../../../contexts/UserContext";
 
 export function useSSE() {
-  const { room } = useContext(RoomContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
+    if (!user) return;
+
     const sse = new EventSource(
-      `http://localhost:8000/sse/${room ? room.id : ""}`,
+      `http://localhost:8000/api/events?token=${localStorage.getItem("token")}`,
     );
 
     sse.addEventListener("message", ({ data }) => {
       const message = JSON.parse(data);
       toast.success(message);
-      console.log(JSON.parse(data));
     });
-  }, [room]);
+  }, [user]);
 }

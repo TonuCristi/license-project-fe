@@ -7,11 +7,13 @@ import Loader from "./Loader";
 import { useFetchLoggedUser } from "../hooks/useFetchLoggedUser";
 import { useFetchRoom } from "./profile/hooks/useFetchRoom";
 import { useFetchContacts } from "./contacts/hooks/useFetchContacts";
+import { useFetchNotifications } from "./notifications/hooks/useFetchNotifications";
 
 export default function AppLayout() {
   const { isLoading: isLoggedUserLoading } = useFetchLoggedUser();
   const { isLoading: isRoomLoading } = useFetchRoom();
   const { getContacts, isContactsLoading } = useFetchContacts();
+  const { isLoading: isNotificationsLoading } = useFetchNotifications();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -21,7 +23,7 @@ export default function AppLayout() {
     location.pathname === "/forgot-password";
 
   useEffect(() => {
-    getContacts("");
+    getContacts();
   }, [getContacts]);
 
   useEffect(() => {
@@ -30,7 +32,13 @@ export default function AppLayout() {
     }
   }, [navigate, pathnames]);
 
-  if (pathnames || isLoggedUserLoading || isRoomLoading || isContactsLoading) {
+  if (
+    pathnames ||
+    isLoggedUserLoading ||
+    isRoomLoading ||
+    isContactsLoading ||
+    isNotificationsLoading
+  ) {
     return (
       <div className="flex h-screen items-center justify-center">
         <Loader />
