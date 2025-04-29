@@ -6,8 +6,10 @@ import AppointmentsList from "./AppointmentsList";
 import CreateAppointmentButton from "./CreateAppointmentButton";
 
 import { RoomContext } from "../../../contexts/RoomContext";
+import { UserContext } from "../../../contexts/UserContext";
 
 export default function Appointments() {
+  const { user } = useContext(UserContext);
   const { room } = useContext(RoomContext);
 
   return (
@@ -17,12 +19,12 @@ export default function Appointments() {
           <h1 className="text-xl font-medium">Appointments</h1>
           {room && <CreateAppointmentButton />}
         </div>
-        {!room && (
+        {!room && user?.role === "assistant" && (
           <p className="font-medium">
             You should be part of a room to access appointments!
           </p>
         )}
-        {room && (
+        {(!!room || user?.role !== "assistant") && (
           <>
             <AppointmentsFilters />
             <AppointmentsList />

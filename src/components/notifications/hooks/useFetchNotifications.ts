@@ -9,7 +9,7 @@ export function useFetchNotifications() {
     useContext(NotificationsContext);
 
   useEffect(() => {
-    NotificationsApi.getContacts()
+    NotificationsApi.getNotifications()
       .then((res) => {
         const notifications = res.map((notification) =>
           mapNotification(notification),

@@ -2,9 +2,12 @@ import { useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 
 import { UserContext } from "../../../contexts/UserContext";
+import { NotificationsContext } from "../../../contexts/NotificationsContext";
+import { mapNotification } from "../../../utlis/mapNotification";
 
 export function useSSE() {
   const { user } = useContext(UserContext);
+  const { setNotifications } = useContext(NotificationsContext);
 
   useEffect(() => {
     if (!user) return;
@@ -14,8 +17,11 @@ export function useSSE() {
     );
 
     sse.addEventListener("message", ({ data }) => {
-      const message = JSON.parse(data);
-      toast.success(message);
+      const notification = mapNotification(JSON.parse(data));
+
+      setNotifications((prev) => [notification, ...prev]);
+
+      toast.success(notification.content);
     });
-  }, [user]);
+  }, [user, setNotifications]);
 }

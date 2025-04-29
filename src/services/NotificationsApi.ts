@@ -6,12 +6,17 @@ import { NotificationResponse } from "../types/notification.type";
 const URL = "/api/notifications";
 
 export const NotificationsApi = {
-  getContacts() {
+  getNotifications() {
     return api
       .get(`${URL}/retrieve-notifications`)
       .then(
         ({ data }: AxiosResponse<{ notifications: NotificationResponse[] }>) =>
           data.notifications,
       );
+  },
+  deleteNotification(notificationId: string) {
+    return api
+      .delete(`${URL}/delete-notification/${notificationId}`)
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
 };

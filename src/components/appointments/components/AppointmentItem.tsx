@@ -2,6 +2,7 @@ import DeleteAppointmentButton from "./DeleteAppointmentButton";
 import { HiMiniInformationCircle } from "react-icons/hi2";
 
 import { Appointment } from "../../../types/appointment.type";
+import { formatDate } from "../../../utlis/formatDate";
 
 type Props = {
   appointment: Appointment;
@@ -10,20 +11,8 @@ type Props = {
 export default function AppointmentItem({ appointment }: Props) {
   const { id, attendee, attendeePhoneNumber, location, note } = appointment;
 
-  const timeZoneOffset =
-    new Date(appointment.startTime).getTimezoneOffset() / 60;
-
-  const startTime = new Date(
-    new Date(appointment.startTime).setHours(
-      new Date(appointment.startTime).getHours() + timeZoneOffset,
-    ),
-  ).toLocaleString();
-
-  const endTime = new Date(
-    new Date(appointment.endTime).setHours(
-      new Date(appointment.endTime).getHours() + timeZoneOffset,
-    ),
-  ).toLocaleString();
+  const startTime = formatDate(appointment.startTime);
+  const endTime = formatDate(appointment.endTime);
 
   return (
     <li className="border-primary flex rounded-lg border-2 p-2">
