@@ -1,20 +1,18 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 
 import Button from "../Button";
 import Notifications from "../notifications/components/Notifications";
-import { HiMiniBell } from "react-icons/hi2";
+import Overlay from "../Overlay";
+import { HiMiniBell, HiMiniXMark } from "react-icons/hi2";
 
-import { useClickOutside } from "../../hooks/useClickOutside";
 import { NotificationsContext } from "../../contexts/NotificationsContext";
 
 export default function NotificationsButton() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const containerRef = useRef<HTMLLIElement>(null);
   const { notifications } = useContext(NotificationsContext);
-  useClickOutside(containerRef, () => setIsOpen(false));
 
   return (
-    <li ref={containerRef} className="relative">
+    <li className="relative">
       <Button
         variant="empty"
         onClick={() => setIsOpen((prev) => !prev)}
@@ -30,7 +28,20 @@ export default function NotificationsButton() {
         </div>
       </Button>
 
-      {isOpen && <Notifications />}
+      {isOpen && (
+        <Overlay>
+          <Button
+            variant="empty"
+            onClick={() => setIsOpen(false)}
+            className="absolute top-5 right-5"
+          >
+            <HiMiniXMark className="text-primary stroke-1 text-xl" />
+          </Button>
+          <div className="h-1/2 w-full p-4 sm:w-md">
+            <Notifications />
+          </div>
+        </Overlay>
+      )}
     </li>
   );
 }

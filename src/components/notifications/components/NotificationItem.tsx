@@ -16,9 +16,9 @@ export default function NotificationItem({ notification }: Props) {
   return (
     <li className="border-primary rounded-lg border-2 p-2">
       <div className="mb-1 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1 font-medium">
+        <div className="flex flex-col items-start gap-0.5 font-medium sm:flex-row sm:items-center sm:gap-1">
           <h3>Notification</h3>
-          <span>-</span>
+          <span className="hidden sm:block">-</span>
           <span>{formatDate(createdAt)}</span>
         </div>
         <Button

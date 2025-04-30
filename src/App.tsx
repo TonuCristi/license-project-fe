@@ -8,6 +8,7 @@ import ContactsProvider from "./contexts/ContactsContext";
 import RoomProvider from "./contexts/RoomContext";
 import NotificationsProvider from "./contexts/NotificationsContext";
 import UserProvider from "./contexts/UserContext";
+import AppointmentsProvider from "./contexts/AppointmentsContext";
 
 function App() {
   const { isLogged } = useContext(AuthContext);
@@ -15,11 +16,13 @@ function App() {
   return isLogged ? (
     <UserProvider>
       <RoomProvider>
-        <ContactsProvider>
-          <NotificationsProvider>
-            <AppLayout />
-          </NotificationsProvider>
-        </ContactsProvider>
+        <AppointmentsProvider>
+          <ContactsProvider>
+            <NotificationsProvider>
+              <AppLayout />
+            </NotificationsProvider>
+          </ContactsProvider>
+        </AppointmentsProvider>
       </RoomProvider>
     </UserProvider>
   ) : (
