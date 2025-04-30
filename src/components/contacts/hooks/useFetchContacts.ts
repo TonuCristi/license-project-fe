@@ -9,7 +9,7 @@ export function useFetchContacts() {
     useContext(ContactsContext);
 
   const getContacts = useCallback(
-    function (search: string) {
+    function (search: string = "") {
       ContactsApi.getContacts(search)
         .then((res) => {
           const contacts = res.map((contact) => mapContact(contact));

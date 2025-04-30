@@ -5,14 +5,26 @@ import AuthLayout from "./components/AuthLayout";
 
 import { AuthContext } from "./contexts/AuthContext";
 import ContactsProvider from "./contexts/ContactsContext";
+import RoomProvider from "./contexts/RoomContext";
+import NotificationsProvider from "./contexts/NotificationsContext";
+import UserProvider from "./contexts/UserContext";
+import AppointmentsProvider from "./contexts/AppointmentsContext";
 
 function App() {
   const { isLogged } = useContext(AuthContext);
 
   return isLogged ? (
-    <ContactsProvider>
-      <AppLayout />
-    </ContactsProvider>
+    <UserProvider>
+      <RoomProvider>
+        <AppointmentsProvider>
+          <ContactsProvider>
+            <NotificationsProvider>
+              <AppLayout />
+            </NotificationsProvider>
+          </ContactsProvider>
+        </AppointmentsProvider>
+      </RoomProvider>
+    </UserProvider>
   ) : (
     <AuthLayout />
   );

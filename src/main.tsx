@@ -9,8 +9,6 @@ import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 
-import UserProvider from "./contexts/UserContext.tsx";
-import RoomProvider from "./contexts/RoomContext.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Toaster } from "react-hot-toast";
 
@@ -30,11 +28,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>
-      <UserProvider>
-        <RoomProvider>
-          <RouterProvider router={router} />
-        </RoomProvider>
-      </UserProvider>
+      <RouterProvider router={router} />
     </AuthProvider>
     <Toaster
       position="top-center"

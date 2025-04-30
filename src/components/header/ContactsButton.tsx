@@ -9,8 +9,12 @@ export default function ContactsButton() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <li className="transition-colors ease-initial hover:text-white">
-      <Button variant="empty" onClick={() => setIsOpen(true)}>
+    <li>
+      <Button
+        variant="empty"
+        onClick={() => setIsOpen(true)}
+        className="text-xl text-blue-200 transition-colors ease-initial hover:text-white"
+      >
         <HiMiniUserGroup />
       </Button>
 
