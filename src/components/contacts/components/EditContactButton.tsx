@@ -21,7 +21,7 @@ export default function EditContactButton({ contact }: Props) {
   const { editContact } = useEditContact();
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef}>
       <Button
         variant="empty"
         onClick={() => setIsOpen((prev) => !prev)}
