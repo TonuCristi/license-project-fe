@@ -46,7 +46,7 @@ export default function ChangePasswordForm() {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-primary grid grid-cols-2 items-center gap-2 rounded-lg border-2 p-2"
+        className="border-primary grid grid-cols-1 items-center gap-2 rounded-lg border-2 p-2 sm:grid-cols-2"
       >
         {inputs.map(({ label, id, name, placeholder }) => (
           <HidePasswordInput
@@ -59,7 +59,7 @@ export default function ChangePasswordForm() {
             error={errors[name] && errors[name].message}
           />
         ))}
-        <Button disabled={isLoading} className="row-start-3">
+        <Button disabled={isLoading} className="sm:row-start-3">
           Save
         </Button>
       </form>

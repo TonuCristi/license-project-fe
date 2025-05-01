@@ -29,7 +29,7 @@ export default function CreateRoomForm() {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-primary grid grid-cols-2 gap-2 rounded-lg border-2 p-2"
+        className="border-primary grid grid-cols-1 gap-2 rounded-lg border-2 p-2 sm:grid-cols-2"
       >
         <InputContainer>
           <Label htmlFor="assistantEmail">Assistant email</Label>
@@ -42,7 +42,7 @@ export default function CreateRoomForm() {
             <Message variant="error">{errors.assistantEmail.message}</Message>
           )}
         </InputContainer>
-        <Button disabled={isLoading} className="row-start-2">
+        <Button disabled={isLoading} className="sm:row-start-2">
           Add
         </Button>
       </form>

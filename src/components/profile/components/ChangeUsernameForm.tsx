@@ -17,7 +17,7 @@ export default function ChangeUsernameForm() {
   const { user } = useContext(UserContext);
   const methods = useForm<ChangeUsername>({
     defaultValues: {
-      username: user.username,
+      username: user?.username,
     },
     resolver: zodResolver(changeUsernameSchema),
   });
@@ -35,7 +35,7 @@ export default function ChangeUsernameForm() {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-primary grid grid-cols-2 gap-2 rounded-lg border-2 p-2"
+        className="border-primary grid grid-cols-1 gap-2 rounded-lg border-2 p-2 sm:grid-cols-2"
       >
         <InputContainer>
           <Label htmlFor="username">Username</Label>
@@ -44,7 +44,7 @@ export default function ChangeUsernameForm() {
             <Message variant="error">{errors.username.message}</Message>
           )}
         </InputContainer>
-        <Button disabled={isLoading} className="row-start-2">
+        <Button disabled={isLoading} className="sm:row-start-2">
           Save
         </Button>
       </form>
