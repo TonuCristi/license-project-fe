@@ -1,9 +1,9 @@
 import { useContext, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
+import Button from "../Button";
 import { HiMiniChevronDown } from "react-icons/hi2";
 import { Link } from "react-router";
-import Button from "../Button";
 
 import { useClickOutside } from "../../hooks/useClickOutside";
 import { useLogout } from "../../hooks/useLogout";
@@ -20,10 +20,10 @@ export default function ProfileBadge() {
     <div ref={containerRef} className="relative">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex cursor-pointer items-center gap-2 rounded-lg bg-white p-2"
+        className="flex w-full cursor-pointer items-center gap-1 rounded-lg bg-white p-1 sm:gap-2 sm:p-2"
       >
-        <p>{user?.username}</p>
-        <div className="bg-primary h-8 w-8 rounded-full"></div>
+        <p className="hidden text-ellipsis md:block">{user?.username}</p>
+        <div className="bg-primary h-7 w-7 rounded-full sm:h-8 sm:w-8"></div>
         <HiMiniChevronDown
           className={twMerge(
             "stroke-1 text-lg transition-transform ease-initial",
@@ -33,7 +33,7 @@ export default function ProfileBadge() {
       </button>
 
       {isOpen && (
-        <ul className="border-primary absolute top-full z-50 mt-3 flex w-full flex-col rounded-xl border-2 bg-white p-1">
+        <ul className="border-primary absolute top-full right-0 z-50 mt-3 flex w-24 flex-col rounded-xl border-2 bg-white p-1 sm:w-full">
           <li className="rounded-lg transition-colors ease-initial hover:bg-blue-100">
             <Link to="/profile" className="inline-block w-full p-1">
               Profile

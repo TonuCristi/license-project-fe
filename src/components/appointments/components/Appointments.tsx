@@ -12,7 +12,7 @@ export default function Appointments() {
   const { room } = useContext(RoomContext);
 
   return (
-    <div className="flex h-full flex-col gap-5 p-4">
+    <div className="flex h-full flex-col gap-5 p-2 sm:p-4">
       <div className="flex items-center justify-between gap-4">
         <h1 className="text-lg font-medium md:text-xl">Appointments</h1>
         {room && <CreateAppointmentButton />}
