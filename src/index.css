@@ -40,9 +40,3 @@
     @apply bg-primary rounded-md;
   }
 }
-
-@utility w-20p {
-  & {
-    width: 20%;
-  }
-}
