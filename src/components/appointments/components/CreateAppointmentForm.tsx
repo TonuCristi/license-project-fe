@@ -71,10 +71,10 @@ export default function CreateAppointmentForm() {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-primary absolute top-full right-0 z-50 mt-3 flex w-[45rem] flex-col rounded-xl border-2 bg-white p-3"
+        className="border-primary scrollbar absolute top-full right-0 z-50 mt-3 flex h-96 w-72 flex-col overflow-y-scroll rounded-xl border-2 bg-white p-3 sm:h-auto sm:w-xl sm:overflow-y-hidden"
       >
         <h2 className="mb-1 text-lg font-medium">Create appointment</h2>
-        <div className="mb-3 grid grid-cols-2 gap-3">
+        <div className="mb-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {inputs.map(({ label, id, name, placeholder }) => (
             <InputContainer key={id}>
               <Label htmlFor={id}>{label}</Label>
@@ -107,7 +107,7 @@ export default function CreateAppointmentForm() {
               <Message variant="error">{errors.duration.message}</Message>
             )}
           </InputContainer>
-          <div className="col-span-2 row-start-4">
+          <div className="sm:col-span-2 sm:row-start-4">
             <InputContainer>
               <Label htmlFor="note">Note</Label>
               <Textarea

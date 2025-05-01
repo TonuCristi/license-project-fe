@@ -14,7 +14,7 @@ export default function Appointments() {
   return (
     <div className="flex h-full flex-col gap-5 p-4">
       <div className="flex items-center justify-between gap-4">
-        <h1 className="text-xl font-medium">Appointments</h1>
+        <h1 className="text-lg font-medium md:text-xl">Appointments</h1>
         {room && <CreateAppointmentButton />}
       </div>
       {!room && user?.role === "assistant" && (
@@ -23,10 +23,10 @@ export default function Appointments() {
         </p>
       )}
       {(!!room || user?.role !== "assistant") && (
-        <>
+        <div className="scrollbar flex flex-col gap-3 overflow-y-auto pr-2">
           <AppointmentsFilters />
           <AppointmentsList />
-        </>
+        </div>
       )}
     </div>
   );

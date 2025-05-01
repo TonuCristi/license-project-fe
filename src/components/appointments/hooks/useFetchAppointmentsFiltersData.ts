@@ -16,7 +16,7 @@ export function useFetchAppointmentsFiltersData() {
     function () {
       AppointmentsApi.getAppointmentsYears()
         .then((res) => setAppointmentsYears(res))
-        .catch((error) => console.log(error))
+        .catch((error) => console.log(error.response.data.message))
         .finally(() => setIsAppointmentsFiltersDataLoading(false));
     },
     [setAppointmentsYears, setIsAppointmentsFiltersDataLoading],
