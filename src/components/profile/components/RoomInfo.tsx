@@ -15,7 +15,7 @@ export default function RoomInfo() {
   const role = room?.chiefId === user?.id ? assistant?.role : chief?.role;
 
   return (
-    <div className="border-primary flex items-end rounded-lg border-2 p-2">
+    <div className="border-primary flex flex-col gap-2 rounded-lg border-2 p-2 sm:flex-row sm:items-end">
       <div className="flex w-full flex-col gap-2">
         <p>
           <span className="font-medium">Username:</span> {username}
