@@ -16,9 +16,11 @@ export default function RoomSection() {
   return (
     <section className="flex flex-col gap-1">
       <h2 className="text-lg font-medium">
-        {room ? roomMember : "Create room"}
+        {!!room && roomMember}
+        {user?.role !== "assistant" && !room && "Create room"}
       </h2>
-      {room ? <RoomInfo /> : <CreateRoomForm />}
+      {!!room && <RoomInfo />}
+      {user?.role !== "assistant" && !room && <CreateRoomForm />}
     </section>
   );
 }
