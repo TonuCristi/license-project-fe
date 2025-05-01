@@ -19,7 +19,7 @@ export default function ContactItem({ index, contact }: Props) {
   const { id, name, phoneNumber, description } = contact;
 
   return (
-    <li className="border-primary flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-1">
+    <li className="border-primary relative flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-1">
       <div className="flex items-center gap-2">
         <span>{`${index + 1}.)`}</span>
         <p className="w-full overflow-hidden font-medium text-ellipsis whitespace-nowrap">

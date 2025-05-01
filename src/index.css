@@ -8,6 +8,9 @@
 
   --animate-rotate: rotate 1s linear;
 
+  --breakpoint-xs: 30rem;
+  --breakpoint-xxs: 20rem;
+
   @keyframes rotate {
     0% {
       @apply rotate-0;
