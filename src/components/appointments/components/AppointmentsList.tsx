@@ -26,9 +26,9 @@ export default function AppointmentsList() {
   }
 
   return (
-    <div className="scrollbar flex flex-col gap-2 overflow-y-auto pr-2">
+    <div className="flex flex-col gap-2">
       {appointments.year && (
-        <h1 className="bg-primary self-start rounded-lg px-2 py-1 text-2xl font-semibold text-white">
+        <h1 className="bg-primary self-start rounded-lg px-2 py-1 text-lg font-semibold text-white md:text-2xl">
           {appointments.year}
         </h1>
       )}

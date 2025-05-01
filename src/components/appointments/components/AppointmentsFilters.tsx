@@ -78,7 +78,7 @@ export default function AppointmentsFilters() {
 
   return (
     <FormProvider {...methods}>
-      <form className="flex items-end justify-between gap-3">
+      <form className="grid grid-cols-1 items-end gap-x-3 gap-y-2 sm:grid-cols-2 md:flex md:items-end md:justify-between md:gap-3">
         <InputContainer>
           <Label>Year</Label>
           <Select
