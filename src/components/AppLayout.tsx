@@ -8,12 +8,14 @@ import { useFetchLoggedUser } from "../hooks/useFetchLoggedUser";
 import { useFetchRoom } from "./profile/hooks/useFetchRoom";
 import { useFetchContacts } from "./contacts/hooks/useFetchContacts";
 import { useFetchNotifications } from "./notifications/hooks/useFetchNotifications";
+import { useSSE } from "./notifications/hooks/useSSE";
 
 export default function AppLayout() {
   const { isLoading: isLoggedUserLoading } = useFetchLoggedUser();
   const { isLoading: isRoomLoading } = useFetchRoom();
   const { getContacts, isContactsLoading } = useFetchContacts();
   const { isLoading: isNotificationsLoading } = useFetchNotifications();
+  useSSE();
   const location = useLocation();
   const navigate = useNavigate();
 
