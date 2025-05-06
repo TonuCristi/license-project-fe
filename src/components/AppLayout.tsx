@@ -13,7 +13,7 @@ import { useSSE } from "./notifications/hooks/useSSE";
 export default function AppLayout() {
   const { isLoading: isLoggedUserLoading } = useFetchLoggedUser();
   const { isLoading: isRoomLoading } = useFetchRoom();
-  const { getContacts, isContactsLoading } = useFetchContacts();
+  const { getContacts, isLoading } = useFetchContacts();
   const { isLoading: isNotificationsLoading } = useFetchNotifications();
   useSSE();
   const location = useLocation();
@@ -38,7 +38,7 @@ export default function AppLayout() {
     pathnames ||
     isLoggedUserLoading ||
     isRoomLoading ||
-    isContactsLoading ||
+    isLoading ||
     isNotificationsLoading
   ) {
     return (

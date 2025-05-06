@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 
 import { ContactsApi } from "../../../services/ContactsApi";
@@ -7,7 +7,8 @@ import { mapContact } from "../../../utlis/mapContact";
 import { ContactsContext } from "../../../contexts/ContactsContext";
 
 export function useCreateContact() {
-  const { setContacts, setIsLoading } = useContext(ContactsContext);
+  const { setContacts } = useContext(ContactsContext);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function createContact(contact: CreateContact) {
     setIsLoading(true);
@@ -21,5 +22,5 @@ export function useCreateContact() {
       .finally(() => setIsLoading(false));
   }
 
-  return { createContact };
+  return { createContact, isLoading };
 }

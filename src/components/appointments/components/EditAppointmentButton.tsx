@@ -5,22 +5,13 @@ import EditAppointmentForm from "./EditAppointmentForm";
 import { HiMiniPencil } from "react-icons/hi2";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
-import { Appointment, EditAppointment } from "../../../types/appointment.type";
+import { Appointment } from "../../../types/appointment.type";
 
 type Props = {
   appointment: Appointment;
-  editAppointment: (
-    appointmentId: string,
-    appointment: EditAppointment,
-  ) => void;
-  isLoading: boolean;
 };
 
-export default function EditAppointmentButton({
-  appointment,
-  editAppointment,
-  isLoading,
-}: Props) {
+export default function EditAppointmentButton({ appointment }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
@@ -35,13 +26,7 @@ export default function EditAppointmentButton({
         <HiMiniPencil className="text-primary stroke-1 text-lg" />
       </Button>
 
-      {isOpen && (
-        <EditAppointmentForm
-          appointment={appointment}
-          editAppointment={editAppointment}
-          isLoading={isLoading}
-        />
-      )}
+      {isOpen && <EditAppointmentForm appointment={appointment} />}
     </div>
   );
 }

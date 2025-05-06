@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -10,6 +10,7 @@ import Button from "../../Button";
 import { appointmentsFiltersSchema } from "../../../schemas/appointmentsFilters.schema";
 import { useFetchAppointments } from "../hooks/useFetchAppointments";
 import { useFetchAppointmentsFiltersData } from "../hooks/useFetchAppointmentsFiltersData";
+import { AppointmentsContext } from "../../../contexts/AppointmentsContext";
 
 const monthOptions = [
   { value: "0", text: "January" },
@@ -37,11 +38,13 @@ const dayOptions = [
 ];
 
 export default function AppointmentsFilters() {
+  const { filters, setFilters } = useContext(AppointmentsContext);
+  // console.log(filters.year);
   const methods = useForm({
     defaultValues: {
-      year: "",
-      month: "",
-      day: "",
+      year: filters.year,
+      month: filters.month,
+      day: filters.day,
     },
     resolver: zodResolver(appointmentsFiltersSchema),
   });
@@ -61,6 +64,11 @@ export default function AppointmentsFilters() {
 
   function handleReset(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
+    setFilters({
+      year: "",
+      month: "",
+      day: "",
+    });
     reset();
   }
 
@@ -84,6 +92,7 @@ export default function AppointmentsFilters() {
           <Select
             name="year"
             placeholder="Select a year"
+            value={filters.year}
             options={yearOptions}
             disabled={isAppointmentsFiltersDataLoading}
           />
@@ -93,6 +102,7 @@ export default function AppointmentsFilters() {
           <Select
             name="month"
             placeholder="Select a month"
+            // value={filters.month}
             options={monthOptions}
             disabled={isAppointmentsFiltersDataLoading}
           />
@@ -102,6 +112,7 @@ export default function AppointmentsFilters() {
           <Select
             name="day"
             placeholder="Select a day"
+            // value={filters.day}
             options={dayOptions}
             disabled={isAppointmentsFiltersDataLoading}
           />

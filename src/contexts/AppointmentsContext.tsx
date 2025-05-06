@@ -6,34 +6,43 @@ import {
   useState,
 } from "react";
 
-import { Appointments } from "../types/appointment.type";
+import { Appointment } from "../types/appointment.type";
+
+const defaultFilters = {
+  year: "",
+  month: "",
+  day: "",
+};
+
+type Filters = {
+  year: string;
+  month: string;
+  day: string;
+};
 
 type AppointmentsContext = {
-  appointments: Appointments;
+  appointments: Appointment[];
   appointmentsYears: number[];
+  filters: Filters;
   isAppointmentsFiltersDataLoading: boolean;
-  isAppointmentsLoading: boolean;
   isLoading: boolean;
-  setAppointments: Dispatch<SetStateAction<Appointments>>;
+  setAppointments: Dispatch<SetStateAction<Appointment[]>>;
   setAppointmentsYears: Dispatch<SetStateAction<number[]>>;
+  setFilters: Dispatch<SetStateAction<Filters>>;
   setIsAppointmentsFiltersDataLoading: Dispatch<SetStateAction<boolean>>;
-  setIsAppointmentsLoading: Dispatch<SetStateAction<boolean>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 export const AppointmentsContext = createContext<AppointmentsContext>({
-  appointments: {
-    year: null,
-    appointmentsPerMonths: [],
-  },
+  appointments: [],
   appointmentsYears: [],
+  filters: defaultFilters,
   isAppointmentsFiltersDataLoading: true,
-  isAppointmentsLoading: false,
   isLoading: false,
   setAppointments: () => undefined,
   setAppointmentsYears: () => undefined,
+  setFilters: () => undefined,
   setIsAppointmentsFiltersDataLoading: () => undefined,
-  setIsAppointmentsLoading: () => undefined,
   setIsLoading: () => undefined,
 });
 
@@ -42,17 +51,13 @@ type Props = {
 };
 
 export default function AppointmentsProvider({ children }: Props) {
-  const [appointments, setAppointments] = useState<Appointments>({
-    year: null,
-    appointmentsPerMonths: [],
-  });
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [appointmentsYears, setAppointmentsYears] = useState<number[]>([]);
   const [
     isAppointmentsFiltersDataLoading,
     setIsAppointmentsFiltersDataLoading,
   ] = useState<boolean>(true);
-  const [isAppointmentsLoading, setIsAppointmentsLoading] =
-    useState<boolean>(false);
+  const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
@@ -60,13 +65,13 @@ export default function AppointmentsProvider({ children }: Props) {
       value={{
         appointments,
         appointmentsYears,
+        filters,
         isAppointmentsFiltersDataLoading,
-        isAppointmentsLoading,
         isLoading,
         setAppointments,
         setAppointmentsYears,
+        setFilters,
         setIsAppointmentsFiltersDataLoading,
-        setIsAppointmentsLoading,
         setIsLoading,
       }}
     >

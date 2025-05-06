@@ -5,34 +5,30 @@ import { AppointmentsApi } from "../../../services/AppointmentsApi";
 import { mapAppointment } from "../../../utlis/mapAppointment";
 
 export function useFetchAppointments() {
-  const { setAppointments, setIsAppointmentsLoading } =
+  const { setAppointments, setFilters, setIsLoading } =
     useContext(AppointmentsContext);
 
-  // Gets all the apppointments
   function getAppointments(year?: string, month?: string, day?: string) {
-    if (year === "" && month === "" && day === "") {
-      return setAppointments({
-        year: null,
-        appointmentsPerMonths: [],
-      });
+    if (!year) {
+      return setAppointments([]);
     }
 
-    setIsAppointmentsLoading(true);
+    setIsLoading(true);
     AppointmentsApi.getAppointments(year, month, day)
       .then((res) => {
-        const mappedAppointments = res.appointmentsPerMonths.map(
-          (appointmentsPerMonth) => ({
-            ...appointmentsPerMonth,
-            appointments: appointmentsPerMonth.appointments.map((appointment) =>
-              mapAppointment(appointment),
-            ),
-          }),
+        const mappedAppointments = res.map((appointment) =>
+          mapAppointment(appointment),
         );
 
-        setAppointments({ ...res, appointmentsPerMonths: mappedAppointments });
+        setFilters({
+          year: year,
+          month: month === undefined ? "" : month,
+          day: day === undefined ? "" : day,
+        });
+        setAppointments(mappedAppointments);
       })
       .catch((error) => console.log(error.response.data.message))
-      .finally(() => setIsAppointmentsLoading(false));
+      .finally(() => setIsLoading(false));
   }
 
   return { getAppointments };

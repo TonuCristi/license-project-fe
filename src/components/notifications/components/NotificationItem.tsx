@@ -2,7 +2,6 @@ import Button from "../../Button";
 import { HiMiniXMark } from "react-icons/hi2";
 
 import { Notification } from "../../../types/notification.type";
-import { formatDate } from "../../../utlis/formatDate";
 import { useDeleteNotification } from "../hooks/useDeleteNotification";
 
 type Props = {
@@ -19,7 +18,7 @@ export default function NotificationItem({ notification }: Props) {
         <div className="flex flex-col items-start gap-0.5 font-medium sm:flex-row sm:items-center sm:gap-1">
           <h3>Notification</h3>
           <span className="hidden sm:block">-</span>
-          <span>{formatDate(createdAt)}</span>
+          <span>{new Date(createdAt).toLocaleString()}</span>
         </div>
         <Button
           variant="empty"

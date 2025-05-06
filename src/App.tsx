@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import AppLayout from "./components/AppLayout";
 import AuthLayout from "./components/AuthLayout";
@@ -9,9 +9,21 @@ import RoomProvider from "./contexts/RoomContext";
 import NotificationsProvider from "./contexts/NotificationsContext";
 import UserProvider from "./contexts/UserContext";
 import AppointmentsProvider from "./contexts/AppointmentsContext";
+import { useLogout } from "./hooks/useLogout";
+import { jwtDecode } from "jwt-decode";
 
 function App() {
-  const { isLogged } = useContext(AuthContext);
+  const { isLogged, token } = useContext(AuthContext);
+  const { logout } = useLogout();
+
+  useEffect(() => {
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.exp && decodedToken.exp < Date.now() / 1000) {
+        logout();
+      }
+    }
+  }, [token, logout]);
 
   return isLogged ? (
     <UserProvider>

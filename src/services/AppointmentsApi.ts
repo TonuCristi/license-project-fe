@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { api } from "../config/api";
 import {
   AppointmentResponse,
-  AppointmentsResponse,
+  // AppointmentsResponse,
   CreateAppointment,
   EditAppointment,
 } from "../types/appointment.type";
@@ -19,7 +19,7 @@ export const AppointmentsApi = {
         ({
           data,
         }: AxiosResponse<{
-          appointments: AppointmentsResponse;
+          appointments: AppointmentResponse[];
         }>) => data.appointments,
       );
   },
@@ -33,12 +33,14 @@ export const AppointmentsApi = {
     );
   },
   createAppointment(appointment: CreateAppointment) {
-    return api
-      .post(`${URL}/create-appointment`, appointment)
-      .then(
-        ({ data }: AxiosResponse<{ appointment: AppointmentResponse }>) =>
-          data.appointment,
-      );
+    return api.post(`${URL}/create-appointment`, appointment).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        newAppointment: AppointmentResponse;
+        message: string;
+      }>) => data,
+    );
   },
   deleteAppointment(appointmentId: string) {
     return api.delete(`${URL}/delete-appointment/${appointmentId}`).then(

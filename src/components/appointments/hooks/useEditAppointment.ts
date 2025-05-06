@@ -1,30 +1,22 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import toast from "react-hot-toast";
 
 import { AppointmentsContext } from "../../../contexts/AppointmentsContext";
 import { EditAppointment } from "../../../types/appointment.type";
 import { AppointmentsApi } from "../../../services/AppointmentsApi";
 import { mapAppointment } from "../../../utlis/mapAppointment";
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
 export function useEditAppointment() {
-  const { isLoading, setAppointments, setIsLoading } =
-    useContext(AppointmentsContext);
+  const {
+    appointments,
+    filters,
+    appointmentsYears,
+    setAppointments,
+    setFilters,
+    setAppointmentsYears,
+  } = useContext(AppointmentsContext);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // Edits an appointment
   function editAppointment(
     appointmentId: string,
     newEditedAppointment: EditAppointment,
@@ -35,174 +27,53 @@ export function useEditAppointment() {
         const editedAppointment = mapAppointment(res.editedAppointment);
         const oldAppointment = mapAppointment(res.oldAppointment);
 
-        const editedAppointmentMonth =
-          months[new Date(editedAppointment.startTime).getMonth()];
+        const editedAppointmentYear = new Date(
+          editedAppointment.startTime,
+        ).getFullYear();
+        const oldAppointmentYear = new Date(
+          oldAppointment.startTime,
+        ).getFullYear();
 
-        const oldAppointmentMonth =
-          months[new Date(oldAppointment.startTime).getMonth()];
-
-        setAppointments((prev) => {
-          const appointmentsPerMonths = prev.appointmentsPerMonths;
-
-          const editedAppointmentMonthIndex = appointmentsPerMonths.findIndex(
-            ({ month }) => month === editedAppointmentMonth,
+        if (!appointmentsYears.includes(editedAppointmentYear)) {
+          setAppointmentsYears((prev) =>
+            [...prev, editedAppointmentYear].sort((a, b) => a - b),
           );
-          const oldAppointmentMonthIndex = appointmentsPerMonths.findIndex(
-            ({ month }) => month === oldAppointmentMonth,
-          );
+        }
 
-          if (
-            !appointmentsPerMonths[editedAppointmentMonthIndex] &&
-            !appointmentsPerMonths[oldAppointmentMonthIndex].appointments.length
-          ) {
-            const restOfAppointmentsPerMonths = appointmentsPerMonths.filter(
-              (appointmentsPerMonth) =>
-                appointmentsPerMonth.month !== oldAppointmentMonth,
-            );
+        if (
+          appointments.length === 1 &&
+          appointments.find(
+            (appointment) =>
+              new Date(appointment.startTime).getFullYear() ===
+              oldAppointmentYear,
+          )
+        ) {
+          setAppointmentsYears((prev) => [
+            ...prev.filter((year) => year != oldAppointmentYear),
+          ]);
+          setFilters({ year: `${editedAppointmentYear}`, month: "", day: "" });
+        }
 
-            console.log("Aici 1");
-
-            return {
-              ...prev,
-              appointmentsPerMonths: [
-                ...restOfAppointmentsPerMonths,
-                {
-                  month: editedAppointmentMonth,
-                  appointments: [editedAppointment],
-                },
-              ].sort(
-                (a, b) => months.indexOf(a.month) - months.indexOf(b.month),
-              ),
-            };
-          }
-
-          if (
-            !appointmentsPerMonths[editedAppointmentMonthIndex] &&
-            appointmentsPerMonths[oldAppointmentMonthIndex].appointments.length
-          ) {
-            const restOfAppointmentsPerMonths = appointmentsPerMonths.filter(
-              (appointmentsPerMonth) =>
-                appointmentsPerMonth.month !== oldAppointmentMonth,
-            );
-
-            const restOfAppointmentPerMonth = {
-              ...appointmentsPerMonths[oldAppointmentMonthIndex],
-              appointments: appointmentsPerMonths[
-                oldAppointmentMonthIndex
-              ].appointments.filter(
-                (appointment) => appointment.id !== appointmentId,
-              ),
-            };
-
-            console.log("Aici 2");
-
-            return {
-              ...prev,
-              appointmentsPerMonths: [
-                ...restOfAppointmentsPerMonths,
-                restOfAppointmentPerMonth,
-                {
-                  month: editedAppointmentMonth,
-                  appointments: [editedAppointment],
-                },
-              ].sort(
-                (a, b) => months.indexOf(a.month) - months.indexOf(b.month),
-              ),
-            };
-          }
-
-          if (editedAppointmentMonth === oldAppointmentMonth) {
-            const restOfAppointmentsPerMonths = appointmentsPerMonths.filter(
-              (appointmentsPerMonth) =>
-                appointmentsPerMonth.month !== oldAppointmentMonth,
-            );
-
-            const restOfAppointmentPerMonth = {
-              ...appointmentsPerMonths[oldAppointmentMonthIndex],
-              appointments: [
-                ...appointmentsPerMonths[
-                  oldAppointmentMonthIndex
-                ].appointments.filter(
-                  (appointment) => appointment.id !== appointmentId,
-                ),
-                editedAppointment,
-              ].sort(
-                (a, b) =>
-                  new Date(a.startTime).getTime() -
-                  new Date(b.startTime).getTime(),
-              ),
-            };
-
-            console.log("Aici 3");
-
-            return {
-              ...prev,
-              appointmentsPerMonths: [
-                ...restOfAppointmentsPerMonths,
-                restOfAppointmentPerMonth,
-              ].sort(
-                (a, b) => months.indexOf(a.month) - months.indexOf(b.month),
-              ),
-            };
-          }
-
-          const firstHalf = appointmentsPerMonths
-            .slice(0, editedAppointmentMonthIndex)
-            .filter(
-              (appointmentsPerMonth) =>
-                appointmentsPerMonth.month !== oldAppointmentMonth,
-            )
-            .filter(
-              (appointmentsPerMonth) =>
-                appointmentsPerMonth.month !== editedAppointmentMonth,
-            );
-
-          const secondHalf = appointmentsPerMonths
-            .slice(editedAppointmentMonthIndex)
-            .filter(
-              (appointmentsPerMonth) =>
-                appointmentsPerMonth.month !== oldAppointmentMonth,
-            )
-            .filter(
-              (appointmentsPerMonth) =>
-                appointmentsPerMonth.month !== editedAppointmentMonth,
-            );
-
-          const restOfAppointmentPerMonth = {
-            ...appointmentsPerMonths[oldAppointmentMonthIndex],
-            appointments: appointmentsPerMonths[
-              oldAppointmentMonthIndex
-            ].appointments.filter(
-              (appointment) => appointment.id !== appointmentId,
+        if (+filters.year === editedAppointmentYear) {
+          setAppointments((prev) => [
+            ...prev.filter(
+              (appointment) => appointment.id !== editedAppointment.id,
             ),
-          };
+            editedAppointment,
+          ]);
+        }
 
-          return {
-            ...prev,
-            appointmentsPerMonths: [
-              ...firstHalf,
-              restOfAppointmentPerMonth,
-              {
-                ...appointmentsPerMonths[editedAppointmentMonthIndex],
-                appointments: [
-                  ...appointmentsPerMonths[
-                    editedAppointmentMonthIndex
-                  ].appointments.filter(
-                    (appointment) => appointment.id !== appointmentId,
-                  ),
-                  editedAppointment,
-                ].sort(
-                  (a, b) =>
-                    new Date(a.startTime).getTime() -
-                    new Date(b.startTime).getTime(),
-                ),
-              },
-              ...secondHalf,
-            ],
-          };
-        });
+        if (+filters.year !== editedAppointmentYear) {
+          setAppointments((prev) => [
+            ...prev.filter(
+              (appointment) => appointment.id !== editedAppointment.id,
+            ),
+          ]);
+        }
+
+        toast.success(res.message);
       })
-      .catch((error) => console.log(error))
+      .catch((error) => toast.error(error.response.data.message))
       .finally(() => setIsLoading(false));
   }
 

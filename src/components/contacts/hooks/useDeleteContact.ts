@@ -1,11 +1,12 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 
 import { ContactsContext } from "../../../contexts/ContactsContext";
 import { ContactsApi } from "../../../services/ContactsApi";
 
 export function useDeleteContact() {
-  const { setContacts, setIsLoading } = useContext(ContactsContext);
+  const { setContacts } = useContext(ContactsContext);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function deleteContact(contactId: string) {
     setIsLoading(true);
@@ -20,5 +21,5 @@ export function useDeleteContact() {
       .finally(() => setIsLoading(false));
   }
 
-  return { deleteContact };
+  return { deleteContact, isLoading };
 }

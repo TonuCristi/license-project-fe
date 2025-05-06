@@ -6,9 +6,9 @@ import Loader from "../../Loader";
 import { ContactsContext } from "../../../contexts/ContactsContext";
 
 export default function ContactsList() {
-  const { contacts, isContactsLoading } = useContext(ContactsContext);
+  const { contacts, isLoading } = useContext(ContactsContext);
 
-  if (isContactsLoading) {
+  if (isLoading) {
     return (
       <div className="flex justify-center">
         <Loader />
