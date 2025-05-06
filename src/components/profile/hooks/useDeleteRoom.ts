@@ -20,7 +20,7 @@ export function useDeleteRoom() {
         setChief(null);
         toast.success(res);
       })
-      .catch((error) => toast.error(error.response.data.error))
+      .catch((error) => toast.error(error.response.data.message))
       .finally(() => setIsLoading(false));
   }
 
