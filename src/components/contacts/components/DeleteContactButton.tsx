@@ -1,10 +1,9 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import Button from "../../Button";
 import ConfirmationModal from "../../ConfirmationModal";
 import { HiMiniXMark } from "react-icons/hi2";
 
-import { ContactsContext } from "../../../contexts/ContactsContext";
 import { useDeleteContact } from "../hooks/useDeleteContact";
 
 type Props = {
@@ -13,8 +12,7 @@ type Props = {
 
 export default function DeleteContactButton({ contactId }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { isLoading } = useContext(ContactsContext);
-  const { deleteContact } = useDeleteContact();
+  const { deleteContact, isLoading } = useDeleteContact();
 
   return (
     <>

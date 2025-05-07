@@ -23,7 +23,7 @@ export default function Appointments() {
         </p>
       )}
       {(!!room || user?.role !== "assistant") && (
-        <div className="scrollbar flex flex-col gap-3 overflow-y-auto pr-2">
+        <div className="scrollbar flex h-full flex-col gap-3 overflow-y-auto pr-2">
           <AppointmentsFilters />
           <AppointmentsList />
         </div>

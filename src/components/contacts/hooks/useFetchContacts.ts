@@ -5,8 +5,7 @@ import { ContactsContext } from "../../../contexts/ContactsContext";
 import { mapContact } from "../../../utlis/mapContact";
 
 export function useFetchContacts() {
-  const { isContactsLoading, setContacts, setIsContactsLoading } =
-    useContext(ContactsContext);
+  const { isLoading, setContacts, setIsLoading } = useContext(ContactsContext);
 
   const getContacts = useCallback(
     function (search: string = "") {
@@ -15,10 +14,10 @@ export function useFetchContacts() {
           const contacts = res.map((contact) => mapContact(contact));
           setContacts(contacts);
         })
-        .finally(() => setIsContactsLoading(false));
+        .finally(() => setIsLoading(false));
     },
-    [setContacts, setIsContactsLoading],
+    [setContacts, setIsLoading],
   );
 
-  return { getContacts, isContactsLoading };
+  return { getContacts, isLoading };
 }

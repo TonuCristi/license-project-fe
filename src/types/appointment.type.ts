@@ -29,18 +29,7 @@ export type Appointment = {
   userId: string;
 };
 
-export type AppointmentsResponse = {
-  year: number | null;
-  appointmentsPerMonths: {
-    month: string;
-    appointments: AppointmentResponse[];
-  }[];
-};
-
 export type Appointments = {
-  year: number | null;
-  appointmentsPerMonths: {
-    month: string;
-    appointments: Appointment[];
-  }[];
-};
+  month: string;
+  appointments: Appointment[];
+}[];

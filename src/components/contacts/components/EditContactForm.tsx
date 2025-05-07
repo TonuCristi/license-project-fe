@@ -9,6 +9,7 @@ import InputContainer from "../../input/InputContainer";
 
 import { contactFormSchema } from "../../../schemas/contactForm.schema";
 import { Contact, EditContact } from "../../../types/contact.type";
+import { useEditContact } from "../hooks/useEditContact";
 
 const inputs = [
   {
@@ -33,15 +34,9 @@ const inputs = [
 
 type Props = {
   contact: Contact;
-  editContact: (contactId: string, editedContactChanges: EditContact) => void;
-  isLoading: boolean;
 };
 
-export default function EditContactForm({
-  contact,
-  editContact,
-  isLoading,
-}: Props) {
+export default function EditContactForm({ contact }: Props) {
   const methods = useForm<EditContact>({
     defaultValues: {
       name: contact.name,
@@ -50,6 +45,7 @@ export default function EditContactForm({
     },
     resolver: zodResolver(contactFormSchema),
   });
+  const { editContact, isLoading } = useEditContact();
 
   const onSubmit: SubmitHandler<EditContact> = (data) =>
     editContact(contact.id, data);

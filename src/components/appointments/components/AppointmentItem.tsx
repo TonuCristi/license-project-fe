@@ -1,4 +1,5 @@
 import DeleteAppointmentButton from "./DeleteAppointmentButton";
+import EditAppointmentButton from "./EditAppointmentButton";
 import { HiMiniInformationCircle } from "react-icons/hi2";
 
 import { Appointment } from "../../../types/appointment.type";
@@ -36,6 +37,8 @@ export default function AppointmentItem({ appointment }: Props) {
       </div>
       <div className="flex flex-col items-center gap-2">
         <DeleteAppointmentButton appointmentId={id} />
+
+        <EditAppointmentButton appointment={appointment} />
 
         {note.length && (
           <div className="group relative self-end">

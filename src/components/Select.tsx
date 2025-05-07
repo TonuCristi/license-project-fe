@@ -41,7 +41,6 @@ export default function Select({
   const { register } = useFormContext();
 
   const placeholderOption = { value: "", placeholder };
-
   return (
     <select
       {...register(name)}

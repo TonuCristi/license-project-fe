@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -10,7 +9,6 @@ import InputContainer from "../../input/InputContainer";
 
 import { contactFormSchema } from "../../../schemas/contactForm.schema";
 import { CreateContact } from "../../../types/contact.type";
-import { ContactsContext } from "../../../contexts/ContactsContext";
 import { useCreateContact } from "../hooks/useCreateContact";
 
 const inputs = [
@@ -38,8 +36,7 @@ export default function CreateContactForm() {
   const methods = useForm<CreateContact>({
     resolver: zodResolver(contactFormSchema),
   });
-  const { isLoading } = useContext(ContactsContext);
-  const { createContact } = useCreateContact();
+  const { createContact, isLoading } = useCreateContact();
 
   const onSubmit: SubmitHandler<CreateContact> = (data) => createContact(data);
 

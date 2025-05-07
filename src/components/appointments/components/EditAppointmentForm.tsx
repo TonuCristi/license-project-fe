@@ -11,6 +11,7 @@ import Textarea from "../../Textarea";
 
 import { appointmentSchema } from "../../../schemas/createAppointment.schema";
 import { Appointment, EditAppointment } from "../../../types/appointment.type";
+import { useEditAppointment } from "../hooks/useEditAppointment";
 
 const inputs = [
   {
@@ -52,18 +53,9 @@ const durationOptions = [
 
 type Props = {
   appointment: Appointment;
-  editAppointment: (
-    appointmentId: string,
-    appointment: EditAppointment,
-  ) => void;
-  isLoading: boolean;
 };
 
-export default function EditAppointmentForm({
-  appointment,
-  editAppointment,
-  isLoading,
-}: Props) {
+export default function EditAppointmentForm({ appointment }: Props) {
   const methods = useForm<EditAppointment>({
     defaultValues: {
       attendee: appointment.attendee,
@@ -78,6 +70,7 @@ export default function EditAppointmentForm({
     },
     resolver: zodResolver(appointmentSchema),
   });
+  const { editAppointment, isLoading } = useEditAppointment();
 
   const {
     handleSubmit,
@@ -93,9 +86,9 @@ export default function EditAppointmentForm({
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-primary absolute top-full right-0 z-50 mt-3 flex w-[45rem] flex-col rounded-xl border-2 bg-white p-3"
+        className="border-primary scrollbar absolute top-full right-0 z-50 mt-3 flex h-96 w-72 flex-col overflow-y-scroll rounded-xl border-2 bg-white p-3 sm:h-auto sm:w-xl sm:overflow-y-hidden"
       >
-        <h2 className="mb-1 text-lg font-medium">Create appointment</h2>
+        <h2 className="mb-1 text-lg font-medium">Edit appointment</h2>
         <div className="mb-3 grid grid-cols-2 gap-3">
           {inputs.map(({ label, id, name, placeholder }) => (
             <InputContainer key={id}>
@@ -145,7 +138,7 @@ export default function EditAppointmentForm({
             </InputContainer>
           </div>
         </div>
-        <Button disabled={isLoading}>Create</Button>
+        <Button disabled={isLoading}>Edit</Button>
       </form>
     </FormProvider>
   );
