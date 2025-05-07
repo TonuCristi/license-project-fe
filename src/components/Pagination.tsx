@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import Button from "./Button";
 
 import { HiMiniChevronLeft, HiMiniChevronRight } from "react-icons/hi2";
+import { twMerge } from "tailwind-merge";
 
 type Props = {
   isLoading: boolean;
@@ -28,7 +29,14 @@ export default function Pagination({
         <HiMiniChevronLeft className="stroke-1 text-xl text-white" />
       </Button>
 
-      <div className="grid grid-cols-[auto_auto_auto] items-center gap-2">
+      <div
+        className={twMerge(
+          "grid items-center gap-2",
+          pages === 1 && "grid-cols-1",
+          pages === 2 && "grid-cols-2",
+          pages >= 3 && "grid-cols-3",
+        )}
+      >
         {offset > 0 && (
           <div className="border-primary flex h-7 w-7 items-center justify-center rounded-full border-2 p-1">
             {offset}

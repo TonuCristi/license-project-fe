@@ -25,12 +25,16 @@ export default function EmployeeListItem({
           <span className="font-medium">Email:</span> {employee.email}
         </p>
         <p>
+          <span className="font-medium">Phone number:</span>{" "}
+          {employee.phoneNumber}
+        </p>
+        <p>
           <span className="font-medium">Teams:</span> team1, team2, team3
         </p>
       </div>
       <div className="flex items-center gap-2 self-start">
         <Button>Select</Button>
-        <DeleteEmployeeButton />
+        <DeleteEmployeeButton employeeId={employee.id} />
       </div>
     </li>
   );
