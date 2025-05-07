@@ -53,6 +53,14 @@ const durationOptions = [
 
 export default function CreateAppointmentForm() {
   const methods = useForm<CreateAppointment>({
+    defaultValues: {
+      attendee: "",
+      attendeePhoneNumber: "",
+      location: "",
+      date: "",
+      duration: "",
+      note: "",
+    },
     resolver: zodResolver(appointmentSchema),
   });
   const { createAppointment, isLoading } = useCreateAppointment();
@@ -71,7 +79,7 @@ export default function CreateAppointmentForm() {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-primary scrollbar absolute top-full right-0 z-50 mt-3 flex h-96 w-72 flex-col overflow-y-scroll rounded-xl border-2 bg-white p-3 sm:h-auto sm:w-xl sm:overflow-y-hidden"
+        className="border-primary scrollbar xxs:w-72 absolute top-full right-0 z-50 mt-3 flex h-96 w-52 flex-col overflow-y-scroll rounded-xl border-2 bg-white p-3 sm:h-auto sm:w-xl sm:overflow-y-hidden"
       >
         <h2 className="mb-1 text-lg font-medium">Create appointment</h2>
         <div className="mb-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
