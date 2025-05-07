@@ -18,6 +18,12 @@ const inputs = [
     placeholder: "Full name...",
   },
   {
+    label: "Phone number",
+    id: "phoneNumber",
+    name: "phoneNumber",
+    placeholder: "Phone number...",
+  },
+  {
     label: "Email",
     id: "email",
     name: "email",

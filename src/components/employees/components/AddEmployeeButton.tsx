@@ -11,9 +11,10 @@ export default function AddEmployeeButton() {
   useClickOutside(containerRef, () => setIsOpen(false));
 
   return (
-    <div ref={containerRef} className="xxs:w-auto relative w-full">
+    <div ref={containerRef} className="relative">
       <Button
-        className="xxs:w-auto w-full text-nowrap"
+        size="full"
+        className="text-nowrap"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         Add employee

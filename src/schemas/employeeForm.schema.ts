@@ -5,4 +5,10 @@ import { emailSchema } from "./email.schema";
 export const employeeFormSchema = z.object({
   fullName: usernameSchema,
   email: emailSchema,
+  phoneNumber: z
+    .string()
+    .min(1, { message: "This field should't be empty!" })
+    .max(10, {
+      message: "The phone number should't be longer than 10 characters!",
+    }),
 });
