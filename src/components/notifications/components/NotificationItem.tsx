@@ -24,6 +24,7 @@ export default function NotificationItem({ notification }: Props) {
           variant="empty"
           disabled={isLoading}
           onClick={() => deleteNotification(notification.id)}
+          className="self-start"
         >
           <HiMiniXMark className="text-primary stroke-1 text-xl" />
         </Button>
