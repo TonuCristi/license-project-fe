@@ -14,7 +14,7 @@ export function useEditContact() {
     setIsLoading(true);
     ContactsApi.editContact(contactId, editedContactChanges)
       .then((res) => {
-        const contact = mapContact(res);
+        const editedContact = mapContact(res);
         const contactIndex = contacts.findIndex(
           (contact) => contact.id === contactId,
         );
@@ -25,7 +25,7 @@ export function useEditContact() {
           );
           return [
             ...filteredContacts.slice(0, contactIndex),
-            contact,
+            editedContact,
             ...filteredContacts.slice(contactIndex, filteredContacts.length),
           ];
         });

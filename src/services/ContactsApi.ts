@@ -21,7 +21,8 @@ export const ContactsApi = {
     return api
       .post(`${URL}/create-contact`, contact)
       .then(
-        ({ data }: AxiosResponse<{ contact: ContactResponse }>) => data.contact,
+        ({ data }: AxiosResponse<{ newContact: ContactResponse }>) =>
+          data.newContact,
       );
   },
   deleteContact(contactId: string) {
@@ -33,7 +34,8 @@ export const ContactsApi = {
     return api
       .put(`${URL}/edit-contact/${contactId}`, editedContactChanges)
       .then(
-        ({ data }: AxiosResponse<{ contact: ContactResponse }>) => data.contact,
+        ({ data }: AxiosResponse<{ editedContact: ContactResponse }>) =>
+          data.editedContact,
       );
   },
 };
