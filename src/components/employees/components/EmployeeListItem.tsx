@@ -2,13 +2,16 @@ import { Dispatch, SetStateAction } from "react";
 
 import Button from "../../Button";
 import DeleteEmployeeButton from "./DeleteEmployeeButton";
+import { Employee } from "../../../types/employee.type";
 
 type Props = {
+  employee: Employee;
   employeeList: string[];
   setEmployeesList: Dispatch<SetStateAction<string[]>>;
 };
 
 export default function EmployeeListItem({
+  employee,
   employeesList,
   setEmployeesList,
 }: Props) {
@@ -16,10 +19,10 @@ export default function EmployeeListItem({
     <li className="border-primary xs:flex-row flex flex-col justify-between gap-2 rounded-xl border-2 p-2">
       <div className="flex flex-col gap-1">
         <p>
-          <span className="font-medium">Full name:</span> example example
+          <span className="font-medium">Full name:</span> {employee.fullName}
         </p>
         <p>
-          <span className="font-medium">Email:</span> example@example.com
+          <span className="font-medium">Email:</span> {employee.email}
         </p>
         <p>
           <span className="font-medium">Teams:</span> team1, team2, team3

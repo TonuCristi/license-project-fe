@@ -2,7 +2,6 @@ import { AxiosResponse } from "axios";
 import { api } from "../config/api";
 import {
   AppointmentResponse,
-  // AppointmentsResponse,
   CreateAppointment,
   EditAppointment,
 } from "../types/appointment.type";
