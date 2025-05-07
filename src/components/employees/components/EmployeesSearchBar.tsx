@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -7,33 +6,21 @@ import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { searchBarSchema } from "../../../schemas/searchBar.schema";
 import { SearchBar } from "../../../types/searchBar.type";
-import { useFetchContacts } from "../hooks/useFetchContacts";
 
-export default function ContactsSearchBar() {
+export default function EmployeesSearchBar() {
   const methods = useForm<SearchBar>({
     defaultValues: {
       value: "",
     },
     resolver: zodResolver(searchBarSchema),
   });
-  const { getContacts } = useFetchContacts();
-
-  const { watch } = methods;
-
-  useEffect(() => {
-    const { unsubscribe } = watch(({ value }) => {
-      getContacts(value);
-    });
-
-    return () => unsubscribe();
-  }, [watch, getContacts]);
 
   return (
     <FormProvider {...methods}>
       <form className="w-full">
         <Input
           name="value"
-          placeholder="Search your contact..."
+          placeholder="Search your employee..."
           rightIcon={<HiMiniMagnifyingGlass className="text-md stroke-1" />}
         />
       </form>

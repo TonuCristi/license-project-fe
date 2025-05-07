@@ -1,6 +1,6 @@
-import { HiMiniUser } from "react-icons/hi2";
-import { Link } from "react-router";
 import NavbarItem from "../../header/NavbarItem";
+import { Link } from "react-router";
+import { HiMiniUser } from "react-icons/hi2";
 
 export default function EmployeesLink() {
   return (
