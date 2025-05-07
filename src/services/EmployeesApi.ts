@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { api } from "../config/api";
-import { EmployeeResponse } from "../types/employee.type";
+import { AddEmployee, EmployeeResponse } from "../types/employee.type";
 
 const URL = "/api/employees";
 
@@ -21,5 +21,15 @@ export const EmployeesApi = {
     return api
       .delete(`${URL}/delete-employee/${employeeId}`)
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+  },
+  addEmployee(employee: AddEmployee) {
+    return api
+      .post(`${URL}/add-employee`, employee)
+      .then(
+        ({
+          data,
+        }: AxiosResponse<{ newEmployee: EmployeeResponse; message: string }>) =>
+          data,
+      );
   },
 };
