@@ -3,19 +3,20 @@ import { useState } from "react";
 import Button from "../Button";
 import Contacts from "../contacts/components/Contacts";
 import Overlay from "../Overlay";
-import { HiMiniUserGroup, HiMiniXMark } from "react-icons/hi2";
+import NavbarItem from "./NavbarItem";
+import { HiMiniBookOpen, HiMiniXMark } from "react-icons/hi2";
 
 export default function ContactsButton() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <li>
+    <NavbarItem>
       <Button
         variant="empty"
         onClick={() => setIsOpen(true)}
         className="text-xl text-blue-200 transition-colors ease-initial hover:text-white"
       >
-        <HiMiniUserGroup />
+        <HiMiniBookOpen />
       </Button>
 
       {isOpen && (
@@ -30,6 +31,6 @@ export default function ContactsButton() {
           <Contacts />
         </Overlay>
       )}
-    </li>
+    </NavbarItem>
   );
 }

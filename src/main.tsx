@@ -8,6 +8,7 @@ import AuthProvider from "./contexts/AuthContext.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
+import EmployeesPage from "./pages/EmployeesPage.tsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Toaster } from "react-hot-toast";
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "/profile", element: <ProfilePage /> },
+      { path: "/employees", element: <EmployeesPage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
     ],

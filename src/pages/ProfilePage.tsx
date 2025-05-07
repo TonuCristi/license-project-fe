@@ -5,7 +5,7 @@ import UserInfoSection from "../components/profile/components/UserInfoSection";
 
 export default function ProfilePage() {
   return (
-    <div className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-6 overflow-hidden overflow-y-auto border-x-2 p-4 lg:w-5xl">
+    <div className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-5 overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">
       <h1 className="text-xl font-medium">Profile</h1>
       <UserInfoSection />
       <section className="flex flex-col gap-1">
