@@ -59,7 +59,7 @@ export default function EditContactForm({ contact }: Props) {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-primary xs:w-75 xxs:w-55 absolute top-full right-0 z-50 mt-3 flex w-50 flex-col rounded-xl border-2 bg-white p-3"
+        className="border-primary xxs:w-64 absolute top-11/12 right-0 z-50 mt-3 flex w-52 flex-col rounded-xl border-2 bg-white p-3"
       >
         <h2 className="mb-1 text-lg font-medium">Edit contact</h2>
         <div className="mb-3 flex flex-col gap-3">

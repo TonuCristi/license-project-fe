@@ -7,43 +7,36 @@ import Message from "../../Message";
 import Button from "../../Button";
 import InputContainer from "../../input/InputContainer";
 
-import { contactFormSchema } from "../../../schemas/contactForm.schema";
-import { CreateContact } from "../../../types/contact.type";
-import { useCreateContact } from "../hooks/useCreateContact";
+import { employeeFormSchema } from "../../../schemas/employeeForm.schema";
+import { AddEmployee } from "../../../types/employee.type";
 
 const inputs = [
   {
-    label: "Name",
-    id: "name",
-    name: "name",
-    placeholder: "Name...",
+    label: "Full name",
+    id: "fullName",
+    name: "fullName",
+    placeholder: "Full name...",
   },
   {
-    label: "Phone number",
-    id: "phoneNumber",
-    name: "phoneNumber",
-    placeholder: "Phone number...",
-  },
-  {
-    label: "Description",
-    id: "description",
-    name: "description",
-    placeholder: "Description...",
+    label: "Email",
+    id: "email",
+    name: "email",
+    placeholder: "Email...",
   },
 ] as const;
 
-export default function CreateContactForm() {
-  const methods = useForm<CreateContact>({
+export default function AddEmployeeForm() {
+  const methods = useForm<AddEmployee>({
     defaultValues: {
-      name: "",
-      phoneNumber: "",
-      description: "",
+      fullName: "",
+      email: "",
     },
-    resolver: zodResolver(contactFormSchema),
+    resolver: zodResolver(employeeFormSchema),
   });
-  const { createContact, isLoading } = useCreateContact();
 
-  const onSubmit: SubmitHandler<CreateContact> = (data) => createContact(data);
+  const onSubmit: SubmitHandler<AddEmployee> = (data) => {
+    console.log(data);
+  };
 
   const {
     handleSubmit,
@@ -56,7 +49,7 @@ export default function CreateContactForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="border-primary xxs:w-64 absolute top-full right-0 z-50 mt-3 flex w-52 flex-col rounded-xl border-2 bg-white p-3"
       >
-        <h2 className="mb-1 text-lg font-medium">Create contact</h2>
+        <h2 className="mb-1 text-lg font-medium">Add employee</h2>
         <div className="mb-3 flex flex-col gap-3">
           {inputs.map(({ label, id, name, placeholder }) => (
             <InputContainer key={id}>
@@ -68,7 +61,7 @@ export default function CreateContactForm() {
             </InputContainer>
           ))}
         </div>
-        <Button disabled={isLoading}>Create</Button>
+        <Button>Add</Button>
       </form>
     </FormProvider>
   );
