@@ -12,7 +12,6 @@ export function useEditAppointment() {
     filters,
     appointmentsYears,
     setAppointments,
-    setFilters,
     setAppointmentsYears,
   } = useContext(AppointmentsContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -51,7 +50,6 @@ export function useEditAppointment() {
           setAppointmentsYears((prev) => [
             ...prev.filter((year) => year != oldAppointmentYear),
           ]);
-          setFilters({ year: `${editedAppointmentYear}`, month: "", day: "" });
         }
 
         if (+filters.year === editedAppointmentYear) {

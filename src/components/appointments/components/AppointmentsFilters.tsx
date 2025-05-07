@@ -92,7 +92,6 @@ export default function AppointmentsFilters() {
           <Select
             name="year"
             placeholder="Select a year"
-            value={filters.year}
             options={yearOptions}
             disabled={isAppointmentsFiltersDataLoading}
           />
@@ -102,7 +101,6 @@ export default function AppointmentsFilters() {
           <Select
             name="month"
             placeholder="Select a month"
-            // value={filters.month}
             options={monthOptions}
             disabled={isAppointmentsFiltersDataLoading}
           />
@@ -112,7 +110,6 @@ export default function AppointmentsFilters() {
           <Select
             name="day"
             placeholder="Select a day"
-            // value={filters.day}
             options={dayOptions}
             disabled={isAppointmentsFiltersDataLoading}
           />

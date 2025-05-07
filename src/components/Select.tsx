@@ -36,7 +36,6 @@ export default function Select({
   options,
   name,
   placeholder,
-  value,
   ...props
 }: Props) {
   const { register } = useFormContext();
@@ -44,7 +43,7 @@ export default function Select({
   const placeholderOption = { value: "", placeholder };
   return (
     <select
-      {...register(name, { value })}
+      {...register(name)}
       {...props}
       defaultValue={placeholderOption.value}
       className={twMerge(selectVariants({ variant, className }))}
