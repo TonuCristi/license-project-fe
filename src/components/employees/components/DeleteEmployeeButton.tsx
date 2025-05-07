@@ -1,8 +1,16 @@
 import { useState } from "react";
+
 import Button from "../../Button";
 import ConfirmationModal from "../../ConfirmationModal";
 
-export default function DeleteEmployeeButton() {
+import { useDeleteEmployee } from "../hooks/useDeleteEmployee";
+
+type Props = {
+  employeeId: string;
+};
+
+export default function DeleteEmployeeButton({ employeeId }: Props) {
+  const { deleteEmployee, isLoading } = useDeleteEmployee();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -12,9 +20,9 @@ export default function DeleteEmployeeButton() {
       </Button>
       {isOpen && (
         <ConfirmationModal
-          onAprove={() => console.log()}
+          onAprove={() => deleteEmployee(employeeId)}
           onReject={() => setIsOpen(false)}
-          //   isLoading={isLoading}
+          isLoading={isLoading}
         >
           Are you sure about deleting this contact?
         </ConfirmationModal>

@@ -17,4 +17,9 @@ export const EmployeesApi = {
           data,
       );
   },
+  deleteEmployee(employeeId: string) {
+    return api
+      .delete(`${URL}/delete-employee/${employeeId}`)
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+  },
 };
