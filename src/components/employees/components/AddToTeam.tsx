@@ -1,4 +1,4 @@
-import TeamsDropdown from "./TeamsDropdown";
+import AddToTeamDropdown from "./AddToTeamDropdown";
 
 type Props = {
   employeeList: string[];
@@ -10,7 +10,7 @@ export default function AddToTeam({ employeeList }: Props) {
       <span className="font-medium">
         Selected employees: {employeeList.length}
       </span>
-      <TeamsDropdown />
+      <AddToTeamDropdown />
     </div>
   );
 }
