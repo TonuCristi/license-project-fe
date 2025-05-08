@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useContext, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 import EmployeeListItem from "./EmployeeListItem";
@@ -22,11 +16,10 @@ export default function EmployeesList({
   employeesList,
   setEmployeesList,
 }: Props) {
-  const { employees, pages, isLoading, setPages } =
+  const { employees, pages, offset, isLoading, setPages, setOffset } =
     useContext(EmployeesContext);
   const methods = useFormContext();
   const { getEmployees } = useFetchEmployees();
-  const [offset, setOffset] = useState<number>(0);
 
   const { watch } = methods;
 
@@ -39,7 +32,7 @@ export default function EmployeesList({
       setPages((prev) => prev - 1);
       setOffset((prev) => prev - 1);
     }
-  }, [employees, offset, setPages]);
+  }, [employees, offset, setPages, setOffset]);
 
   return (
     <div className="flex flex-col items-center gap-8">

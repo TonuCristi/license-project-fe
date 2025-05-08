@@ -37,11 +37,14 @@ export default function Pagination({
           pages >= 3 && "grid-cols-3",
         )}
       >
-        {offset > 0 && (
-          <div className="border-primary flex h-7 w-7 items-center justify-center rounded-full border-2 p-1">
-            {offset}
-          </div>
-        )}
+        <div
+          className={twMerge(
+            "border-primary flex h-7 w-7 items-center justify-center rounded-full border-2 p-1",
+            offset === 0 && "opacity-0",
+          )}
+        >
+          {offset}
+        </div>
         <div className="bg-primary border-primary flex h-7 w-7 items-center justify-center rounded-full border-2 p-1 text-white">
           {offset + 1}
         </div>

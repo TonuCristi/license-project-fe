@@ -9,6 +9,7 @@ import InputContainer from "../../input/InputContainer";
 
 import { employeeFormSchema } from "../../../schemas/employeeForm.schema";
 import { AddEmployee } from "../../../types/employee.type";
+import { useAddEmployee } from "../hooks/useAddEmployee";
 
 const inputs = [
   {
@@ -40,9 +41,9 @@ export default function AddEmployeeForm() {
     resolver: zodResolver(employeeFormSchema),
   });
 
-  const onSubmit: SubmitHandler<AddEmployee> = (data) => {
-    console.log(data);
-  };
+  const { addEmployee, isLoading } = useAddEmployee();
+
+  const onSubmit: SubmitHandler<AddEmployee> = (data) => addEmployee(data);
 
   const {
     handleSubmit,
@@ -67,7 +68,7 @@ export default function AddEmployeeForm() {
             </InputContainer>
           ))}
         </div>
-        <Button>Add</Button>
+        <Button disabled={isLoading}>Add</Button>
       </form>
     </FormProvider>
   );
