@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
+import TeamsList from "./TeamsList";
 import { HiMiniChevronDown } from "react-icons/hi2";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
@@ -25,13 +26,7 @@ export default function TeamsDropdown() {
         />
       </button>
 
-      {isOpen && (
-        <ul className="border-primary absolute top-full right-0 z-50 mt-1 flex w-full flex-col rounded-xl border-2 bg-white p-1">
-          <li>aaa</li>
-          <li>bbb</li>
-          <li>ccc</li>
-        </ul>
-      )}
+      {isOpen && <TeamsList />}
     </div>
   );
 }

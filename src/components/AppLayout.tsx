@@ -9,12 +9,14 @@ import { useFetchRoom } from "./profile/hooks/useFetchRoom";
 import { useFetchContacts } from "./contacts/hooks/useFetchContacts";
 import { useFetchNotifications } from "./notifications/hooks/useFetchNotifications";
 import { useSSE } from "./notifications/hooks/useSSE";
+import { useFetchTeams } from "./teams/hooks/useFetchTeams";
 
 export default function AppLayout() {
   const { isLoading: isLoggedUserLoading } = useFetchLoggedUser();
   const { isLoading: isRoomLoading } = useFetchRoom();
-  const { getContacts, isLoading } = useFetchContacts();
+  const { getContacts, isLoading: isContactsLoading } = useFetchContacts();
   const { isLoading: isNotificationsLoading } = useFetchNotifications();
+  const { isLoading: isTeamsLoading } = useFetchTeams();
   useSSE();
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,8 +40,9 @@ export default function AppLayout() {
     pathnames ||
     isLoggedUserLoading ||
     isRoomLoading ||
-    isLoading ||
-    isNotificationsLoading
+    isContactsLoading ||
+    isNotificationsLoading ||
+    isTeamsLoading
   ) {
     return (
       <div className="flex h-screen items-center justify-center">

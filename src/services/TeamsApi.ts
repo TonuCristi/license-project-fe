@@ -13,4 +13,9 @@ export const TeamsApi = {
           data,
       );
   },
+  getTeams() {
+    return api
+      .get(`${URL}/retrieve-teams`)
+      .then(({ data }: AxiosResponse<{ teams: TeamResponse[] }>) => data.teams);
+  },
 };
