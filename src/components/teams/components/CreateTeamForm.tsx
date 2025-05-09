@@ -9,18 +9,19 @@ import InputContainer from "../../input/InputContainer";
 
 import { CreateTeam } from "../../../types/team.type";
 import { teamFormSchema } from "../../../schemas/teamForm.schema";
+import { useCreateTeam } from "../hooks/useCreateTeam";
 
 export default function CreateTeamForm() {
   const methods = useForm<CreateTeam>({
     defaultValues: {
-      teamName: "",
+      name: "",
     },
     resolver: zodResolver(teamFormSchema),
   });
 
-  const onSubmit: SubmitHandler<CreateTeam> = (data) => {
-    console.log(data);
-  };
+  const { createTeam, isLoading } = useCreateTeam();
+
+  const onSubmit: SubmitHandler<CreateTeam> = (data) => createTeam(data);
 
   const {
     handleSubmit,
@@ -36,14 +37,14 @@ export default function CreateTeamForm() {
         <h2 className="mb-1 text-lg font-medium">Create team</h2>
         <div className="mb-3 flex flex-col gap-3">
           <InputContainer>
-            <Label htmlFor="teamName">Team name</Label>
-            <Input id="teamName" name="teamName" placeholder="Team name" />
-            {errors.teamName && (
-              <Message variant="error">{errors.teamName.message}</Message>
+            <Label htmlFor="name">Team name</Label>
+            <Input id="name" name="name" placeholder="Team name" />
+            {errors.name && (
+              <Message variant="error">{errors.name.message}</Message>
             )}
           </InputContainer>
         </div>
-        <Button>Create</Button>
+        <Button disabled={isLoading}>Create</Button>
       </form>
     </FormProvider>
   );
