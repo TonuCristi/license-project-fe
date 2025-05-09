@@ -16,7 +16,7 @@ export function useCreateTeam() {
       .then((res) => {
         const newTeam = mapTeam(res.newTeam);
 
-        setTeams((prev) => [newTeam, ...prev]);
+        setTeams((prev) => [...prev, newTeam]);
 
         toast.success(res.message);
       })
