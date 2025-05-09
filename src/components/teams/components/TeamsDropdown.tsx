@@ -26,7 +26,7 @@ export default function TeamsDropdown() {
         />
       </button>
 
-      {isOpen && <TeamsList />}
+      {isOpen && <TeamsList setIsOpen={setIsOpen} />}
     </div>
   );
 }

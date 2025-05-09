@@ -4,21 +4,19 @@ import { useEffect } from "react";
 import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
-import { useFetchEmployees } from "../hooks/useFetchEmployees";
-
-export default function EmployeesSearchBar() {
-  const { getEmployees } = useFetchEmployees();
+export default function TeamMembersSearchBar() {
   const methods = useFormContext();
 
   const { watch } = methods;
 
   useEffect(() => {
     const { unsubscribe } = watch(({ value }) => {
-      getEmployees(value, "0", "9");
+      // getEmployees(value, "0", "9");
+      console.log(value);
     });
 
     return () => unsubscribe();
-  }, [watch, getEmployees]);
+  }, [watch]);
 
   return (
     <form className="w-full">
