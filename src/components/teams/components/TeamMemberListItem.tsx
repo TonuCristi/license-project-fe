@@ -1,3 +1,5 @@
+import DeleteMemberButton from "./DeleteMemberButton";
+
 import { Employee } from "../../../types/employee.type";
 
 type Props = {
@@ -23,7 +25,10 @@ export default function TeamMemberListItem({ member }: Props) {
         </p>
       </div>
       <div className="flex items-center gap-2 self-start">
-        {/* <DeleteEmployeeButton employeeId={employee.id} /> */}
+        <DeleteMemberButton
+          memberId={member.membershipId}
+          employeeId={member.id}
+        />
       </div>
     </li>
   );

@@ -36,4 +36,9 @@ export const TeamsApi = {
           data,
       );
   },
+  deleteMember(memberId: string) {
+    return api
+      .delete(`${URL}/delete-member/${memberId}`)
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+  },
 };

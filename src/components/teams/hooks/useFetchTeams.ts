@@ -5,7 +5,8 @@ import { TeamsApi } from "../../../services/TeamsApi";
 import { mapTeam } from "../../../utlis/mapTeam";
 
 export function useFetchTeams() {
-  const { isLoading, setTeams, setIsLoading } = useContext(TeamsContext);
+  const { isTeamsLoading, setTeams, setIsTeamsLoading } =
+    useContext(TeamsContext);
 
   useEffect(() => {
     TeamsApi.getTeams()
@@ -15,8 +16,8 @@ export function useFetchTeams() {
         setTeams(teams);
       })
       .catch((error) => console.log(error.response.data.message))
-      .finally(() => setIsLoading(false));
-  }, [setTeams, setIsLoading]);
+      .finally(() => setIsTeamsLoading(false));
+  }, [setTeams, setIsTeamsLoading]);
 
-  return { isLoading };
+  return { isTeamsLoading };
 }

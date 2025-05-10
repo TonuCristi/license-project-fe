@@ -1,41 +1,29 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext } from "react";
 
 import { TeamsApi } from "../../../services/TeamsApi";
-import { Employee } from "../../../types/employee.type";
 import { mapEmployee } from "../../../utlis/mapEmployee";
+import { TeamsContext } from "../../../contexts/TeamsContext";
 
 export function useFetchTeamMembers() {
-  const [members, setMembers] = useState<Employee[]>([]);
-  const [pages, setPages] = useState<number>(0);
-  const [offset, setOffset] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { setMembers, setPages, setIsMembersLoading } =
+    useContext(TeamsContext);
 
-  const getTeamMembers = useCallback(function (
-    teamId: string,
-    search: string,
-    offset: string,
-    perPage: string,
-  ) {
-    setIsLoading(true);
-    TeamsApi.getTeamMembers(teamId, search, offset, perPage)
-      .then((res) => {
-        const members = res.members.map((member) => mapEmployee(member));
-        setPages(res.pages);
-        setMembers(members);
-      })
-      .catch((error) => console.log(error.response.data.message))
-      .finally(() => setIsLoading(false));
-  }, []);
+  const getTeamMembers = useCallback(
+    function (teamId: string, search: string, offset: string, perPage: string) {
+      setIsMembersLoading(true);
+      TeamsApi.getTeamMembers(teamId, search, offset, perPage)
+        .then((res) => {
+          const members = res.members.map((member) => mapEmployee(member));
+          setPages(res.pages);
+          setMembers(members);
+        })
+        .catch((error) => console.log(error.response.data.message))
+        .finally(() => setIsMembersLoading(false));
+    },
+    [setMembers, setPages, setIsMembersLoading],
+  );
 
   return {
     getTeamMembers,
-    members,
-    pages,
-    offset,
-    isLoading,
-    setMembers,
-    setPages,
-    setOffset,
-    setIsLoading,
   };
 }
