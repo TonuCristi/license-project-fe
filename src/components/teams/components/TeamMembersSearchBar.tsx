@@ -3,20 +3,15 @@ import { useContext, useEffect } from "react";
 
 import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
+
 import { TeamsContext } from "../../../contexts/TeamsContext";
+import { useFetchTeamMembers } from "../hooks/useFetchTeamMembers";
 
-type Props = {
-  getTeamMembers: (
-    teamId: string,
-    search: string,
-    offset: string,
-    perPage: string,
-  ) => void;
-};
-
-export default function TeamMembersSearchBar({ getTeamMembers }: Props) {
+export default function TeamMembersSearchBar() {
   const { selectedTeam } = useContext(TeamsContext);
   const methods = useFormContext();
+
+  const { getTeamMembers } = useFetchTeamMembers();
 
   const { watch } = methods;
 

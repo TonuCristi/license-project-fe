@@ -16,7 +16,7 @@ export default function AppLayout() {
   const { isLoading: isRoomLoading } = useFetchRoom();
   const { getContacts, isLoading: isContactsLoading } = useFetchContacts();
   const { isLoading: isNotificationsLoading } = useFetchNotifications();
-  const { isLoading: isTeamsLoading } = useFetchTeams();
+  const { isTeamsLoading } = useFetchTeams();
   useSSE();
   const location = useLocation();
   const navigate = useNavigate();

@@ -1,38 +1,25 @@
-import { Dispatch, SetStateAction, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 import TeamMemberListItem from "./TeamMemberListItem";
 import Pagination from "../../Pagination";
 
-import { Employee } from "../../../types/employee.type";
 import { TeamsContext } from "../../../contexts/TeamsContext";
+import { useFetchTeamMembers } from "../hooks/useFetchTeamMembers";
 
-type Props = {
-  getTeamMembers: (
-    teamId: string,
-    search: string,
-    offset: string,
-    perPage: string,
-  ) => void;
-  members: Employee[];
-  pages: number;
-  offset: number;
-  isLoading: boolean;
-  setPages: Dispatch<SetStateAction<number>>;
-  setOffset: Dispatch<SetStateAction<number>>;
-};
-
-export default function TeamMembersList({
-  getTeamMembers,
-  members,
-  pages,
-  offset,
-  isLoading,
-  setPages,
-  setOffset,
-}: Props) {
-  const { selectedTeam } = useContext(TeamsContext);
+export default function TeamMembersList() {
+  const {
+    selectedTeam,
+    members,
+    pages,
+    offset,
+    isMembersLoading,
+    setPages,
+    setOffset,
+  } = useContext(TeamsContext);
   const methods = useFormContext();
+
+  const { getTeamMembers } = useFetchTeamMembers();
 
   const { watch } = methods;
 
@@ -51,17 +38,21 @@ export default function TeamMembersList({
 
   return (
     <div className="xs:gap-8 flex flex-col items-center gap-4">
-      <ul className="flex w-full flex-col gap-2">
-        {members.map((member) => (
-          <TeamMemberListItem key={member.id} member={member} />
-        ))}
-      </ul>
-      <Pagination
-        isLoading={isLoading}
-        pages={pages}
-        offset={offset}
-        setOffset={setOffset}
-      />
+      {members.length > 0 && (
+        <ul className="flex w-full flex-col gap-2">
+          {members.map((member) => (
+            <TeamMemberListItem key={member.id} member={member} />
+          ))}
+        </ul>
+      )}
+      {pages > 1 && (
+        <Pagination
+          isLoading={isMembersLoading}
+          pages={pages}
+          offset={offset}
+          setOffset={setOffset}
+        />
+      )}
     </div>
   );
 }

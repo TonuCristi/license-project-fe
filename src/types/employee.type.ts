@@ -8,6 +8,7 @@ export type EmployeeResponse = {
   fullName: string;
   email: string;
   phoneNumber: string;
+  membership_id: string;
 };
 
 export type Employee = {
@@ -15,4 +16,5 @@ export type Employee = {
   fullName: string;
   email: string;
   phoneNumber: string;
+  membershipId: string;
 };
