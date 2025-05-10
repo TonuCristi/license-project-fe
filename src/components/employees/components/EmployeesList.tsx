@@ -35,7 +35,7 @@ export default function EmployeesList({
   }, [employees, offset, setPages, setOffset]);
 
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="xs:gap-8 flex flex-col items-center gap-4">
       <ul className="flex w-full flex-col gap-2">
         {employees.map((employee) => (
           <EmployeeListItem

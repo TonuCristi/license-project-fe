@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import PageTitle from "../components/PageTitle";
 import CreateTeamButton from "../components/teams/components/CreateTeamButton";
@@ -8,7 +8,11 @@ import TeamsDropdown from "../components/teams/components/TeamsDropdown";
 import { TeamsContext } from "../contexts/TeamsContext";
 
 export default function TeamsPage() {
-  const { selectedTeam } = useContext(TeamsContext);
+  const { selectedTeam, setSelectedTeam } = useContext(TeamsContext);
+
+  useEffect(() => {
+    return () => setSelectedTeam(null);
+  }, [setSelectedTeam]);
 
   return (
     <main className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-5 overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">

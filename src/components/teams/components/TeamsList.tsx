@@ -18,7 +18,7 @@ export default function TeamsList({ setIsOpen }: Props) {
   }
 
   return (
-    <ul className="border-primary scrollbar absolute top-full right-0 z-50 mt-1 flex h-64 w-full flex-col gap-2 overflow-y-auto rounded-xl border-2 bg-white p-2 transition-colors">
+    <ul className="border-primary scrollbar absolute top-full right-0 z-50 mt-1 flex max-h-64 w-full flex-col gap-2 overflow-y-auto rounded-xl border-2 bg-white p-2 transition-colors">
       {teams.map((team) => (
         <li key={team.id}>
           <Button

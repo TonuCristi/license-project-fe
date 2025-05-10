@@ -1,22 +1,34 @@
 import { useFormContext } from "react-hook-form";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
+import { TeamsContext } from "../../../contexts/TeamsContext";
 
-export default function TeamMembersSearchBar() {
+type Props = {
+  getTeamMembers: (
+    teamId: string,
+    search: string,
+    offset: string,
+    perPage: string,
+  ) => void;
+};
+
+export default function TeamMembersSearchBar({ getTeamMembers }: Props) {
+  const { selectedTeam } = useContext(TeamsContext);
   const methods = useFormContext();
 
   const { watch } = methods;
 
   useEffect(() => {
     const { unsubscribe } = watch(({ value }) => {
-      // getEmployees(value, "0", "9");
-      console.log(value);
+      if (selectedTeam) {
+        getTeamMembers(selectedTeam.id, value, "0", "9");
+      }
     });
 
     return () => unsubscribe();
-  }, [watch]);
+  }, [watch, getTeamMembers, selectedTeam]);
 
   return (
     <form className="w-full">
