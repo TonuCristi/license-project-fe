@@ -6,12 +6,18 @@ import { HiMiniChevronDown } from "react-icons/hi2";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
 import { TeamsContext } from "../../../contexts/TeamsContext";
+import { Team } from "../../../types/team.type";
 
 export default function TeamsDropdown() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
-  const { selectedTeam } = useContext(TeamsContext);
+  const { teams, selectedTeam, setSelectedTeam } = useContext(TeamsContext);
+
+  function handleTeamSelection(team: Team) {
+    setSelectedTeam(team);
+    setIsOpen(false);
+  }
 
   return (
     <div ref={containerRef} className="relative">
@@ -30,7 +36,9 @@ export default function TeamsDropdown() {
         />
       </button>
 
-      {isOpen && <TeamsList setIsOpen={setIsOpen} />}
+      {isOpen && (
+        <TeamsList onTeamSelection={handleTeamSelection} teams={teams} />
+      )}
     </div>
   );
 }

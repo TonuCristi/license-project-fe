@@ -5,10 +5,11 @@ import DeleteEmployeeButton from "./DeleteEmployeeButton";
 import EditEmployeeButton from "./EditEmployeeButton";
 
 import { Employee } from "../../../types/employee.type";
+import { twMerge } from "tailwind-merge";
 
 type Props = {
   employee: Employee;
-  employeeList: string[];
+  employeesList: string[];
   setEmployeesList: Dispatch<SetStateAction<string[]>>;
 };
 
@@ -17,8 +18,25 @@ export default function EmployeeListItem({
   employeesList,
   setEmployeesList,
 }: Props) {
+  const isSelected = employeesList.find(
+    (employeeId) => employeeId === employee.id,
+  );
+
+  function handleAddEmployee() {
+    setEmployeesList((prev) =>
+      isSelected
+        ? [...prev.filter((employeeId) => employeeId !== employee.id)]
+        : [...prev, employee.id],
+    );
+  }
+
   return (
-    <li className="border-primary xs:flex-row flex flex-col justify-between gap-2 rounded-xl border-2 p-2">
+    <li
+      className={twMerge(
+        "border-primary xs:flex-row flex flex-col justify-between gap-2 rounded-xl border-2 p-2",
+        !!isSelected && "bg-blue-200",
+      )}
+    >
       <div className="flex flex-col gap-1">
         <p>
           <span className="font-medium">Full name:</span> {employee.fullName}
@@ -38,7 +56,9 @@ export default function EmployeeListItem({
         )}
       </div>
       <div className="flex items-center gap-2 self-start">
-        <Button>Select</Button>
+        <Button onClick={handleAddEmployee}>
+          {isSelected ? "Deselect" : "Select"}
+        </Button>
         <DeleteEmployeeButton employeeId={employee.id} />
         <EditEmployeeButton employee={employee} />
       </div>
