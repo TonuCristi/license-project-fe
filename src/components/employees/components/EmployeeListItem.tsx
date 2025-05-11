@@ -2,6 +2,8 @@ import { Dispatch, SetStateAction } from "react";
 
 import Button from "../../Button";
 import DeleteEmployeeButton from "./DeleteEmployeeButton";
+import EditEmployeeButton from "./EditEmployeeButton";
+
 import { Employee } from "../../../types/employee.type";
 
 type Props = {
@@ -28,13 +30,17 @@ export default function EmployeeListItem({
           <span className="font-medium">Phone number:</span>{" "}
           {employee.phoneNumber}
         </p>
-        <p>
-          <span className="font-medium">Teams:</span> team1, team2, team3
-        </p>
+        {employee.teams.length > 0 && (
+          <p>
+            <span className="font-medium">Teams:</span>{" "}
+            {employee.teams.join(", ")}
+          </p>
+        )}
       </div>
       <div className="flex items-center gap-2 self-start">
         <Button>Select</Button>
         <DeleteEmployeeButton employeeId={employee.id} />
+        <EditEmployeeButton employee={employee} />
       </div>
     </li>
   );

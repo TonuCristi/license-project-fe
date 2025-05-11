@@ -1,6 +1,10 @@
 import { AxiosResponse } from "axios";
 import { api } from "../config/api";
-import { AddEmployee, EmployeeResponse } from "../types/employee.type";
+import {
+  AddEmployee,
+  EditEmployee,
+  EmployeeResponse,
+} from "../types/employee.type";
 
 const URL = "/api/employees";
 
@@ -21,6 +25,18 @@ export const EmployeesApi = {
     return api
       .delete(`${URL}/delete-employee/${employeeId}`)
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+  },
+  editEmployee(employeeId: string, newEditedEmployee: EditEmployee) {
+    return api
+      .put(`${URL}/edit-employee/${employeeId}`, newEditedEmployee)
+      .then(
+        ({
+          data,
+        }: AxiosResponse<{
+          editedEmployee: EmployeeResponse;
+          message: string;
+        }>) => data,
+      );
   },
   addEmployee(employee: AddEmployee) {
     return api

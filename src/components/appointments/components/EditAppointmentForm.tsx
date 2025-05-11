@@ -138,7 +138,7 @@ export default function EditAppointmentForm({ appointment }: Props) {
             </InputContainer>
           </div>
         </div>
-        <Button disabled={isLoading}>Edit</Button>
+        <Button disabled={isLoading}>Save</Button>
       </form>
     </FormProvider>
   );

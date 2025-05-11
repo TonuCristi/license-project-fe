@@ -25,7 +25,7 @@ export default function DeleteMemberButton({ memberId, employeeId }: Props) {
           onReject={() => setIsOpen(false)}
           isLoading={isLoading}
         >
-          Are you sure about deleting this contact?
+          Are you sure about deleting this member?
         </ConfirmationModal>
       )}
     </>

@@ -20,9 +20,12 @@ export default function TeamMemberListItem({ member }: Props) {
           <span className="font-medium">Phone number:</span>{" "}
           {member.phoneNumber}
         </p>
-        <p>
-          <span className="font-medium">Teams:</span> team1, team2, team3
-        </p>
+        {member.teams.length > 0 && (
+          <p>
+            <span className="font-medium">Teams:</span>{" "}
+            {member.teams.join(", ")}
+          </p>
+        )}
       </div>
       <div className="flex items-center gap-2 self-start">
         <DeleteMemberButton
