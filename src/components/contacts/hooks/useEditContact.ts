@@ -10,9 +10,9 @@ export function useEditContact() {
   const { contacts, setContacts } = useContext(ContactsContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  function editContact(contactId: string, editedContactChanges: EditContact) {
+  function editContact(contactId: string, newEditedContact: EditContact) {
     setIsLoading(true);
-    ContactsApi.editContact(contactId, editedContactChanges)
+    ContactsApi.editContact(contactId, newEditedContact)
       .then((res) => {
         const editedContact = mapContact(res);
         const contactIndex = contacts.findIndex(

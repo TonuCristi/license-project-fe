@@ -3,12 +3,15 @@ import { employeeFormSchema } from "../schemas/employeeForm.schema";
 
 export type AddEmployee = z.infer<typeof employeeFormSchema>;
 
+export type EditEmployee = z.infer<typeof employeeFormSchema>;
+
 export type EmployeeResponse = {
   _id: string;
   fullName: string;
   email: string;
   phoneNumber: string;
   membership_id: string;
+  teams: string[];
 };
 
 export type Employee = {
@@ -17,4 +20,5 @@ export type Employee = {
   email: string;
   phoneNumber: string;
   membershipId: string;
+  teams: string[];
 };

@@ -24,7 +24,7 @@ export default function DeleteEmployeeButton({ employeeId }: Props) {
           onReject={() => setIsOpen(false)}
           isLoading={isLoading}
         >
-          Are you sure about deleting this contact?
+          Are you sure about deleting this employee?
         </ConfirmationModal>
       )}
     </>
