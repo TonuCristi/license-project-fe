@@ -20,7 +20,7 @@ export default function Pagination({
   return (
     <div className="text-primary xs:grid-cols-3 xs:gap-4 xs:px-8 grid w-full grid-cols-1 items-center justify-items-center gap-2 font-semibold">
       <div></div>
-      <div className="flex items-center gap-8">
+      <div className="xxs:gap-8 flex items-center gap-4">
         <Button
           variant="empty"
           disabled={isLoading}

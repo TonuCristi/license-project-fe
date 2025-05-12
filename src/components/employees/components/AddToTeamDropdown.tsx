@@ -45,7 +45,7 @@ export default function AddToTeamDropdown({ employeesList }: Props) {
       {isOpen && (
         <TeamsList
           onTeamSelection={handleTeamSelection}
-          isAddToTeamLoading={isLoading}
+          isLoading={isLoading}
         />
       )}
     </div>

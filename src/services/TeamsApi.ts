@@ -41,6 +41,11 @@ export const TeamsApi = {
       .delete(`${URL}/delete-member/${memberId}`)
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
+  deleteTeam(teamId: string) {
+    return api
+      .delete(`${URL}/delete-team/${teamId}`)
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+  },
   addToTeam(teamId: string, employeesIds: string[]) {
     return api
       .post(`${URL}/add-to-team/${teamId}`, { employeesIds })
