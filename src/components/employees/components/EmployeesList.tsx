@@ -41,17 +41,19 @@ export default function EmployeesList({
           <EmployeeListItem
             key={employee.id}
             employee={employee}
-            employeeList={employeesList}
+            employeesList={employeesList}
             setEmployeesList={setEmployeesList}
           />
         ))}
       </ul>
-      <Pagination
-        isLoading={isLoading}
-        pages={pages}
-        offset={offset}
-        setOffset={setOffset}
-      />
+      {pages > 1 && (
+        <Pagination
+          isLoading={isLoading}
+          pages={pages}
+          offset={offset}
+          setOffset={setOffset}
+        />
+      )}
     </div>
   );
 }

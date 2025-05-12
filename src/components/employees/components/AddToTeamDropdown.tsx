@@ -1,14 +1,31 @@
 import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import toast from "react-hot-toast";
 
 import { HiMiniChevronDown } from "react-icons/hi2";
+import TeamsList from "../../teams/components/TeamsList";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
+import { Team } from "../../../types/team.type";
+import { useAddToTeam } from "../hooks/useAddToTeam";
 
-export default function AddToTeamDropdown() {
+type Props = {
+  employeesList: string[];
+};
+
+export default function AddToTeamDropdown({ employeesList }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
+  const { addToTeam, isLoading } = useAddToTeam();
+
+  function handleTeamSelection(team: Team) {
+    if (!employeesList.length) {
+      return toast.error("You didn't select any employees!");
+    }
+
+    addToTeam(team.id, employeesList);
+  }
 
   return (
     <div ref={containerRef} className="relative">
@@ -26,11 +43,10 @@ export default function AddToTeamDropdown() {
       </button>
 
       {isOpen && (
-        <ul className="border-primary absolute top-full right-0 z-50 mt-1 flex w-full flex-col rounded-xl border-2 bg-white p-1">
-          <li>aaa</li>
-          <li>bbb</li>
-          <li>ccc</li>
-        </ul>
+        <TeamsList
+          onTeamSelection={handleTeamSelection}
+          isAddToTeamLoading={isLoading}
+        />
       )}
     </div>
   );

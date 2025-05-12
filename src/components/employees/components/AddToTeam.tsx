@@ -1,16 +1,23 @@
+import { Dispatch, SetStateAction } from "react";
+
+import Button from "../../Button";
 import AddToTeamDropdown from "./AddToTeamDropdown";
 
 type Props = {
-  employeeList: string[];
+  employeesList: string[];
+  setEmployeesList: Dispatch<SetStateAction<string[]>>;
 };
 
-export default function AddToTeam({ employeeList }: Props) {
+export default function AddToTeam({ employeesList, setEmployeesList }: Props) {
   return (
-    <div className="xxs:grid-cols-[80fr_20fr] grid grid-cols-1 items-center gap-2">
+    <div className="grid grid-cols-1 items-center gap-2 sm:grid-cols-[60fr_20fr_20fr]">
       <span className="font-medium">
-        Selected employees: {employeeList.length}
+        Selected employees: {employeesList.length}
       </span>
-      <AddToTeamDropdown />
+      <Button onClick={() => setEmployeesList([])} className="text-nowrap">
+        Clear list
+      </Button>
+      <AddToTeamDropdown employeesList={employeesList} />
     </div>
   );
 }

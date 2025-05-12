@@ -8,7 +8,10 @@ export default function Employees() {
 
   return (
     <div className="flex flex-col gap-3">
-      <AddToTeam employeeList={employeesList} />
+      <AddToTeam
+        employeesList={employeesList}
+        setEmployeesList={setEmployeesList}
+      />
       <EmployeesList
         employeesList={employeesList}
         setEmployeesList={setEmployeesList}
