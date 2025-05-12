@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import toast from "react-hot-toast";
 
 import { HiMiniChevronDown } from "react-icons/hi2";
 import TeamsList from "../../teams/components/TeamsList";
@@ -19,6 +20,10 @@ export default function AddToTeamDropdown({ employeesList }: Props) {
   const { addToTeam, isLoading } = useAddToTeam();
 
   function handleTeamSelection(team: Team) {
+    if (!employeesList.length) {
+      return toast.error("You didn't select any employees!");
+    }
+
     addToTeam(team.id, employeesList);
   }
 

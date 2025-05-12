@@ -37,7 +37,7 @@ export default function EmployeeListItem({
         !!isSelected && "bg-blue-200",
       )}
     >
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 break-all">
         <p>
           <span className="font-medium">Full name:</span> {employee.fullName}
         </p>
@@ -55,7 +55,7 @@ export default function EmployeeListItem({
           </p>
         )}
       </div>
-      <div className="flex items-center gap-2 self-start">
+      <div className="flex flex-wrap items-center gap-2 self-start">
         <Button onClick={handleAddEmployee}>
           {isSelected ? "Deselect" : "Select"}
         </Button>

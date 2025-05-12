@@ -9,7 +9,7 @@ type Props = {
 export default function TeamMemberListItem({ member }: Props) {
   return (
     <li className="border-primary xs:flex-row flex flex-col justify-between gap-2 rounded-xl border-2 p-2">
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 break-all">
         <p>
           <span className="font-medium">Full name:</span> {member.fullName}
         </p>
