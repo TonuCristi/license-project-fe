@@ -22,7 +22,7 @@ export default function ConfirmationModal({
           <Button disabled={isLoading} onClick={onAprove}>
             Aprove
           </Button>
-          <Button variant="reject" onClick={onReject}>
+          <Button variant="reject" disabled={isLoading} onClick={onReject}>
             Reject
           </Button>
         </div>

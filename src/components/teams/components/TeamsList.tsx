@@ -7,12 +7,12 @@ import { TeamsContext } from "../../../contexts/TeamsContext";
 
 type Props = {
   onTeamSelection: (team: Team) => void;
-  isAddToTeamLoading: boolean;
+  isLoading?: boolean;
 };
 
 export default function TeamsList({
   onTeamSelection,
-  isAddToTeamLoading,
+  isLoading = false,
 }: Props) {
   const { teams } = useContext(TeamsContext);
 
@@ -22,7 +22,7 @@ export default function TeamsList({
         <li key={team.id}>
           <Button
             variant="empty"
-            disabled={isAddToTeamLoading}
+            disabled={isLoading}
             onClick={() => onTeamSelection(team)}
             className="w-full rounded-xl bg-blue-100 p-2 text-left hover:bg-blue-200"
           >
