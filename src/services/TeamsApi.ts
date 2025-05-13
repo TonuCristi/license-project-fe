@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { api } from "../config/api";
-import { CreateTeam, TeamResponse } from "../types/team.type";
+import { CreateTeam, EditTeam, TeamResponse } from "../types/team.type";
 import { EmployeeResponse } from "../types/employee.type";
 
 const URL = "/api/teams";
@@ -45,6 +45,16 @@ export const TeamsApi = {
     return api
       .delete(`${URL}/delete-team/${teamId}`)
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+  },
+  editTeam(teamId: string, newEditedTeam: EditTeam) {
+    return api
+      .put(`${URL}/edit-team/${teamId}`, newEditedTeam)
+      .then(
+        ({
+          data,
+        }: AxiosResponse<{ editedTeam: TeamResponse; message: string }>) =>
+          data,
+      );
   },
   addToTeam(teamId: string, employeesIds: string[]) {
     return api

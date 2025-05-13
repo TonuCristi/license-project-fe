@@ -1,7 +1,9 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 
 import Button from "../../Button";
 import AddToTeamDropdown from "./AddToTeamDropdown";
+import { EmployeesContext } from "../../../contexts/EmployeesContext";
+import { twMerge } from "tailwind-merge";
 
 type Props = {
   employeesList: string[];
@@ -9,8 +11,15 @@ type Props = {
 };
 
 export default function AddToTeam({ employeesList, setEmployeesList }: Props) {
+  const { isLoading } = useContext(EmployeesContext);
+
   return (
-    <div className="grid grid-cols-1 items-center gap-2 sm:grid-cols-[60fr_20fr_20fr]">
+    <div
+      className={twMerge(
+        "grid grid-cols-1 items-center gap-2 sm:grid-cols-[60fr_20fr_20fr]",
+        isLoading && "pointer-events-none",
+      )}
+    >
       <span className="font-medium">
         Selected employees: {employeesList.length}
       </span>

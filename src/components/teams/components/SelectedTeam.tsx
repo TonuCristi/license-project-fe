@@ -3,12 +3,13 @@ import { useContext } from "react";
 import Button from "../../Button";
 import SelectedTeamMembers from "./SelectedTeamMembers";
 import DeleteTeamButton from "./DeleteTeamButton";
+import EditTeamButton from "./EditTeamButton";
 
 import { TeamsContext } from "../../../contexts/TeamsContext";
 import { twMerge } from "tailwind-merge";
 
 export default function SelectedTeam() {
-  const { selectedTeam, members, isMembersLoading } = useContext(TeamsContext);
+  const { selectedTeam, isMembersLoading } = useContext(TeamsContext);
 
   return (
     <div className="flex flex-col gap-3">
@@ -19,9 +20,9 @@ export default function SelectedTeam() {
         )}
       >
         <h2 className="font-medium">{selectedTeam?.name} team</h2>
+        <EditTeamButton />
         <DeleteTeamButton />
-        <DeleteTeamButton />
-        <Button size="full" disabled={!members.length} className="text-nowrap">
+        <Button size="full" className="text-nowrap">
           Create meeting
         </Button>
       </div>
