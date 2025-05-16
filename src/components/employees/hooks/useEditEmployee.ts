@@ -21,12 +21,18 @@ export function useEditEmployee() {
             (employee) => employee.id === employeeId,
           );
 
-          const firstHalf = prev.slice(0, editedEmployeeIndex);
-          const secondHalf = prev
-            .slice(editedEmployeeIndex, prev.length)
-            .filter((employee) => employee.id !== employeeId);
+          const oldEmployee = prev.find(
+            (employee) => employee.id === employeeId,
+          );
 
-          return [...firstHalf, editedEmployee, ...secondHalf];
+          const firstHalf = prev.slice(0, editedEmployeeIndex);
+          const secondHalf = prev.slice(editedEmployeeIndex + 1, prev.length);
+
+          return [
+            ...firstHalf,
+            { ...editedEmployee, teams: oldEmployee ? oldEmployee.teams : [] },
+            ...secondHalf,
+          ];
         });
 
         toast.success(res.message);
