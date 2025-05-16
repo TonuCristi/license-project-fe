@@ -18,7 +18,7 @@ export function useAddEmployee() {
         const newEmployee = mapEmployee(res.newEmployee);
 
         if (employees.length < 9) {
-          setEmployees((prev) => [...prev, newEmployee]);
+          setEmployees((prev) => [...prev, { ...newEmployee, teams: [] }]);
         }
 
         if (employees.length === 9) {

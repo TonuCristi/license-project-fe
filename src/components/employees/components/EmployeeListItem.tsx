@@ -30,6 +30,8 @@ export default function EmployeeListItem({
     );
   }
 
+  const hireDate = new Date(employee.hireDate).toLocaleDateString();
+
   return (
     <li
       className={twMerge(
@@ -43,6 +45,9 @@ export default function EmployeeListItem({
         </p>
         <p>
           <span className="font-medium">Email:</span> {employee.email}
+        </p>
+        <p>
+          <span className="font-medium">Hire date:</span> {hireDate}
         </p>
         <p>
           <span className="font-medium">Phone number:</span>{" "}

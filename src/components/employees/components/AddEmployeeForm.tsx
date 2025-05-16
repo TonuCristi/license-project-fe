@@ -17,18 +17,28 @@ const inputs = [
     id: "fullName",
     name: "fullName",
     placeholder: "Full name...",
+    type: "text",
   },
   {
     label: "Phone number",
     id: "phoneNumber",
     name: "phoneNumber",
     placeholder: "Phone number...",
+    type: "text",
   },
   {
     label: "Email",
     id: "email",
     name: "email",
     placeholder: "Email...",
+    type: "text",
+  },
+  {
+    label: "Hire date",
+    id: "hireDate",
+    name: "hireDate",
+    placeholder: "Hire date...",
+    type: "date",
   },
 ] as const;
 
@@ -58,10 +68,15 @@ export default function AddEmployeeForm() {
       >
         <h2 className="mb-1 text-lg font-medium">Add employee</h2>
         <div className="mb-3 flex flex-col gap-3">
-          {inputs.map(({ label, id, name, placeholder }) => (
+          {inputs.map(({ label, id, name, placeholder, type }) => (
             <InputContainer key={id}>
               <Label htmlFor={id}>{label}</Label>
-              <Input id={id} name={name} placeholder={placeholder} />
+              <Input
+                id={id}
+                name={name}
+                type={type}
+                placeholder={placeholder}
+              />
               {errors[name] && (
                 <Message variant="error">{errors[name].message}</Message>
               )}
