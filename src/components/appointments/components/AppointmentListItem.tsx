@@ -9,7 +9,7 @@ type Props = {
   appointment: Appointment;
 };
 
-export default function AppointmentItem({ appointment }: Props) {
+export default function AppointmentListItem({ appointment }: Props) {
   const { id, attendee, attendeePhoneNumber, location, note } = appointment;
 
   const startTime = formatDate(appointment.startTime);

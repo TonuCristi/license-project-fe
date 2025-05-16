@@ -13,7 +13,7 @@ type Props = {
   contact: Contact;
 };
 
-export default function ContactItem({ index, contact }: Props) {
+export default function ContactListItem({ index, contact }: Props) {
   const [isContactInfoOpen, setIsContactInfoOpen] = useState<boolean>(false);
 
   const { id, name, phoneNumber, description } = contact;

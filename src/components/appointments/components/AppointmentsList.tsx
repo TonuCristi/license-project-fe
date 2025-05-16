@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
-import AppointmentItem from "./AppointmentItem";
 import Loader from "../../Loader";
+import AppointmentListItem from "./AppointmentListItem";
 
 import { AppointmentsContext } from "../../../contexts/AppointmentsContext";
 import { formatAppointments } from "../../../utlis/formatAppointments";
@@ -29,7 +29,7 @@ export default function AppointmentsList() {
             </h2>
             <ul className="flex flex-col gap-2">
               {appointmentsPerMonth.appointments.map((appointment) => (
-                <AppointmentItem
+                <AppointmentListItem
                   key={appointment.id}
                   appointment={appointment}
                 />
