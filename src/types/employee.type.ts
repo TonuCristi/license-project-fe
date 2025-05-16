@@ -10,7 +10,6 @@ export type EmployeeResponse = {
   fullName: string;
   email: string;
   phoneNumber: string;
-  membership_id: string;
   teams: string[];
 };
 
@@ -19,6 +18,5 @@ export type Employee = {
   fullName: string;
   email: string;
   phoneNumber: string;
-  membershipId: string;
   teams: string[];
 };
