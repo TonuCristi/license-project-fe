@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import EmployeesPage from "./pages/EmployeesPage.tsx";
 import TeamsPage from "./pages/TeamsPage.tsx";
+import MeetingsPage from "./pages/MeetingsPage.tsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Toaster } from "react-hot-toast";
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <ProfilePage /> },
       { path: "/employees", element: <EmployeesPage /> },
       { path: "/teams", element: <TeamsPage /> },
+      { path: "/meetings", element: <MeetingsPage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
     ],

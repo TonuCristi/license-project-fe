@@ -39,7 +39,6 @@ const dayOptions = [
 
 export default function AppointmentsFilters() {
   const { filters, setFilters } = useContext(AppointmentsContext);
-  // console.log(filters.year);
   const methods = useForm({
     defaultValues: {
       year: filters.year,
