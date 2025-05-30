@@ -7,7 +7,7 @@ const selectVariants = cva("outline-none", {
   variants: {
     variant: {
       primary:
-        "rounded-lg border-2 border-primary px-2 py-1 placeholder:text-sm",
+        "rounded-lg border-2 border-primary px-2 py-1 placeholder:text-sm disabled:cursor-not-allowed",
     },
   },
   defaultVariants: {

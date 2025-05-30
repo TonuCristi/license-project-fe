@@ -1,8 +1,9 @@
 import { useContext } from "react";
 
 import Logo from "../Logo";
-import Navbar from "./Navbar";
 import ProfileBadge from "./ProfileBadge";
+import NavMenu from "./NavMenu";
+import NotificationsButton from "./NotificationsButton";
 
 import { RoomContext } from "../../contexts/RoomContext";
 import { UserContext } from "../../contexts/UserContext";
@@ -17,9 +18,10 @@ export default function Header() {
         <Logo />
       </div>
       <div className="justify-self-center">
-        {(!!room || user?.role !== "assistant") && <Navbar />}
+        {(!!room || user?.role !== "assistant") && <NavMenu />}
       </div>
-      <div className="justify-self-end">
+      <div className="flex items-center gap-4 justify-self-end">
+        <NotificationsButton />
         <ProfileBadge />
       </div>
     </header>

@@ -3,10 +3,10 @@ import { useContext, useState } from "react";
 import Button from "../Button";
 import Notifications from "../notifications/components/Notifications";
 import Overlay from "../Overlay";
+import NavbarItem from "./NavbarItem";
 import { HiMiniBell, HiMiniXMark } from "react-icons/hi2";
 
 import { NotificationsContext } from "../../contexts/NotificationsContext";
-import NavbarItem from "./NavbarItem";
 
 export default function NotificationsButton() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
