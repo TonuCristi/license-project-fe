@@ -9,12 +9,13 @@ export function useFetchMeetings() {
 
   function getTeamMeetings(
     meetingType: string,
+    meetingState: string,
     year: string,
     month: string,
     day: string,
   ) {
     setIsLoading(true);
-    MeetingsApi.getTeamMeetings(meetingType, year, month, day)
+    MeetingsApi.getTeamMeetings(meetingType, meetingState, year, month, day)
       .then((res) => {
         const meetings = res.map((meeting) => mapMeeting(meeting));
         setMeetings(meetings);

@@ -52,9 +52,13 @@ const selects = [
 
 export default function MeetingsDateFilters() {
   const { watch, reset } = useFormContext();
-  const { years, isLoading } = useFetchMeetingsYears(watch("meetingType"));
+  const { years, isLoading: isMeetingYearsLoading } = useFetchMeetingsYears(
+    watch("meetingType"),
+    watch("meetingState"),
+  );
   const { getTeamMeetings } = useFetchMeetings();
-  const { setMeetings } = useContext(MeetingsContext);
+  const { setMeetings, isLoading: isMeetingsLoading } =
+    useContext(MeetingsContext);
 
   const yearOptions = years.map((year) => ({
     value: String(year),
@@ -65,15 +69,23 @@ export default function MeetingsDateFilters() {
     setMeetings([]);
 
     e.preventDefault();
-    reset({ meetingType: watch("meetingType"), year: "", month: "", day: "" });
+    reset({
+      meetingType: watch("meetingType"),
+      meetingState: watch("meetingState"),
+      year: "",
+      month: "",
+      day: "",
+    });
   }
 
   useEffect(() => {
-    const { unsubscribe } = watch(({ meetingType, year, month, day }) => {
-      if (!(year === "" && month === "" && day === "")) {
-        getTeamMeetings(meetingType, year, month, day);
-      }
-    });
+    const { unsubscribe } = watch(
+      ({ meetingType, meetingState, year, month, day }) => {
+        if (!(year === "" && month === "" && day === "")) {
+          getTeamMeetings(meetingType, meetingState, year, month, day);
+        }
+      },
+    );
 
     return () => unsubscribe();
   }, [watch, getTeamMeetings]);
@@ -86,7 +98,7 @@ export default function MeetingsDateFilters() {
           name="year"
           placeholder="Select a year"
           options={yearOptions}
-          disabled={isLoading}
+          disabled={isMeetingYearsLoading || isMeetingsLoading}
         />
       </InputContainer>
       {selects.map(({ label, name, placeholder, options }) => (
@@ -96,7 +108,7 @@ export default function MeetingsDateFilters() {
             name={name}
             placeholder={placeholder}
             options={options}
-            disabled={isLoading}
+            disabled={isMeetingYearsLoading || isMeetingsLoading}
           />
         </InputContainer>
       ))}

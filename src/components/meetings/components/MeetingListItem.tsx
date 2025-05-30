@@ -40,7 +40,7 @@ export default function MeetingListItem({ meeting }: Props) {
         {note.length && (
           <div className="group relative self-end">
             <HiMiniInformationCircle className="text-primary cursor-pointer text-xl" />
-            <p className="border-primary scrollbar absolute right-0 bottom-full hidden h-28 w-44 overflow-hidden overflow-y-auto rounded-lg border-2 bg-white p-1 break-all group-hover:block">
+            <p className="border-primary scrollbar absolute right-0 bottom-full hidden h-24 w-44 overflow-hidden overflow-y-auto rounded-lg border-2 bg-white p-1 break-all group-hover:block">
               {note}
             </p>
           </div>
