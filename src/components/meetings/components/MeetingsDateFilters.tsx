@@ -52,15 +52,18 @@ const selects = [
 
 export default function MeetingsDateFilters() {
   const { watch, reset } = useFormContext();
-  const { years, isLoading: isMeetingYearsLoading } = useFetchMeetingsYears(
+  const { isLoading: isMeetingYearsLoading } = useFetchMeetingsYears(
     watch("meetingType"),
     watch("meetingState"),
   );
   const { getTeamMeetings } = useFetchMeetings();
-  const { setMeetings, isLoading: isMeetingsLoading } =
-    useContext(MeetingsContext);
+  const {
+    meetingsYears,
+    setMeetings,
+    isLoading: isMeetingsLoading,
+  } = useContext(MeetingsContext);
 
-  const yearOptions = years.map((year) => ({
+  const yearOptions = meetingsYears.map((year) => ({
     value: String(year),
     text: String(year),
   }));

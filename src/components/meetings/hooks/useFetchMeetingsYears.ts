@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { MeetingsApi } from "../../../services/MeetingsApi";
+import { MeetingsContext } from "../../../contexts/MeetingsContext";
 
 export function useFetchMeetingsYears(
   meetingType: string,
   meetingState: string,
 ) {
-  const [years, setYears] = useState<number[]>([]);
+  const { setMeetingsYears } = useContext(MeetingsContext);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     MeetingsApi.getMeetingsYears(meetingType, meetingState)
-      .then((res) => setYears(res))
+      .then((res) => setMeetingsYears(res))
       .finally(() => setIsLoading(false));
-  }, [meetingType, meetingState]);
+  }, [meetingType, meetingState, setMeetingsYears]);
 
   return {
-    years,
     isLoading,
   };
 }

@@ -1,14 +1,18 @@
 import { AxiosResponse } from "axios";
 import { api } from "../config/api";
-import { MeetingResponse } from "../types/meeting.type";
+import {
+  CreateMeeting,
+  EditMeeting,
+  MeetingResponse,
+} from "../types/meeting.type";
 
-const TEAM_MEETINGS_URL = "/api/meetings";
+const URL = "/api/meetings";
 
 export const MeetingsApi = {
   getMeetingsYears(meetingType: string, meetingState: string) {
     return api
       .get(
-        `${TEAM_MEETINGS_URL}/retrieve-meetings-years?meetingType=${meetingType}&meetingState=${meetingState}`,
+        `${URL}/retrieve-meetings-years?meetingType=${meetingType}&meetingState=${meetingState}`,
       )
       .then(
         ({ data }: AxiosResponse<{ meetingsYears: number[] }>) =>
@@ -24,11 +28,28 @@ export const MeetingsApi = {
   ) {
     return api
       .get(
-        `${TEAM_MEETINGS_URL}/retrieve-meetings?meetingType=${meetingType}&meetingState=${meetingState}&year=${year}&month=${month}&day=${day}`,
+        `${URL}/retrieve-meetings?meetingType=${meetingType}&meetingState=${meetingState}&year=${year}&month=${month}&day=${day}`,
       )
       .then(
         ({ data }: AxiosResponse<{ meetings: MeetingResponse[] }>) =>
           data.meetings,
+      );
+  },
+  createTeamMeeting(teamId: string, meeting: CreateMeeting) {
+    return api
+      .post(`${URL}/create-team-meeting/${teamId}`, meeting)
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+  },
+  editTeamMeeting(teamId: string, newEditedMeeting: EditMeeting) {
+    return api
+      .post(`${URL}/edit-team-meeting/${teamId}`, newEditedMeeting)
+      .then(
+        ({
+          data,
+        }: AxiosResponse<{
+          editedMeeting: MeetingResponse;
+          message: string;
+        }>) => data,
       );
   },
 };

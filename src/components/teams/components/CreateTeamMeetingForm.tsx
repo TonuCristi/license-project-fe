@@ -9,30 +9,11 @@ import Button from "../../Button";
 import Select from "../../Select";
 import Textarea from "../../Textarea";
 
-import { Appointment, EditAppointment } from "../../../types/appointment.type";
-import { useEditAppointment } from "../hooks/useEditAppointment";
-import { appointmentFormSchema } from "../../../schemas/appointmentForm.schema";
-
-const inputs = [
-  {
-    label: "Attendeee",
-    id: "attendee",
-    name: "attendee",
-    placeholder: "Attendee...",
-  },
-  {
-    label: "Attendee phone number",
-    id: "attendeePhoneNumber",
-    name: "attendeePhoneNumber",
-    placeholder: "Attendee phone number...",
-  },
-  {
-    label: "Location",
-    id: "location",
-    name: "location",
-    placeholder: "Location...",
-  },
-] as const;
+import { meetingFormSchema } from "../../../schemas/meetingForm.schema";
+import { CreateMeeting } from "../../../types/meeting.type";
+import { useCreateTeamMeeting } from "../hooks/useCreateTeamMeeting";
+import { useContext } from "react";
+import { TeamsContext } from "../../../contexts/TeamsContext";
 
 const durationOptions = [
   { value: "1", text: "1" },
@@ -51,54 +32,38 @@ const durationOptions = [
   { value: "14", text: "14" },
 ];
 
-type Props = {
-  appointment: Appointment;
-};
-
-export default function EditAppointmentForm({ appointment }: Props) {
-  const methods = useForm<EditAppointment>({
+export default function CreateTeamMeetingForm() {
+  const methods = useForm<CreateMeeting>({
     defaultValues: {
-      attendee: appointment.attendee,
-      attendeePhoneNumber: appointment.attendeePhoneNumber,
-      location: appointment.location,
-      date:
-        appointment.startTime.split(":")[0] +
-        ":" +
-        appointment.startTime.split(":")[1],
-      duration: String(appointment.duration),
-      note: appointment.note,
+      date: "",
+      duration: "",
+      note: "",
     },
-    resolver: zodResolver(appointmentFormSchema),
+    resolver: zodResolver(meetingFormSchema),
   });
-  const { editAppointment, isLoading } = useEditAppointment();
+  const { selectedTeam } = useContext(TeamsContext);
+  const { createTeamMeeting, isLoading } = useCreateTeamMeeting();
 
   const {
     handleSubmit,
     formState: { errors },
   } = methods;
 
-  const onSubmit: SubmitHandler<EditAppointment> = (data) => {
+  const onSubmit: SubmitHandler<CreateMeeting> = (data) => {
     const date = data.date + ":00Z";
-    editAppointment(appointment.id, { ...data, date });
+    if (selectedTeam) {
+      createTeamMeeting(selectedTeam.id, { ...data, date });
+    }
   };
 
   return (
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-primary xxs:w-72 absolute top-full right-0 z-50 mt-3 flex w-52 flex-col rounded-xl border-2 bg-white p-3 sm:h-auto sm:w-xl"
+        className="border-primary xxs:w-72 absolute top-full right-0 z-50 mt-3 flex h-96 w-52 flex-col rounded-xl border-2 bg-white p-3 sm:h-auto sm:w-xl"
       >
-        <h2 className="mb-1 text-lg font-medium">Edit appointment</h2>
+        <h2 className="mb-1 text-lg font-medium">Create meeting</h2>
         <div className="mb-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {inputs.map(({ label, id, name, placeholder }) => (
-            <InputContainer key={id}>
-              <Label htmlFor={id}>{label}</Label>
-              <Input id={id} name={name} placeholder={placeholder} />
-              {errors[name] && (
-                <Message variant="error">{errors[name].message}</Message>
-              )}
-            </InputContainer>
-          ))}
           <InputContainer>
             <Label htmlFor="date">Date</Label>
             <Input
@@ -122,7 +87,7 @@ export default function EditAppointmentForm({ appointment }: Props) {
               <Message variant="error">{errors.duration.message}</Message>
             )}
           </InputContainer>
-          <div className="sm:col-span-2 sm:row-start-4">
+          <div className="sm:col-span-2">
             <InputContainer>
               <Label htmlFor="note">Note</Label>
               <Textarea
@@ -138,7 +103,7 @@ export default function EditAppointmentForm({ appointment }: Props) {
             </InputContainer>
           </div>
         </div>
-        <Button disabled={isLoading}>Save</Button>
+        <Button disabled={isLoading}>Create</Button>
       </form>
     </FormProvider>
   );

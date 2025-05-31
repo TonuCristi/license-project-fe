@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { appointmentSchema } from "../schemas/createAppointment.schema";
+import { appointmentFormSchema } from "../schemas/appointmentForm.schema";
 
-export type CreateAppointment = z.infer<typeof appointmentSchema>;
+export type CreateAppointment = z.infer<typeof appointmentFormSchema>;
 
-export type EditAppointment = z.infer<typeof appointmentSchema>;
+export type EditAppointment = z.infer<typeof appointmentFormSchema>;
 
 export type AppointmentResponse = {
   _id: string;

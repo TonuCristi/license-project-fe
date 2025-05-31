@@ -11,7 +11,7 @@ import Textarea from "../../Textarea";
 
 import { CreateAppointment } from "../../../types/appointment.type";
 import { useCreateAppointment } from "../hooks/useCreateAppointment";
-import { appointmentSchema } from "../../../schemas/createAppointment.schema";
+import { appointmentFormSchema } from "../../../schemas/appointmentForm.schema";
 
 const inputs = [
   {
@@ -61,7 +61,7 @@ export default function CreateAppointmentForm() {
       duration: "",
       note: "",
     },
-    resolver: zodResolver(appointmentSchema),
+    resolver: zodResolver(appointmentFormSchema),
   });
   const { createAppointment, isLoading } = useCreateAppointment();
 

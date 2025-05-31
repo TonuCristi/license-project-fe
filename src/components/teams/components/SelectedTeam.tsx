@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-import Button from "../../Button";
 import SelectedTeamMembers from "./SelectedTeamMembers";
 import DeleteTeamButton from "./DeleteTeamButton";
 import EditTeamButton from "./EditTeamButton";
+import CreateTeamMeetingButton from "./CreateTeamMeetingButton";
 
 import { TeamsContext } from "../../../contexts/TeamsContext";
 import { twMerge } from "tailwind-merge";
@@ -22,9 +22,7 @@ export default function SelectedTeam() {
         <h2 className="font-medium">{selectedTeam?.name} team</h2>
         <EditTeamButton />
         <DeleteTeamButton />
-        <Button size="full" className="text-nowrap">
-          Create meeting
-        </Button>
+        <CreateTeamMeetingButton />
       </div>
       <SelectedTeamMembers />
     </div>
