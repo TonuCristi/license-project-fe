@@ -43,5 +43,9 @@ export function formatAppointments(appointments: Appointment[]) {
     ),
   }));
 
+  result.sort((a, b) => {
+    return months.indexOf(a.month) - months.indexOf(b.month);
+  });
+
   return result;
 }

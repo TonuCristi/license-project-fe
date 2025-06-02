@@ -1,19 +1,22 @@
-import { useContext } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  // useFormContext,
+} from "react-hook-form";
 
+import Button from "../../Button";
 import InputContainer from "../../input/InputContainer";
 import Label from "../../Label";
 import Input from "../../input/Input";
 import Message from "../../Message";
-import Button from "../../Button";
-import Select from "../../Select";
 import Textarea from "../../Textarea";
+import Select from "../../Select";
 
 import { meetingFormSchema } from "../../../schemas/meetingForm.schema";
-import { CreateMeeting } from "../../../types/meeting.type";
-import { useCreateTeamMeeting } from "../hooks/useCreateTeamMeeting";
-import { TeamsContext } from "../../../contexts/TeamsContext";
+import { EditMeeting, Meeting } from "../../../types/meeting.type";
+import { useEditMeeting } from "../hooks/useEditMeeting";
 
 const durationOptions = [
   { value: "1", text: "1" },
@@ -32,29 +35,32 @@ const durationOptions = [
   { value: "14", text: "14" },
 ];
 
-export default function CreateTeamMeetingForm() {
-  const methods = useForm<CreateMeeting>({
+type Props = {
+  meeting: Meeting;
+};
+
+export default function EditMeetingForm({ meeting }: Props) {
+  const methods = useForm<EditMeeting>({
     defaultValues: {
-      date: "",
-      duration: "",
-      note: "",
+      ...meeting,
+      date:
+        meeting.startTime.split(":")[0] + ":" + meeting.startTime.split(":")[1],
     },
     resolver: zodResolver(meetingFormSchema),
   });
-  const { selectedTeam } = useContext(TeamsContext);
-  const { createTeamMeeting, isLoading } = useCreateTeamMeeting();
+  const { editMeeting, isLoading } = useEditMeeting();
+
+  const onSubmit: SubmitHandler<EditMeeting> = (data) => {
+    const date = data.date + ":00Z";
+    editMeeting(meeting.id, { ...data, date });
+  };
+
+  // const { watch } = useFormContext();
 
   const {
     handleSubmit,
     formState: { errors },
   } = methods;
-
-  const onSubmit: SubmitHandler<CreateMeeting> = (data) => {
-    const date = data.date + ":00Z";
-    if (selectedTeam) {
-      createTeamMeeting(selectedTeam.id, { ...data, date });
-    }
-  };
 
   return (
     <FormProvider {...methods}>
@@ -62,7 +68,7 @@ export default function CreateTeamMeetingForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="border-primary xxs:w-72 absolute top-full right-0 z-50 mt-3 flex h-96 w-52 flex-col rounded-xl border-2 bg-white p-3 sm:h-auto sm:w-xl"
       >
-        <h2 className="mb-1 text-lg font-medium">Create meeting</h2>
+        <h2 className="mb-1 text-lg font-medium">Edit meeting</h2>
         <div className="mb-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <InputContainer>
             <Label htmlFor="date">Date</Label>
@@ -103,7 +109,7 @@ export default function CreateTeamMeetingForm() {
             </InputContainer>
           </div>
         </div>
-        <Button disabled={isLoading}>Create</Button>
+        <Button disabled={isLoading}>Save</Button>
       </form>
     </FormProvider>
   );

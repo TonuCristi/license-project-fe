@@ -43,5 +43,9 @@ export function formatMeetings(meetings: Meeting[]) {
     ),
   }));
 
+  result.sort((a, b) => {
+    return months.indexOf(a.month) - months.indexOf(b.month);
+  });
+
   return result;
 }

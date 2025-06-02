@@ -19,7 +19,7 @@ export const MeetingsApi = {
           data.meetingsYears,
       );
   },
-  getTeamMeetings(
+  getMeetings(
     meetingType: string,
     meetingState: string,
     year: string,
@@ -40,14 +40,15 @@ export const MeetingsApi = {
       .post(`${URL}/create-team-meeting/${teamId}`, meeting)
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
-  editTeamMeeting(teamId: string, newEditedMeeting: EditMeeting) {
+  editTeamMeeting(meetingId: string, newEditedMeeting: EditMeeting) {
     return api
-      .post(`${URL}/edit-team-meeting/${teamId}`, newEditedMeeting)
+      .put(`${URL}/edit-team-meeting/${meetingId}`, newEditedMeeting)
       .then(
         ({
           data,
         }: AxiosResponse<{
           editedMeeting: MeetingResponse;
+          oldMeeting: MeetingResponse;
           message: string;
         }>) => data,
       );

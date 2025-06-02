@@ -11,7 +11,7 @@ export type AppointmentResponse = {
   attendeePhoneNumber: string;
   location: string;
   date: string;
-  duration: number;
+  duration: string;
   endTime: string;
   note: string;
   user_id: string;
@@ -23,7 +23,7 @@ export type Appointment = {
   attendeePhoneNumber: string;
   location: string;
   startTime: string;
-  duration: number;
+  duration: string;
   endTime: string;
   note: string;
   userId: string;
