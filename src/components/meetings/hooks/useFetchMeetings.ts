@@ -7,7 +7,7 @@ import { mapMeeting } from "../../../utlis/mapMeeting";
 export function useFetchMeetings() {
   const { setMeetings, setIsLoading } = useContext(MeetingsContext);
 
-  function getTeamMeetings(
+  function getMeetings(
     meetingType: string,
     meetingState: string,
     year: string,
@@ -15,7 +15,7 @@ export function useFetchMeetings() {
     day: string,
   ) {
     setIsLoading(true);
-    MeetingsApi.getTeamMeetings(meetingType, meetingState, year, month, day)
+    MeetingsApi.getMeetings(meetingType, meetingState, year, month, day)
       .then((res) => {
         const meetings = res.map((meeting) => mapMeeting(meeting));
         setMeetings(meetings);
@@ -23,5 +23,5 @@ export function useFetchMeetings() {
       .finally(() => setIsLoading(false));
   }
 
-  return { getTeamMeetings };
+  return { getMeetings };
 }

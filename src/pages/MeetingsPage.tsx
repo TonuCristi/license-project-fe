@@ -22,8 +22,8 @@ const stateOptions = [
 export default function MeetingsPage() {
   const methods = useForm({
     defaultValues: {
-      meetingType: "",
-      meetingState: "",
+      meetingType: "team",
+      meetingState: "upcoming",
       year: "",
       month: "",
       day: "",

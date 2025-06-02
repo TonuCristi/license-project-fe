@@ -56,7 +56,7 @@ export default function MeetingsDateFilters() {
     watch("meetingType"),
     watch("meetingState"),
   );
-  const { getTeamMeetings } = useFetchMeetings();
+  const { getMeetings } = useFetchMeetings();
   const {
     meetingsYears,
     setMeetings,
@@ -85,13 +85,13 @@ export default function MeetingsDateFilters() {
     const { unsubscribe } = watch(
       ({ meetingType, meetingState, year, month, day }) => {
         if (!(year === "" && month === "" && day === "")) {
-          getTeamMeetings(meetingType, meetingState, year, month, day);
+          getMeetings(meetingType, meetingState, year, month, day);
         }
       },
     );
 
     return () => unsubscribe();
-  }, [watch, getTeamMeetings]);
+  }, [watch, getMeetings]);
 
   return (
     <form className="grid grid-cols-1 items-end gap-x-3 gap-y-2 sm:grid-cols-2 md:flex md:items-end md:justify-between md:gap-3">
