@@ -48,9 +48,18 @@ export const MeetingsApi = {
           data,
         }: AxiosResponse<{
           editedMeeting: MeetingResponse;
-          oldMeeting: MeetingResponse;
           message: string;
         }>) => data,
       );
+  },
+  deleteTeamMeeting(meetingId: string) {
+    return api.delete(`${URL}/delete-team-meeting/${meetingId}`).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        deletedMeeting: MeetingResponse;
+        message: string;
+      }>) => data,
+    );
   },
 };

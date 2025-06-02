@@ -1,6 +1,6 @@
 import { HiMiniInformationCircle } from "react-icons/hi2";
-import Button from "../../Button";
 import EditMeetingButton from "./EditMeetingButton";
+import DeleteMeetingButton from "./DeleteMeetingButton";
 
 import { formatDate } from "../../../utlis/formatDate";
 import { Meeting } from "../../../types/meeting.type";
@@ -36,8 +36,7 @@ export default function MeetingListItem({ meeting }: Props) {
       </div>
       <div className="flex flex-col items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          {/* <DeleteAppointmentButton appointmentId={id} /> */}
-          <Button variant="reject">Delete</Button>
+          <DeleteMeetingButton meetingId={id} />
           <EditMeetingButton meeting={meeting} />
         </div>
 
