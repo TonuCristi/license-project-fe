@@ -7,8 +7,8 @@ export function useFetchMeetingsYears(
   meetingType: string,
   meetingState: string,
 ) {
-  const { setMeetingsYears } = useContext(MeetingsContext);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { setMeetingsYears } = useContext(MeetingsContext);
 
   useEffect(() => {
     MeetingsApi.getMeetingsYears(meetingType, meetingState)

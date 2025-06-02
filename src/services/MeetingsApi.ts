@@ -57,7 +57,6 @@ export const MeetingsApi = {
       ({
         data,
       }: AxiosResponse<{
-        deletedMeeting: MeetingResponse;
         message: string;
       }>) => data,
     );

@@ -16,7 +16,7 @@ export default function MeetingListItem({ meeting }: Props) {
   const endTime = formatDate(meeting.endTime);
 
   return (
-    <li className="border-primary flex rounded-lg border-2 p-2">
+    <li className="border-primary xs:flex-row flex flex-col gap-2 rounded-lg border-2 p-2">
       <div className="flex w-full flex-col gap-2">
         {teamName ? (
           <p>
@@ -34,7 +34,7 @@ export default function MeetingListItem({ meeting }: Props) {
           <span className="font-medium">End time:</span> {endTime}
         </p>
       </div>
-      <div className="flex flex-col items-center justify-between gap-2">
+      <div className="xs:items-center xs:flex-col flex flex-row justify-between gap-2">
         <div className="flex items-center gap-2">
           <DeleteMeetingButton meetingId={id} />
           <EditMeetingButton meeting={meeting} />

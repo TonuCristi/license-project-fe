@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 
 import Button from "../../Button";
 import EditAppointmentForm from "./EditAppointmentForm";
-import { HiMiniPencil } from "react-icons/hi2";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
 import { Appointment } from "../../../types/appointment.type";
@@ -18,13 +17,7 @@ export default function EditAppointmentButton({ appointment }: Props) {
 
   return (
     <div ref={containerRef} className="relative">
-      <Button
-        variant="empty"
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="mt-auto"
-      >
-        <HiMiniPencil className="text-primary stroke-1 text-lg" />
-      </Button>
+      <Button onClick={() => setIsOpen((prev) => !prev)}>Edit</Button>
 
       {isOpen && <EditAppointmentForm appointment={appointment} />}
     </div>

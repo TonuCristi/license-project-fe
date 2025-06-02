@@ -22,7 +22,7 @@ export default function ProfileBadge() {
         onClick={() => setIsOpen((prev) => !prev)}
         className="flex w-full cursor-pointer items-center gap-1 rounded-lg bg-white p-1 sm:gap-2 sm:p-2"
       >
-        <p className="hidden text-ellipsis md:block">{user?.username}</p>
+        <p className="hidden text-nowrap md:block">{user?.username}</p>
         <div className="bg-primary h-7 w-7 rounded-full sm:h-8 sm:w-8"></div>
         <HiMiniChevronDown
           className={twMerge(

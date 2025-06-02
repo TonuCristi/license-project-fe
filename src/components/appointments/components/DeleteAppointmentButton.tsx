@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import Button from "../../Button";
 import ConfirmationModal from "../../ConfirmationModal";
-import { HiMiniXMark } from "react-icons/hi2";
 
 import { useDeleteAppointment } from "../hooks/useDeleteAppointment";
 
@@ -16,12 +15,8 @@ export default function DeleteAppointmentButton({ appointmentId }: Props) {
 
   return (
     <>
-      <Button
-        variant="empty"
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="mt-auto"
-      >
-        <HiMiniXMark className="text-primary stroke-1 text-xl" />
+      <Button variant="reject" onClick={() => setIsOpen(true)}>
+        Delete
       </Button>
 
       {isOpen && (

@@ -6,10 +6,12 @@ import SelectedTeam from "../components/teams/components/SelectedTeam";
 import TeamsDropdown from "../components/teams/components/TeamsDropdown";
 
 import { TeamsContext } from "../contexts/TeamsContext";
+import { useFetchTeams } from "../components/teams/hooks/useFetchTeams";
 
 export default function TeamsPage() {
   const { selectedTeam, setSelectedTeam, setMembers, setPages, setOffset } =
     useContext(TeamsContext);
+  useFetchTeams();
 
   useEffect(() => {
     return () => {

@@ -14,9 +14,9 @@ export function useCreateContact() {
     setIsLoading(true);
     ContactsApi.createContact(contact)
       .then((res) => {
-        const newContact = mapContact(res);
+        const newContact = mapContact(res.newContact);
         setContacts((prev) => [...prev, newContact]);
-        toast.success("Contact created successfully!");
+        toast.success(res.message);
       })
       .catch((error) => toast.error(error.response.data.message))
       .finally(() => setIsLoading(false));
