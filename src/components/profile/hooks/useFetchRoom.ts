@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import toast from "react-hot-toast";
 
 import { RoomContext } from "../../../contexts/RoomContext";
 import { RoomsApi } from "../../../services/RoomsApi";
@@ -20,7 +19,6 @@ export function useFetchRoom() {
         setAssistant(assistant);
         setChief(chief);
       })
-      .catch((error) => toast.error(error.response.data.message))
       .finally(() => setIsLoading(false));
   }, [setRoom, setAssistant, setChief, setIsLoading]);
 
