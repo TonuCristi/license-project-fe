@@ -18,6 +18,7 @@ export default function DeleteMeetingButton({ meetingId }: Props) {
       <Button variant="reject" onClick={() => setIsOpen(true)}>
         Delete
       </Button>
+
       {isOpen && (
         <ConfirmationModal
           onAprove={() => deleteMeeting(meetingId)}

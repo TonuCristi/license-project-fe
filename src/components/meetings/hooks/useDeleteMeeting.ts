@@ -15,7 +15,6 @@ export function useDeleteMeeting() {
         setMeetings((prev) => [
           ...prev.filter((meeting) => meeting.id !== meetingId),
         ]);
-        console.log(res);
 
         toast.success(res.message);
       })

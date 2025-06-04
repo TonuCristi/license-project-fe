@@ -17,7 +17,6 @@ export function useFetchTeamMembers() {
           setPages(res.pages);
           setMembers(members);
         })
-        .catch((error) => console.log(error.response.data.message))
         .finally(() => setIsMembersLoading(false));
     },
     [setMembers, setPages, setIsMembersLoading],

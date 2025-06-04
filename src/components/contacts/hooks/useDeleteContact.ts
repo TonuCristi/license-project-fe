@@ -11,11 +11,12 @@ export function useDeleteContact() {
   function deleteContact(contactId: string) {
     setIsLoading(true);
     ContactsApi.deleteContact(contactId)
-      .then(() => {
+      .then((res) => {
         setContacts((prev) => [
           ...prev.filter((contact) => contact.id !== contactId),
         ]);
-        toast.success("Contact deleted successfully!");
+
+        toast.success(res);
       })
       .catch((error) => toast.error(error.response.data.message))
       .finally(() => setIsLoading(false));

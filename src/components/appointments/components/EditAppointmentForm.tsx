@@ -58,15 +58,11 @@ type Props = {
 export default function EditAppointmentForm({ appointment }: Props) {
   const methods = useForm<EditAppointment>({
     defaultValues: {
-      attendee: appointment.attendee,
-      attendeePhoneNumber: appointment.attendeePhoneNumber,
-      location: appointment.location,
+      ...appointment,
       date:
         appointment.startTime.split(":")[0] +
         ":" +
         appointment.startTime.split(":")[1],
-      duration: String(appointment.duration),
-      note: appointment.note,
     },
     resolver: zodResolver(appointmentFormSchema),
   });

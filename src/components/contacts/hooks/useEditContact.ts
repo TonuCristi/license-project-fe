@@ -14,7 +14,7 @@ export function useEditContact() {
     setIsLoading(true);
     ContactsApi.editContact(contactId, newEditedContact)
       .then((res) => {
-        const editedContact = mapContact(res);
+        const editedContact = mapContact(res.editedContact);
         const contactIndex = contacts.findIndex(
           (contact) => contact.id === contactId,
         );
@@ -29,7 +29,7 @@ export function useEditContact() {
             ...filteredContacts.slice(contactIndex, filteredContacts.length),
           ];
         });
-        toast.success("Contact edited successfully!");
+        toast.success(res.message);
       })
       .catch((error) => toast.error(error.response.data.message))
       .finally(() => setIsLoading(false));

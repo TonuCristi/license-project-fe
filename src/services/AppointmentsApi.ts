@@ -9,7 +9,7 @@ import {
 const URL = "/api/appointments";
 
 export const AppointmentsApi = {
-  getAppointments(year?: string, month?: string, day?: string) {
+  getAppointments(year: string, month: string, day: string) {
     return api
       .get(
         `${URL}/retrieve-appointments?year=${year || ""}&month=${month || ""}&day=${day || ""}`,
@@ -46,7 +46,6 @@ export const AppointmentsApi = {
       ({
         data,
       }: AxiosResponse<{
-        deletedAppointment: AppointmentResponse;
         message: string;
       }>) => data,
     );
@@ -62,7 +61,6 @@ export const AppointmentsApi = {
           data,
         }: AxiosResponse<{
           editedAppointment: AppointmentResponse;
-          oldAppointment: AppointmentResponse;
           message: string;
         }>) => data,
       );

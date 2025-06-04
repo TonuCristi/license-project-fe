@@ -16,7 +16,7 @@ export default function AppointmentListItem({ appointment }: Props) {
   const endTime = formatDate(appointment.endTime);
 
   return (
-    <li className="border-primary flex rounded-lg border-2 p-2">
+    <li className="border-primary xs:flex-row flex flex-col gap-2 rounded-lg border-2 p-2">
       <div className="flex w-full flex-col gap-2">
         <p>
           <span className="font-medium">Attendee:</span> {attendee}
@@ -35,10 +35,11 @@ export default function AppointmentListItem({ appointment }: Props) {
           <span className="font-medium">End time:</span> {endTime}
         </p>
       </div>
-      <div className="flex flex-col items-center gap-2">
-        <DeleteAppointmentButton appointmentId={id} />
-
-        <EditAppointmentButton appointment={appointment} />
+      <div className="xs:items-center xs:flex-col flex flex-row justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <DeleteAppointmentButton appointmentId={id} />
+          <EditAppointmentButton appointment={appointment} />
+        </div>
 
         {note.length && (
           <div className="group relative self-end">

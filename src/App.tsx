@@ -8,7 +8,6 @@ import ContactsProvider from "./contexts/ContactsContext";
 import RoomProvider from "./contexts/RoomContext";
 import NotificationsProvider from "./contexts/NotificationsContext";
 import UserProvider from "./contexts/UserContext";
-import AppointmentsProvider from "./contexts/AppointmentsContext";
 import TeamsProvider from "./contexts/TeamsContext";
 import { useLogout } from "./hooks/useLogout";
 import { jwtDecode } from "jwt-decode";
@@ -30,13 +29,11 @@ function App() {
     <UserProvider>
       <RoomProvider>
         <NotificationsProvider>
-          <AppointmentsProvider>
-            <ContactsProvider>
-              <TeamsProvider>
-                <AppLayout />
-              </TeamsProvider>
-            </ContactsProvider>
-          </AppointmentsProvider>
+          <ContactsProvider>
+            <TeamsProvider>
+              <AppLayout />
+            </TeamsProvider>
+          </ContactsProvider>
         </NotificationsProvider>
       </RoomProvider>
     </UserProvider>

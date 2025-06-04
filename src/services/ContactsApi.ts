@@ -21,8 +21,10 @@ export const ContactsApi = {
     return api
       .post(`${URL}/create-contact`, contact)
       .then(
-        ({ data }: AxiosResponse<{ newContact: ContactResponse }>) =>
-          data.newContact,
+        ({
+          data,
+        }: AxiosResponse<{ newContact: ContactResponse; message: string }>) =>
+          data,
       );
   },
   deleteContact(contactId: string) {
@@ -30,12 +32,14 @@ export const ContactsApi = {
       .delete(`${URL}/delete-contact/${contactId}`)
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
-  editContact(contactId: string, editedContactChanges: EditContact) {
-    return api
-      .put(`${URL}/edit-contact/${contactId}`, editedContactChanges)
-      .then(
-        ({ data }: AxiosResponse<{ editedContact: ContactResponse }>) =>
-          data.editedContact,
-      );
+  editContact(contactId: string, newEditedContact: EditContact) {
+    return api.put(`${URL}/edit-contact/${contactId}`, newEditedContact).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        editedContact: ContactResponse;
+        message: string;
+      }>) => data,
+    );
   },
 };
