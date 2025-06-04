@@ -8,6 +8,7 @@ import Select from "../components/Select";
 
 import MeetingsProvider from "../contexts/MeetingsContext";
 import { meetingsFiltersSchema } from "../schemas/meetingsFilters.schema";
+import { MeetingDateFilters } from "../types/meeting.type";
 
 const typeOptions = [
   { value: "team", text: "Team" },
@@ -15,15 +16,16 @@ const typeOptions = [
 ];
 
 const stateOptions = [
-  { value: "finished", text: "Finished" },
   { value: "upcoming", text: "Upcoming" },
+  { value: "progress", text: "In progress" },
+  { value: "finished", text: "Finished" },
 ];
 
 export default function MeetingsPage() {
-  const methods = useForm({
+  const methods = useForm<MeetingDateFilters>({
     defaultValues: {
-      meetingType: "team",
-      meetingState: "upcoming",
+      meetingType: "",
+      meetingState: "",
       year: "",
       month: "",
       day: "",
@@ -43,12 +45,12 @@ export default function MeetingsPage() {
             </div>
             <Select
               name="meetingType"
-              placeholder="Select a meeting type"
+              placeholder="Select the type"
               options={typeOptions}
             />
             <Select
               name="meetingState"
-              placeholder="Select a meeting state"
+              placeholder="Select the state"
               options={stateOptions}
             />
           </div>

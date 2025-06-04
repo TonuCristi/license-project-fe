@@ -9,7 +9,7 @@ import {
 const URL = "/api/employees";
 
 export const EmployeesApi = {
-  getEmployees(search: string, offset: string, perPage: string) {
+  getEmployees(search: string, offset: number, perPage: number) {
     return api
       .get(
         `${URL}/retrieve-employees?search=${search}&offset=${offset}&perPage=${perPage}`,

@@ -9,7 +9,7 @@ export function useFetchEmployees() {
     useContext(EmployeesContext);
 
   const getEmployees = useCallback(
-    function (search: string, offset: string, perPage: string) {
+    function (search: string, offset: number, perPage: number) {
       setIsLoading(true);
       EmployeesApi.getEmployees(search, offset, perPage)
         .then((res) => {

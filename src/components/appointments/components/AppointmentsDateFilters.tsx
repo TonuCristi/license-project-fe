@@ -35,12 +35,32 @@ const dayOptions = [
   { value: "6", text: "Sunday" },
 ];
 
+const selects = [
+  {
+    label: "Month",
+    name: "month",
+    placeholder: "Select a month",
+    options: monthOptions,
+  },
+  {
+    label: "Day",
+    name: "day",
+    placeholder: "Select a day",
+    options: dayOptions,
+  },
+];
+
 export default function AppointmentsDateFilters() {
-  const { getAppointments } = useFetchAppointments();
-  const { isLoading } = useFetchAppointmentsYears();
-  const { appointmentsYears, setAppointments } =
-    useContext(AppointmentsContext);
   const { watch, reset } = useFormContext();
+  const { getAppointments } = useFetchAppointments();
+  const { isLoading: isAppointmentsYearsLoading } = useFetchAppointmentsYears(
+    watch("appointmentState"),
+  );
+  const {
+    isLoading: isAppointmentsLoading,
+    appointmentsYears,
+    setAppointments,
+  } = useContext(AppointmentsContext);
 
   const yearOptions = appointmentsYears.map((year) => ({
     value: String(year),
@@ -49,19 +69,25 @@ export default function AppointmentsDateFilters() {
 
   function handleReset(e: React.MouseEvent<HTMLButtonElement>) {
     setAppointments([]);
+
     e.preventDefault();
-    reset({ year: "", month: "", day: "" });
+    reset({
+      appointmentState: watch("appointmentState"),
+      year: "",
+      month: "",
+      day: "",
+    });
   }
 
   useEffect(() => {
-    const { unsubscribe } = watch(({ year, month, day }) => {
+    const { unsubscribe } = watch(({ appointmentState, year, month, day }) => {
       if (!(year === "" && month === "" && day === "")) {
-        getAppointments(year, month, day);
+        getAppointments(appointmentState, year, month, day);
       }
     });
 
     return () => unsubscribe();
-  }, [watch, getAppointments]);
+  }, [watch, reset, getAppointments]);
 
   return (
     <form className="grid grid-cols-1 items-end gap-x-3 gap-y-2 sm:grid-cols-2 md:flex md:items-end md:justify-between md:gap-3">
@@ -71,27 +97,20 @@ export default function AppointmentsDateFilters() {
           name="year"
           placeholder="Select a year"
           options={yearOptions}
-          disabled={isLoading}
+          disabled={isAppointmentsYearsLoading || isAppointmentsLoading}
         />
       </InputContainer>
-      <InputContainer>
-        <Label>Month</Label>
-        <Select
-          name="month"
-          placeholder="Select a month"
-          options={monthOptions}
-          disabled={isLoading}
-        />
-      </InputContainer>
-      <InputContainer>
-        <Label>Day</Label>
-        <Select
-          name="day"
-          placeholder="Select a day"
-          options={dayOptions}
-          disabled={isLoading}
-        />
-      </InputContainer>
+      {selects.map(({ label, name, placeholder, options }) => (
+        <InputContainer key={name}>
+          <Label>{label}</Label>
+          <Select
+            name={name}
+            placeholder={placeholder}
+            options={options}
+            disabled={isAppointmentsYearsLoading || isAppointmentsLoading}
+          />
+        </InputContainer>
+      ))}
       <Button onClick={handleReset}>Reset</Button>
     </form>
   );

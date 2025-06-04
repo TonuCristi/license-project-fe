@@ -6,7 +6,6 @@ import Loader from "./Loader";
 
 import { useFetchLoggedUser } from "../hooks/useFetchLoggedUser";
 import { useFetchRoom } from "./profile/hooks/useFetchRoom";
-import { useFetchContacts } from "./contacts/hooks/useFetchContacts";
 import { useFetchNotifications } from "./notifications/hooks/useFetchNotifications";
 import { useSSE } from "./notifications/hooks/useSSE";
 import { useFetchTeams } from "./teams/hooks/useFetchTeams";
@@ -14,7 +13,6 @@ import { useFetchTeams } from "./teams/hooks/useFetchTeams";
 export default function AppLayout() {
   const { isLoading: isLoggedUserLoading } = useFetchLoggedUser();
   const { isLoading: isRoomLoading } = useFetchRoom();
-  const { getContacts, isLoading: isContactsLoading } = useFetchContacts();
   const { isLoading: isNotificationsLoading } = useFetchNotifications();
   const { isTeamsLoading } = useFetchTeams();
   useSSE();
@@ -27,10 +25,6 @@ export default function AppLayout() {
     location.pathname === "/forgot-password";
 
   useEffect(() => {
-    getContacts();
-  }, [getContacts]);
-
-  useEffect(() => {
     if (pathnames) {
       navigate("/");
     }
@@ -40,7 +34,6 @@ export default function AppLayout() {
     pathnames ||
     isLoggedUserLoading ||
     isRoomLoading ||
-    isContactsLoading ||
     isNotificationsLoading ||
     isTeamsLoading
   ) {

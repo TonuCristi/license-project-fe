@@ -5,19 +5,17 @@ import { ContactsContext } from "../../../contexts/ContactsContext";
 import { mapContact } from "../../../utlis/mapContact";
 
 export function useFetchContacts() {
-  const { isLoading, setContacts, setIsLoading } = useContext(ContactsContext);
+  const { setContacts } = useContext(ContactsContext);
 
   const getContacts = useCallback(
-    function (search: string = "") {
-      ContactsApi.getContacts(search)
-        .then((res) => {
-          const contacts = res.map((contact) => mapContact(contact));
-          setContacts(contacts);
-        })
-        .finally(() => setIsLoading(false));
+    function (search: string, offset: number, perPage: number) {
+      ContactsApi.getContacts(search, offset, perPage).then((res) => {
+        const contacts = res.map((contact) => mapContact(contact));
+        setContacts((prev) => [...prev, ...contacts]);
+      });
     },
-    [setContacts, setIsLoading],
+    [setContacts],
   );
 
-  return { getContacts, isLoading };
+  return { getContacts };
 }

@@ -24,7 +24,7 @@ export default function EmployeesList({
   const { watch } = methods;
 
   useEffect(() => {
-    getEmployees(watch("value"), `${offset}`, "9");
+    getEmployees(watch("value"), offset, 9);
   }, [getEmployees, offset, watch]);
 
   useEffect(() => {

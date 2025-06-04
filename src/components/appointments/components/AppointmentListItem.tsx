@@ -4,6 +4,7 @@ import { HiMiniInformationCircle } from "react-icons/hi2";
 
 import { Appointment } from "../../../types/appointment.type";
 import { formatDate } from "../../../utlis/formatDate";
+import { useFormContext } from "react-hook-form";
 
 type Props = {
   appointment: Appointment;
@@ -11,6 +12,7 @@ type Props = {
 
 export default function AppointmentListItem({ appointment }: Props) {
   const { id, attendee, attendeePhoneNumber, location, note } = appointment;
+  const { watch } = useFormContext();
 
   const startTime = formatDate(appointment.startTime);
   const endTime = formatDate(appointment.endTime);
@@ -38,7 +40,10 @@ export default function AppointmentListItem({ appointment }: Props) {
       <div className="xs:items-center xs:flex-col flex flex-row justify-between gap-2">
         <div className="flex items-center gap-2">
           <DeleteAppointmentButton appointmentId={id} />
-          <EditAppointmentButton appointment={appointment} />
+          {watch("appointmentState") === "finished" ||
+            watch("appointmentState") === "progress" || (
+              <EditAppointmentButton appointment={appointment} />
+            )}
         </div>
 
         {note.length && (

@@ -39,7 +39,7 @@ export default function NotificationsButton() {
             >
               <HiMiniXMark className="text-primary stroke-1 text-xl" />
             </Button>
-            <div className="h-3/4 w-full p-4 sm:w-md">
+            <div className="h-2/4 w-full p-4 sm:w-md">
               <Notifications />
             </div>
           </Overlay>

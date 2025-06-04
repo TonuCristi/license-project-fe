@@ -9,9 +9,11 @@ import {
 const URL = "/api/contacts";
 
 export const ContactsApi = {
-  getContacts(search: string) {
+  getContacts(search: string, offset: number, perPage: number) {
     return api
-      .get(`${URL}/retrieve-contacts?search=${encodeURIComponent(search)}`)
+      .get(
+        `${URL}/retrieve-contacts?search=${encodeURIComponent(search)}&offset=${offset}&perPage=${perPage}`,
+      )
       .then(
         ({ data }: AxiosResponse<{ contacts: ContactResponse[] }>) =>
           data.contacts,
