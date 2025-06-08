@@ -8,11 +8,18 @@ export function useFetchContacts() {
   const { setContacts } = useContext(ContactsContext);
 
   const getContacts = useCallback(
-    function (search: string, offset: number, perPage: number) {
-      ContactsApi.getContacts(search, offset, perPage).then((res) => {
-        const contacts = res.map((contact) => mapContact(contact));
-        setContacts((prev) => [...prev, ...contacts]);
-      });
+    function (
+      search: string,
+      offset: number,
+      perPage: number,
+      controller: AbortController,
+    ) {
+      ContactsApi.getContacts(search, offset, perPage, controller).then(
+        (res) => {
+          const contacts = res.map((contact) => mapContact(contact));
+          setContacts((prev) => [...prev, ...contacts]);
+        },
+      );
     },
     [setContacts],
   );

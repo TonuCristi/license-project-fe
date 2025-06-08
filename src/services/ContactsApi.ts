@@ -9,10 +9,18 @@ import {
 const URL = "/api/contacts";
 
 export const ContactsApi = {
-  getContacts(search: string, offset: number, perPage: number) {
+  getContacts(
+    search: string,
+    offset: number,
+    perPage: number,
+    controller: AbortController,
+  ) {
     return api
       .get(
         `${URL}/retrieve-contacts?search=${encodeURIComponent(search)}&offset=${offset}&perPage=${perPage}`,
+        {
+          signal: controller.signal,
+        },
       )
       .then(
         ({ data }: AxiosResponse<{ contacts: ContactResponse[] }>) =>
