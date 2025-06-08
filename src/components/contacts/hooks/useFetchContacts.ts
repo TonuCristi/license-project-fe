@@ -5,7 +5,7 @@ import { ContactsContext } from "../../../contexts/ContactsContext";
 import { mapContact } from "../../../utlis/mapContact";
 
 export function useFetchContacts() {
-  const { setContacts } = useContext(ContactsContext);
+  const { setContacts, setIsLoading } = useContext(ContactsContext);
 
   const getContacts = useCallback(
     function (
@@ -14,14 +14,22 @@ export function useFetchContacts() {
       perPage: number,
       controller: AbortController,
     ) {
-      ContactsApi.getContacts(search, offset, perPage, controller).then(
-        (res) => {
+      setIsLoading(true);
+      ContactsApi.getContacts(search, offset, perPage, controller)
+        .then((res) => {
           const contacts = res.map((contact) => mapContact(contact));
           setContacts((prev) => [...prev, ...contacts]);
-        },
-      );
+        })
+        .catch((error) => {
+          if (error.name === "CanceledError") {
+            return;
+          }
+
+          console.log(error.response.data.message);
+        })
+        .finally(() => setIsLoading(false));
     },
-    [setContacts],
+    [setContacts, setIsLoading],
   );
 
   return { getContacts };

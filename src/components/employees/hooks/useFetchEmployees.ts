@@ -19,6 +19,7 @@ export function useFetchEmployees() {
           setPages(res.pages);
           setEmployees(employees);
         })
+        .catch((error) => console.log(error.response.data.message))
         .finally(() => setIsLoading(false));
     },
     [setEmployees, setPages, setIsLoading],

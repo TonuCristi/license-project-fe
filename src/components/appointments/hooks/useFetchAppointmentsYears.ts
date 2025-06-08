@@ -10,6 +10,7 @@ export function useFetchAppointmentsYears(appointmentState: string) {
   useEffect(() => {
     AppointmentsApi.getAppointmentsYears(appointmentState)
       .then((res) => setAppointmentsYears(res))
+      .catch((error) => console.log(error.response.data.message))
       .finally(() => setIsLoading(false));
   }, [setAppointmentsYears, appointmentState]);
 

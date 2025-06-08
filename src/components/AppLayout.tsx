@@ -6,15 +6,16 @@ import Loader from "./Loader";
 
 import { useFetchLoggedUser } from "../hooks/useFetchLoggedUser";
 import { useFetchRoom } from "./profile/hooks/useFetchRoom";
-import { useFetchNotifications } from "./notifications/hooks/useFetchNotifications";
 import { useSSE } from "./notifications/hooks/useSSE";
 import { useFetchTeams } from "./teams/hooks/useFetchTeams";
+import { useFetchNotificationsCount } from "./notifications/hooks/useFetchNotificationsCount";
 
 export default function AppLayout() {
   const { isLoading: isLoggedUserLoading } = useFetchLoggedUser();
   const { isLoading: isRoomLoading } = useFetchRoom();
-  const { isLoading: isNotificationsLoading } = useFetchNotifications();
   const { isTeamsLoading } = useFetchTeams();
+  const { isLoading: isNotificationsCountLoading } =
+    useFetchNotificationsCount();
   useSSE();
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,8 +35,8 @@ export default function AppLayout() {
     pathnames ||
     isLoggedUserLoading ||
     isRoomLoading ||
-    isNotificationsLoading ||
-    isTeamsLoading
+    isTeamsLoading ||
+    isNotificationsCountLoading
   ) {
     return (
       <div className="flex h-screen items-center justify-center">

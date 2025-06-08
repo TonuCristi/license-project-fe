@@ -22,6 +22,7 @@ export function useFetchAppointments() {
 
         setAppointments(mappedAppointments);
       })
+      .catch((error) => console.log(error.response.data.message))
       .finally(() => setIsLoading(false));
   }
 

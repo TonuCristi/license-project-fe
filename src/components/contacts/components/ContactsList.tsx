@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 
 import ContactListItem from "./ContactListItem";
 
@@ -6,23 +6,13 @@ import { ContactsContext } from "../../../contexts/ContactsContext";
 import { useFetchContacts } from "../hooks/useFetchContacts";
 import { useFormContext } from "react-hook-form";
 
-type Props = {
-  offset: number;
-  isSearching: boolean;
-  setOffset: Dispatch<SetStateAction<number>>;
-  setIsSearching: Dispatch<SetStateAction<boolean>>;
-};
-
-export default function ContactsList({
-  offset,
-  isSearching,
-  setOffset,
-  setIsSearching,
-}: Props) {
-  const { contacts } = useContext(ContactsContext);
+export default function ContactsList() {
+  const { contacts, offset, isLoading, setOffset } =
+    useContext(ContactsContext);
   const { getContacts } = useFetchContacts();
   const listRef = useRef<HTMLUListElement>(null);
   const itemRef = useRef<HTMLLIElement>(null);
+  const controllerRef = useRef<AbortController>();
 
   const { watch } = useFormContext();
 
@@ -33,10 +23,14 @@ export default function ContactsList({
       threshold: 0.1,
     };
 
-    setIsSearching(false);
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && !isSearching) {
-        // getContacts(watch("value"), offset, 15);
+      if (entries[0].isIntersecting && !isLoading) {
+        if (controllerRef.current) {
+          controllerRef.current.abort();
+        }
+
+        controllerRef.current = new AbortController();
+        getContacts(watch("value"), offset, 15, controllerRef.current);
         setOffset((prev) => prev + 1);
       }
     }, options);
@@ -46,7 +40,7 @@ export default function ContactsList({
     }
 
     return () => observer.disconnect();
-  }, [contacts.length, watch]);
+  }, [contacts.length, watch, setOffset, getContacts]);
 
   return (
     <ul

@@ -15,6 +15,7 @@ export function useFetchTeams() {
 
         setTeams(teams);
       })
+      .catch((error) => console.log(error.response.data.message))
       .finally(() => setIsTeamsLoading(false));
   }, [setTeams, setIsTeamsLoading]);
 

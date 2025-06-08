@@ -23,7 +23,7 @@ export function useAddEmployee() {
 
         if (employees.length === 9) {
           setPages((prev) => prev + 1);
-          setOffset(pages);
+          setOffset(pages - 1);
         }
 
         toast.success(res.message);

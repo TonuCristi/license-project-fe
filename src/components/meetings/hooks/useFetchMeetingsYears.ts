@@ -13,6 +13,7 @@ export function useFetchMeetingsYears(
   useEffect(() => {
     MeetingsApi.getMeetingsYears(meetingType, meetingState)
       .then((res) => setMeetingsYears(res))
+      .catch((error) => console.log(error.response.data.message))
       .finally(() => setIsLoading(false));
   }, [meetingType, meetingState, setMeetingsYears]);
 
