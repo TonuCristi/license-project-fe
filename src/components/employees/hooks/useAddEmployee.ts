@@ -7,26 +7,24 @@ import { EmployeesApi } from "../../../services/EmployeesApi";
 import { mapEmployee } from "../../../utlis/mapEmployee";
 
 export function useAddEmployee() {
-  const { employees, pages, setEmployees, setPages, setOffset } =
-    useContext(EmployeesContext);
+  const { employees, setEmployees } = useContext(EmployeesContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  function addEmployee(employee: AddEmployee) {
+  function addEmployee(employee: AddEmployee, search: string) {
     setIsLoading(true);
-    EmployeesApi.addEmployee(employee)
+    Promise.all([
+      EmployeesApi.addEmployee(employee),
+      EmployeesApi.getEmployeesCount(search),
+    ])
       .then((res) => {
-        const newEmployee = mapEmployee(res.newEmployee);
+        console.log(res);
+        const newEmployee = mapEmployee(res[0].newEmployee);
 
-        if (employees.length < 9) {
-          setEmployees((prev) => [...prev, { ...newEmployee, teams: [] }]);
-        }
+        // if (employees.length < 9) {
+        //   setEmployees((prev) => [...prev, { ...newEmployee, teams: [] }]);
+        // }
 
-        if (employees.length === 9) {
-          setPages((prev) => prev + 1);
-          setOffset(pages - 1);
-        }
-
-        toast.success(res.message);
+        // toast.success(res.message);
       })
       .catch((error) => toast.error(error.response.data.message))
       .finally(() => setIsLoading(false));

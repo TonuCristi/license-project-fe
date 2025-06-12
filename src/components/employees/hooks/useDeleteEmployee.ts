@@ -5,16 +5,28 @@ import { EmployeesApi } from "../../../services/EmployeesApi";
 import { EmployeesContext } from "../../../contexts/EmployeesContext";
 
 export function useDeleteEmployee() {
-  const { setEmployees } = useContext(EmployeesContext);
+  const { employees, pages, setEmployees, setPages, setOffset } =
+    useContext(EmployeesContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function deleteEmployee(employeeId: string) {
     setIsLoading(true);
     EmployeesApi.deleteEmployee(employeeId)
       .then((res) => {
-        setEmployees((prev) => [
-          ...prev.filter((employee) => employee.id !== employeeId),
-        ]);
+        if (employees.length === 1) {
+          setEmployees((prev) => [
+            ...prev.filter((employee) => employee.id !== employeeId),
+          ]);
+          setPages((prev) => prev - 1);
+          setOffset(pages - 2);
+        }
+
+        if (employees.length > 1) {
+          setEmployees((prev) => [
+            ...prev.filter((employee) => employee.id !== employeeId),
+          ]);
+        }
+
         toast.success(res);
       })
       .catch((error) => toast.error(error.response.data.message))

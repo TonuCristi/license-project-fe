@@ -21,6 +21,11 @@ export const EmployeesApi = {
           data,
       );
   },
+  getEmployeesCount(search: string) {
+    return api
+      .get(`${URL}/retrieve-employees-count?search=${search}`)
+      .then(({ data }: AxiosResponse<{ count: number }>) => data.count);
+  },
   deleteEmployee(employeeId: string) {
     return api
       .delete(`${URL}/delete-employee/${employeeId}`)

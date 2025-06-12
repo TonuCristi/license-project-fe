@@ -16,7 +16,7 @@ export default function EmployeesList({
   employeesList,
   setEmployeesList,
 }: Props) {
-  const { employees, pages, offset, isLoading, setPages, setOffset } =
+  const { employees, pages, offset, isLoading, setOffset } =
     useContext(EmployeesContext);
   const methods = useFormContext();
   const { getEmployees } = useFetchEmployees();
@@ -26,13 +26,6 @@ export default function EmployeesList({
   useEffect(() => {
     getEmployees(watch("value"), offset, 9);
   }, [getEmployees, offset, watch]);
-
-  // useEffect(() => {
-  //   if (employees.length === 0 && offset > 0) {
-  //     setPages((prev) => prev - 1);
-  //     setOffset((prev) => prev - 1);
-  //   }
-  // }, [employees, offset, setPages, setOffset]);
 
   return (
     <div className="xs:gap-8 flex flex-col items-center gap-4">
