@@ -5,11 +5,13 @@ import { CreateAppointment } from "../../../types/appointment.type";
 import { AppointmentsContext } from "../../../contexts/AppointmentsContext";
 import { AppointmentsApi } from "../../../services/AppointmentsApi";
 import { mapAppointment } from "../../../utlis/mapAppointment";
+import { useFormContext } from "react-hook-form";
 
 export function useCreateAppointment() {
-  const { filters, appointmentsYears, setAppointments, setAppointmentsYears } =
+  const { appointmentsYears, setAppointments, setAppointmentsYears } =
     useContext(AppointmentsContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { getValues } = useFormContext();
 
   function createAppointment(appointment: CreateAppointment) {
     setIsLoading(true);
@@ -27,7 +29,7 @@ export function useCreateAppointment() {
           );
         }
 
-        if (+filters.year === newAppointmentYear) {
+        if (+getValues().year === newAppointmentYear) {
           setAppointments((prev) => [...prev, newAppointment]);
         }
 

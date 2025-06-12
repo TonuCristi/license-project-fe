@@ -14,7 +14,7 @@ export default function EmployeesSearchBar() {
 
   useEffect(() => {
     const { unsubscribe } = watch(({ value }) => {
-      getEmployees(value, "0", "9");
+      getEmployees(value, 0, 9);
     });
 
     return () => unsubscribe();

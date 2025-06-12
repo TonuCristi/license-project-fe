@@ -4,7 +4,6 @@ import AppLayout from "./components/AppLayout";
 import AuthLayout from "./components/AuthLayout";
 
 import { AuthContext } from "./contexts/AuthContext";
-import ContactsProvider from "./contexts/ContactsContext";
 import RoomProvider from "./contexts/RoomContext";
 import NotificationsProvider from "./contexts/NotificationsContext";
 import UserProvider from "./contexts/UserContext";
@@ -29,11 +28,9 @@ function App() {
     <UserProvider>
       <RoomProvider>
         <NotificationsProvider>
-          <ContactsProvider>
-            <TeamsProvider>
-              <AppLayout />
-            </TeamsProvider>
-          </ContactsProvider>
+          <TeamsProvider>
+            <AppLayout />
+          </TeamsProvider>
         </NotificationsProvider>
       </RoomProvider>
     </UserProvider>

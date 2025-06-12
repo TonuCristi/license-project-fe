@@ -4,6 +4,7 @@ import DeleteMeetingButton from "./DeleteMeetingButton";
 
 import { formatDate } from "../../../utlis/formatDate";
 import { Meeting } from "../../../types/meeting.type";
+import { useFormContext } from "react-hook-form";
 
 type Props = {
   meeting: Meeting;
@@ -11,6 +12,7 @@ type Props = {
 
 export default function MeetingListItem({ meeting }: Props) {
   const { id, note, teamName, projectName } = meeting;
+  const { watch } = useFormContext();
 
   const startTime = formatDate(meeting.startTime);
   const endTime = formatDate(meeting.endTime);
@@ -37,7 +39,10 @@ export default function MeetingListItem({ meeting }: Props) {
       <div className="xs:items-center xs:flex-col flex flex-row justify-between gap-2">
         <div className="flex items-center gap-2">
           <DeleteMeetingButton meetingId={id} />
-          <EditMeetingButton meeting={meeting} />
+          {watch("meetingState") === "finished" ||
+            watch("meetingState") === "progress" || (
+              <EditMeetingButton meeting={meeting} />
+            )}
         </div>
 
         {note.length && (

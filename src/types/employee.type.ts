@@ -11,6 +11,7 @@ export type EmployeeResponse = {
   email: string;
   hireDate: string;
   phoneNumber: string;
+  membership_id: string;
   teams: string[];
 };
 
@@ -20,5 +21,6 @@ export type Employee = {
   email: string;
   hireDate: string;
   phoneNumber: string;
+  membershipId: string;
   teams: string[];
 };

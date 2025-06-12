@@ -24,15 +24,15 @@ export default function EmployeesList({
   const { watch } = methods;
 
   useEffect(() => {
-    getEmployees(watch("value"), `${offset}`, "9");
+    getEmployees(watch("value"), offset, 9);
   }, [getEmployees, offset, watch]);
 
-  useEffect(() => {
-    if (employees.length === 0 && offset > 0) {
-      setPages((prev) => prev - 1);
-      setOffset((prev) => prev - 1);
-    }
-  }, [employees, offset, setPages, setOffset]);
+  // useEffect(() => {
+  //   if (employees.length === 0 && offset > 0) {
+  //     setPages((prev) => prev - 1);
+  //     setOffset((prev) => prev - 1);
+  //   }
+  // }, [employees, offset, setPages, setOffset]);
 
   return (
     <div className="xs:gap-8 flex flex-col items-center gap-4">

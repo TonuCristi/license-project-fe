@@ -6,17 +6,16 @@ import Loader from "./Loader";
 
 import { useFetchLoggedUser } from "../hooks/useFetchLoggedUser";
 import { useFetchRoom } from "./profile/hooks/useFetchRoom";
-import { useFetchContacts } from "./contacts/hooks/useFetchContacts";
-import { useFetchNotifications } from "./notifications/hooks/useFetchNotifications";
 import { useSSE } from "./notifications/hooks/useSSE";
 import { useFetchTeams } from "./teams/hooks/useFetchTeams";
+import { useFetchNotificationsCount } from "./notifications/hooks/useFetchNotificationsCount";
 
 export default function AppLayout() {
   const { isLoading: isLoggedUserLoading } = useFetchLoggedUser();
   const { isLoading: isRoomLoading } = useFetchRoom();
-  const { getContacts, isLoading: isContactsLoading } = useFetchContacts();
-  const { isLoading: isNotificationsLoading } = useFetchNotifications();
   const { isTeamsLoading } = useFetchTeams();
+  const { isLoading: isNotificationsCountLoading } =
+    useFetchNotificationsCount();
   useSSE();
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,10 +24,6 @@ export default function AppLayout() {
     location.pathname === "/login" ||
     location.pathname === "/register" ||
     location.pathname === "/forgot-password";
-
-  useEffect(() => {
-    getContacts();
-  }, [getContacts]);
 
   useEffect(() => {
     if (pathnames) {
@@ -40,9 +35,8 @@ export default function AppLayout() {
     pathnames ||
     isLoggedUserLoading ||
     isRoomLoading ||
-    isContactsLoading ||
-    isNotificationsLoading ||
-    isTeamsLoading
+    isTeamsLoading ||
+    isNotificationsCountLoading
   ) {
     return (
       <div className="flex h-screen items-center justify-center">

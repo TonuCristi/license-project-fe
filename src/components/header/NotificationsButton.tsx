@@ -10,7 +10,7 @@ import { NotificationsContext } from "../../contexts/NotificationsContext";
 
 export default function NotificationsButton() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { notifications } = useContext(NotificationsContext);
+  const { notificationsCount } = useContext(NotificationsContext);
 
   return (
     <div className="relative">
@@ -22,9 +22,9 @@ export default function NotificationsButton() {
         >
           <div className="relative">
             <HiMiniBell />
-            {!!notifications.length && (
+            {!!notificationsCount && (
               <span className="absolute -top-2/5 min-w-4 rounded-full bg-red-500 px-1 py-0.5 text-xs font-medium text-white">
-                {notifications.length}
+                {notificationsCount}
               </span>
             )}
           </div>
@@ -39,7 +39,7 @@ export default function NotificationsButton() {
             >
               <HiMiniXMark className="text-primary stroke-1 text-xl" />
             </Button>
-            <div className="h-3/4 w-full p-4 sm:w-md">
+            <div className="h-3/5 w-full p-4 sm:w-md">
               <Notifications />
             </div>
           </Overlay>

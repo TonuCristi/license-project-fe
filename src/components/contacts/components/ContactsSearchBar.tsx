@@ -1,42 +1,44 @@
-import { useEffect } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm } from "react-hook-form";
+import { useContext, useEffect, useRef } from "react";
+import { useFormContext } from "react-hook-form";
 
 import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
-import { searchBarSchema } from "../../../schemas/searchBar.schema";
-import { SearchBar } from "../../../types/searchBar.type";
 import { useFetchContacts } from "../hooks/useFetchContacts";
+import { ContactsContext } from "../../../contexts/ContactsContext";
 
 export default function ContactsSearchBar() {
-  const methods = useForm<SearchBar>({
-    defaultValues: {
-      value: "",
-    },
-    resolver: zodResolver(searchBarSchema),
-  });
   const { getContacts } = useFetchContacts();
+  const { setContacts, setOffset } = useContext(ContactsContext);
+  const controllerRef = useRef<AbortController>();
 
-  const { watch } = methods;
+  const { watch } = useFormContext();
 
   useEffect(() => {
     const { unsubscribe } = watch(({ value }) => {
-      getContacts(value);
+      if (controllerRef.current) {
+        controllerRef.current.abort();
+      }
+
+      controllerRef.current = new AbortController();
+
+      setOffset(1);
+      setContacts([]);
+      if (controllerRef.current) {
+        getContacts(value, 0, 15, controllerRef.current);
+      }
     });
 
     return () => unsubscribe();
-  }, [watch, getContacts]);
+  }, [watch, getContacts, setContacts, setOffset]);
 
   return (
-    <FormProvider {...methods}>
-      <form className="w-full">
-        <Input
-          name="value"
-          placeholder="Search your contact..."
-          rightIcon={<HiMiniMagnifyingGlass className="text-md stroke-1" />}
-        />
-      </form>
-    </FormProvider>
+    <form className="w-full">
+      <Input
+        name="value"
+        placeholder="Search your contact..."
+        rightIcon={<HiMiniMagnifyingGlass className="text-md stroke-1" />}
+      />
+    </form>
   );
 }

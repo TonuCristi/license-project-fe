@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -10,6 +11,7 @@ import InputContainer from "../../input/InputContainer";
 import { employeeFormSchema } from "../../../schemas/employeeForm.schema";
 import { AddEmployee } from "../../../types/employee.type";
 import { useAddEmployee } from "../hooks/useAddEmployee";
+import { EmployeesContext } from "../../../contexts/EmployeesContext";
 
 const inputs = [
   {
@@ -45,13 +47,16 @@ const inputs = [
 export default function AddEmployeeForm() {
   const methods = useForm<AddEmployee>({
     defaultValues: {
-      fullName: "",
-      email: "",
+      fullName: "anton",
+      email: "anton@mail.com",
+      phoneNumber: "0767993999",
+      hireDate: "",
     },
     resolver: zodResolver(employeeFormSchema),
   });
 
   const { addEmployee, isLoading } = useAddEmployee();
+  const { isLoading: isEmployeesLoading } = useContext(EmployeesContext);
 
   const onSubmit: SubmitHandler<AddEmployee> = (data) => addEmployee(data);
 
@@ -83,7 +88,7 @@ export default function AddEmployeeForm() {
             </InputContainer>
           ))}
         </div>
-        <Button disabled={isLoading}>Add</Button>
+        <Button disabled={isLoading || isEmployeesLoading}>Add</Button>
       </form>
     </FormProvider>
   );

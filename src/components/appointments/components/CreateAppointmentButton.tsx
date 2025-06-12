@@ -1,24 +1,26 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 import CreateAppointmentForm from "./CreateAppointmentForm";
 import Button from "../../Button";
-import { HiMiniPlusSmall } from "react-icons/hi2";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
+import { AppointmentsContext } from "../../../contexts/AppointmentsContext";
 
 export default function CreateAppointmentButton() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
+  const { isLoading } = useContext(AppointmentsContext);
 
   return (
     <div ref={containerRef} className="relative">
       <Button
-        variant="empty"
+        disabled={isLoading}
+        size="full"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="bg-primary rounded-full"
+        className="text-nowrap"
       >
-        <HiMiniPlusSmall className="stroke-1 text-2xl text-white" />
+        Create appointment
       </Button>
 
       {isOpen && <CreateAppointmentForm />}

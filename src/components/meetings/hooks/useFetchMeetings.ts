@@ -20,6 +20,7 @@ export function useFetchMeetings() {
         const meetings = res.map((meeting) => mapMeeting(meeting));
         setMeetings(meetings);
       })
+      .catch((error) => console.log(error.response.data.message))
       .finally(() => setIsLoading(false));
   }
 
