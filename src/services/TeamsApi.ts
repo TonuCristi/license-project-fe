@@ -9,10 +9,7 @@ export const TeamsApi = {
   createTeam(team: CreateTeam) {
     return api
       .post(`${URL}/create-team`, team)
-      .then(
-        ({ data }: AxiosResponse<{ newTeam: TeamResponse; message: string }>) =>
-          data,
-      );
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
   getTeams(
     search: string,

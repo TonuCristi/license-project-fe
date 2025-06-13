@@ -4,7 +4,7 @@ import { TeamsApi } from "../../../services/TeamsApi";
 import { mapTeam } from "../../../utlis/mapTeam";
 import { Team } from "../../../types/team.type";
 
-export function useFetchTeams() {
+export function useFetchEmployeeTeams() {
   const [teams, setTeams] = useState<Team[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

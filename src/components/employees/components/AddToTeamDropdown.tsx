@@ -3,11 +3,11 @@ import { twMerge } from "tailwind-merge";
 import toast from "react-hot-toast";
 
 import { HiMiniChevronDown } from "react-icons/hi2";
+import EmployeeTeamList from "./EmployeeTeamList";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
 import { Team } from "../../../types/team.type";
 import { useAddToTeam } from "../hooks/useAddToTeam";
-import TeamsList from "./TeamsList";
 
 type Props = {
   employeesList: string[];
@@ -43,7 +43,7 @@ export default function AddToTeamDropdown({ employeesList }: Props) {
       </button>
 
       {isOpen && (
-        <TeamsList
+        <EmployeeTeamList
           onTeamSelection={handleTeamSelection}
           isAddToTeamLoading={isLoading}
         />

@@ -17,7 +17,7 @@ type Props = {
   setOffset: Dispatch<SetStateAction<number>>;
 };
 
-export default function TeamsSearchBar({
+export default function EmployeeTeamSearchBar({
   getTeams,
   setTeams,
   setOffset,

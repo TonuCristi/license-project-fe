@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -13,16 +13,10 @@ import { useFetchTeams } from "../hooks/useFetchTeams";
 
 type Props = {
   onTeamSelection: (team: Team) => void;
-  offset: number;
-  setOffset: Dispatch<SetStateAction<number>>;
 };
 
-export default function TeamsList({
-  onTeamSelection,
-  offset,
-  setOffset,
-}: Props) {
-  const { teams, isTeamsLoading } = useContext(TeamsContext);
+export default function TeamsList({ onTeamSelection }: Props) {
+  const { teams, isTeamsLoading, setTeams } = useContext(TeamsContext);
   const listRef = useRef<HTMLUListElement>(null);
   const itemRef = useRef<HTMLLIElement>(null);
   const controllerRef = useRef<AbortController>();
@@ -32,8 +26,15 @@ export default function TeamsList({
     },
     resolver: zodResolver(searchBarSchema),
   });
+  const [offset, setOffset] = useState<number>(0);
   const { getTeams } = useFetchTeams();
   const { watch } = methods;
+
+  useEffect(() => {
+    return () => {
+      setTeams([]);
+    };
+  }, [setTeams]);
 
   useEffect(() => {
     const options = {

@@ -3,19 +3,19 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import Button from "../../Button";
-import TeamsSearchBar from "./TeamsSearchBar";
+import EmployeeTeamSearchBar from "./EmployeeTeamSearchBar";
 
 import { Team } from "../../../types/team.type";
 import { SearchBar } from "../../../types/searchBar.type";
 import { searchBarSchema } from "../../../schemas/searchBar.schema";
-import { useFetchTeams } from "../hooks/useFetchTeams";
+import { useFetchEmployeeTeams } from "../hooks/useFetchEmployeeTeams";
 
 type Props = {
   onTeamSelection: (team: Team) => void;
   isAddToTeamLoading: boolean;
 };
 
-export default function TeamsList({
+export default function EmployeeTeamList({
   onTeamSelection,
   isAddToTeamLoading,
 }: Props) {
@@ -25,7 +25,7 @@ export default function TeamsList({
     },
     resolver: zodResolver(searchBarSchema),
   });
-  const { getTeams, teams, isLoading, setTeams } = useFetchTeams();
+  const { getTeams, teams, isLoading, setTeams } = useFetchEmployeeTeams();
   const [offset, setOffset] = useState<number>(0);
   const listRef = useRef<HTMLUListElement>(null);
   const itemRef = useRef<HTMLLIElement>(null);
@@ -62,7 +62,7 @@ export default function TeamsList({
   return (
     <FormProvider {...methods}>
       <div className="border-primary absolute top-full right-0 z-50 mt-1 flex max-h-64 w-full flex-col gap-2 rounded-xl border-2 bg-white p-2 transition-colors">
-        <TeamsSearchBar
+        <EmployeeTeamSearchBar
           getTeams={getTeams}
           setTeams={setTeams}
           setOffset={setOffset}
