@@ -52,9 +52,9 @@ const inputs = [
 export default function AddEmployeeForm() {
   const methods = useForm<AddEmployee>({
     defaultValues: {
-      fullName: "19",
-      email: "tcgb19@mail.com",
-      phoneNumber: "0743980534",
+      fullName: "",
+      email: "",
+      phoneNumber: "",
       hireDate: "",
     },
     resolver: zodResolver(employeeFormSchema),

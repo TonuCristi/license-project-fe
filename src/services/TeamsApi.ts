@@ -22,8 +22,8 @@ export const TeamsApi = {
   getTeamMembers(
     teamId: string,
     search: string,
-    offset: string,
-    perPage: string,
+    offset: number,
+    perPage: number,
   ) {
     return api
       .get(

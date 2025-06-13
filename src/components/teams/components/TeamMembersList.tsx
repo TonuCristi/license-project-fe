@@ -6,17 +6,11 @@ import Pagination from "../../Pagination";
 
 import { TeamsContext } from "../../../contexts/TeamsContext";
 import { useFetchTeamMembers } from "../hooks/useFetchTeamMembers";
+import { PER_PAGE } from "./SelectedTeamMembers";
 
 export default function TeamMembersList() {
-  const {
-    selectedTeam,
-    members,
-    pages,
-    offset,
-    isMembersLoading,
-    setPages,
-    setOffset,
-  } = useContext(TeamsContext);
+  const { selectedTeam, members, pages, offset, isMembersLoading, setOffset } =
+    useContext(TeamsContext);
   const methods = useFormContext();
 
   const { getTeamMembers } = useFetchTeamMembers();
@@ -25,16 +19,9 @@ export default function TeamMembersList() {
 
   useEffect(() => {
     if (selectedTeam) {
-      getTeamMembers(selectedTeam.id, "", `${offset}`, "9");
+      getTeamMembers(selectedTeam.id, "", offset, PER_PAGE);
     }
   }, [getTeamMembers, watch, selectedTeam, offset]);
-
-  useEffect(() => {
-    if (members.length === 0 && offset > 0) {
-      setPages((prev) => prev - 1);
-      setOffset((prev) => prev - 1);
-    }
-  }, [members, offset, setPages, setOffset]);
 
   return (
     <div className="xs:gap-8 flex flex-col items-center gap-4">

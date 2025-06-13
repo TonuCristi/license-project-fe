@@ -21,10 +21,12 @@ export const EmployeesApi = {
           data,
       );
   },
-  getEmployeesCount(search: string) {
+  getEmployeesPages(search: string, perPage: number) {
     return api
-      .get(`${URL}/retrieve-employees-count?search=${search}`)
-      .then(({ data }: AxiosResponse<{ count: number }>) => data.count);
+      .get(
+        `${URL}/retrieve-employees-pages?search=${search}&perPage=${perPage}`,
+      )
+      .then(({ data }: AxiosResponse<{ pages: number }>) => data.pages);
   },
   deleteEmployee(employeeId: string) {
     return api

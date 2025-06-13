@@ -9,7 +9,7 @@ export function useFetchTeamMembers() {
     useContext(TeamsContext);
 
   const getTeamMembers = useCallback(
-    function (teamId: string, search: string, offset: string, perPage: string) {
+    function (teamId: string, search: string, offset: number, perPage: number) {
       setIsMembersLoading(true);
       TeamsApi.getTeamMembers(teamId, search, offset, perPage)
         .then((res) => {

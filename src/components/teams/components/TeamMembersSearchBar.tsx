@@ -6,6 +6,7 @@ import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { TeamsContext } from "../../../contexts/TeamsContext";
 import { useFetchTeamMembers } from "../hooks/useFetchTeamMembers";
+import { PER_PAGE } from "./SelectedTeamMembers";
 
 export default function TeamMembersSearchBar() {
   const { selectedTeam } = useContext(TeamsContext);
@@ -18,7 +19,7 @@ export default function TeamMembersSearchBar() {
   useEffect(() => {
     const { unsubscribe } = watch(({ value }) => {
       if (selectedTeam) {
-        getTeamMembers(selectedTeam.id, value, "0", "9");
+        getTeamMembers(selectedTeam.id, value, 0, PER_PAGE);
       }
     });
 

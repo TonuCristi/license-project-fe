@@ -7,6 +7,8 @@ import Pagination from "../../Pagination";
 import { EmployeesContext } from "../../../contexts/EmployeesContext";
 import { useFetchEmployees } from "../hooks/useFetchEmployees";
 
+export const PER_PAGE = 9;
+
 type Props = {
   employeesList: string[];
   setEmployeesList: Dispatch<SetStateAction<string[]>>;
@@ -24,7 +26,7 @@ export default function EmployeesList({
   const { watch } = methods;
 
   useEffect(() => {
-    getEmployees(watch("value"), offset, 9);
+    getEmployees(watch("value"), offset, PER_PAGE);
   }, [getEmployees, offset, watch]);
 
   return (

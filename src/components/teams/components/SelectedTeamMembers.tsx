@@ -7,6 +7,8 @@ import TeamMembersList from "./TeamMembersList";
 import { SearchBar } from "../../../types/searchBar.type";
 import { searchBarSchema } from "../../../schemas/searchBar.schema";
 
+export const PER_PAGE = 9;
+
 export default function SelectedTeamMembers() {
   const methods = useForm<SearchBar>({
     defaultValues: {

@@ -5,6 +5,7 @@ import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { useFetchEmployees } from "../hooks/useFetchEmployees";
+import { PER_PAGE } from "./EmployeesList";
 
 export default function EmployeesSearchBar() {
   const { getEmployees } = useFetchEmployees();
@@ -14,7 +15,7 @@ export default function EmployeesSearchBar() {
 
   useEffect(() => {
     const { unsubscribe } = watch(({ value }) => {
-      getEmployees(value, 0, 9);
+      getEmployees(value, 0, PER_PAGE);
     });
 
     return () => unsubscribe();
