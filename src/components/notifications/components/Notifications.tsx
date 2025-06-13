@@ -5,6 +5,8 @@ import NotificationItem from "./NotificationItem";
 import { NotificationsContext } from "../../../contexts/NotificationsContext";
 import { useFetchNotifications } from "../hooks/useFetchNotifications";
 
+const PER_PAGE = 10;
+
 export default function Notifications() {
   const { notifications, offset, isLoading, setOffset, setIsLoading } =
     useContext(NotificationsContext);
@@ -29,7 +31,7 @@ export default function Notifications() {
         }
 
         controllerRef.current = new AbortController();
-        getNotifications(offset, 10, controllerRef.current);
+        getNotifications(offset, PER_PAGE, controllerRef.current);
         setOffset((prev) => prev + 1);
       }
     }, options);

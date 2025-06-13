@@ -9,14 +9,21 @@ export const TeamsApi = {
   createTeam(team: CreateTeam) {
     return api
       .post(`${URL}/create-team`, team)
-      .then(
-        ({ data }: AxiosResponse<{ newTeam: TeamResponse; message: string }>) =>
-          data,
-      );
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
-  getTeams() {
+  getTeams(
+    search: string,
+    offset: number,
+    perPage: number,
+    controller: AbortController,
+  ) {
     return api
-      .get(`${URL}/retrieve-teams`)
+      .get(
+        `${URL}/retrieve-teams?search=${encodeURIComponent(search)}&offset=${offset}&perPage=${perPage}`,
+        {
+          signal: controller.signal,
+        },
+      )
       .then(({ data }: AxiosResponse<{ teams: TeamResponse[] }>) => data.teams);
   },
   getTeamMembers(

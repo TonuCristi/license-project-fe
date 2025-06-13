@@ -1,11 +1,12 @@
-import { useCallback, useContext } from "react";
+import { useCallback, useState } from "react";
 
-import { TeamsContext } from "../../../contexts/TeamsContext";
 import { TeamsApi } from "../../../services/TeamsApi";
 import { mapTeam } from "../../../utlis/mapTeam";
+import { Team } from "../../../types/team.type";
 
-export function useFetchTeams() {
-  const { setTeams, setIsTeamsLoading } = useContext(TeamsContext);
+export function useFetchEmployeeTeams() {
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getTeams = useCallback(
     function (
@@ -14,7 +15,7 @@ export function useFetchTeams() {
       perPage: number,
       controller: AbortController,
     ) {
-      setIsTeamsLoading(true);
+      setIsLoading(true);
       TeamsApi.getTeams(search, offset, perPage, controller)
         .then((res) => {
           const teams = res.map((team) => mapTeam(team));
@@ -22,10 +23,10 @@ export function useFetchTeams() {
           setTeams((prev) => [...prev, ...teams]);
         })
         .catch((error) => console.log(error.response.data.message))
-        .finally(() => setIsTeamsLoading(false));
+        .finally(() => setIsLoading(false));
     },
-    [setTeams, setIsTeamsLoading],
+    [setTeams, setIsLoading],
   );
 
-  return { getTeams };
+  return { getTeams, teams, isLoading, setTeams };
 }

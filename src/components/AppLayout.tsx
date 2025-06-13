@@ -7,13 +7,11 @@ import Loader from "./Loader";
 import { useFetchLoggedUser } from "../hooks/useFetchLoggedUser";
 import { useFetchRoom } from "./profile/hooks/useFetchRoom";
 import { useSSE } from "./notifications/hooks/useSSE";
-import { useFetchTeams } from "./teams/hooks/useFetchTeams";
 import { useFetchNotificationsCount } from "./notifications/hooks/useFetchNotificationsCount";
 
 export default function AppLayout() {
   const { isLoading: isLoggedUserLoading } = useFetchLoggedUser();
   const { isLoading: isRoomLoading } = useFetchRoom();
-  const { isTeamsLoading } = useFetchTeams();
   const { isLoading: isNotificationsCountLoading } =
     useFetchNotificationsCount();
   useSSE();
@@ -35,7 +33,6 @@ export default function AppLayout() {
     pathnames ||
     isLoggedUserLoading ||
     isRoomLoading ||
-    isTeamsLoading ||
     isNotificationsCountLoading
   ) {
     return (

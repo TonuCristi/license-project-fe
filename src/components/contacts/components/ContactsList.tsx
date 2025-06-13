@@ -5,6 +5,7 @@ import ContactListItem from "./ContactListItem";
 import { ContactsContext } from "../../../contexts/ContactsContext";
 import { useFetchContacts } from "../hooks/useFetchContacts";
 import { useFormContext } from "react-hook-form";
+import { PER_PAGE } from "./Contacts";
 
 export default function ContactsList() {
   const { contacts, offset, isLoading, setOffset } =
@@ -30,7 +31,7 @@ export default function ContactsList() {
         }
 
         controllerRef.current = new AbortController();
-        getContacts(watch("value"), offset, 15, controllerRef.current);
+        getContacts(watch("value"), offset, PER_PAGE, controllerRef.current);
         setOffset((prev) => prev + 1);
       }
     }, options);

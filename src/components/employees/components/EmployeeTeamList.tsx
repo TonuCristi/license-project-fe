@@ -1,40 +1,37 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import Button from "../../Button";
-import TeamsSearchBar from "./TeamsSearchBar";
+import EmployeeTeamSearchBar from "./EmployeeTeamSearchBar";
 
 import { Team } from "../../../types/team.type";
-import { TeamsContext } from "../../../contexts/TeamsContext";
 import { SearchBar } from "../../../types/searchBar.type";
 import { searchBarSchema } from "../../../schemas/searchBar.schema";
-import { useFetchTeams } from "../hooks/useFetchTeams";
+import { useFetchEmployeeTeams } from "../hooks/useFetchEmployeeTeams";
 
 type Props = {
   onTeamSelection: (team: Team) => void;
+  isAddToTeamLoading: boolean;
 };
 
-export default function TeamsList({ onTeamSelection }: Props) {
-  const { teams, isTeamsLoading, setTeams } = useContext(TeamsContext);
-  const listRef = useRef<HTMLUListElement>(null);
-  const itemRef = useRef<HTMLLIElement>(null);
-  const controllerRef = useRef<AbortController>();
+export default function EmployeeTeamList({
+  onTeamSelection,
+  isAddToTeamLoading,
+}: Props) {
   const methods = useForm<SearchBar>({
     defaultValues: {
       value: "",
     },
     resolver: zodResolver(searchBarSchema),
   });
+  const { getTeams, teams, isLoading, setTeams } = useFetchEmployeeTeams();
   const [offset, setOffset] = useState<number>(0);
-  const { getTeams } = useFetchTeams();
-  const { watch } = methods;
+  const listRef = useRef<HTMLUListElement>(null);
+  const itemRef = useRef<HTMLLIElement>(null);
+  const controllerRef = useRef<AbortController>();
 
-  useEffect(() => {
-    return () => {
-      setTeams([]);
-    };
-  }, [setTeams]);
+  const { watch } = methods;
 
   useEffect(() => {
     const options = {
@@ -44,7 +41,7 @@ export default function TeamsList({ onTeamSelection }: Props) {
     };
 
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && !isTeamsLoading) {
+      if (entries[0].isIntersecting && !isLoading) {
         if (controllerRef.current) {
           controllerRef.current.abort();
         }
@@ -65,7 +62,11 @@ export default function TeamsList({ onTeamSelection }: Props) {
   return (
     <FormProvider {...methods}>
       <div className="border-primary absolute top-full right-0 z-50 mt-1 flex max-h-64 w-full flex-col gap-2 rounded-xl border-2 bg-white p-2 transition-colors">
-        <TeamsSearchBar setOffset={setOffset} />
+        <EmployeeTeamSearchBar
+          getTeams={getTeams}
+          setTeams={setTeams}
+          setOffset={setOffset}
+        />
         <ul
           ref={listRef}
           className="scrollbar flex flex-col gap-2 overflow-y-auto pr-2"
@@ -74,6 +75,7 @@ export default function TeamsList({ onTeamSelection }: Props) {
             <li key={team.id}>
               <Button
                 variant="empty"
+                disabled={isAddToTeamLoading}
                 onClick={() => onTeamSelection(team)}
                 className="w-full rounded-xl bg-blue-100 p-2 text-left hover:bg-blue-200"
               >
