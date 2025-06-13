@@ -14,9 +14,9 @@ export function useCreateTeam() {
     setIsLoading(true);
     TeamsApi.createTeam(team)
       .then((res) => {
-        const newTeam = mapTeam(res.newTeam);
+        // const newTeam = mapTeam(res.newTeam);
 
-        setTeams((prev) => [...prev, newTeam]);
+        // setTeams((prev) => [...prev, newTeam]);
 
         toast.success(res.message);
       })

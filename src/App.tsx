@@ -7,7 +7,6 @@ import { AuthContext } from "./contexts/AuthContext";
 import RoomProvider from "./contexts/RoomContext";
 import NotificationsProvider from "./contexts/NotificationsContext";
 import UserProvider from "./contexts/UserContext";
-import TeamsProvider from "./contexts/TeamsContext";
 import { useLogout } from "./hooks/useLogout";
 import { jwtDecode } from "jwt-decode";
 
@@ -28,9 +27,7 @@ function App() {
     <UserProvider>
       <RoomProvider>
         <NotificationsProvider>
-          <TeamsProvider>
-            <AppLayout />
-          </TeamsProvider>
+          <AppLayout />
         </NotificationsProvider>
       </RoomProvider>
     </UserProvider>

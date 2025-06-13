@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { searchBarSchema } from "../../../schemas/searchBar.schema";
 import ContactsProvider from "../../../contexts/ContactsContext";
 
+export const PER_PAGE = 15;
+
 export default function Contacts() {
   const methods = useForm<SearchBar>({
     defaultValues: {

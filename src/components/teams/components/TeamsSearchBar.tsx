@@ -1,17 +1,20 @@
-import { useContext, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
 import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
-import { useFetchContacts } from "../hooks/useFetchContacts";
-import { ContactsContext } from "../../../contexts/ContactsContext";
-import { PER_PAGE } from "./Contacts";
+import { useFetchTeams } from "../hooks/useFetchTeams";
+import { TeamsContext } from "../../../contexts/TeamsContext";
 
-export default function ContactsSearchBar() {
-  const { getContacts } = useFetchContacts();
-  const { setContacts, setOffset } = useContext(ContactsContext);
+type Props = {
+  setOffset: Dispatch<SetStateAction<number>>;
+};
+
+export default function TeamsSearchBar({ setOffset }: Props) {
   const controllerRef = useRef<AbortController>();
+  const { getTeams } = useFetchTeams();
+  const { setTeams } = useContext(TeamsContext);
 
   const { watch } = useFormContext();
 
@@ -24,20 +27,20 @@ export default function ContactsSearchBar() {
       controllerRef.current = new AbortController();
 
       setOffset(1);
-      setContacts([]);
+      setTeams([]);
       if (controllerRef.current) {
-        getContacts(value, 0, PER_PAGE, controllerRef.current);
+        getTeams(value, 0, 5, controllerRef.current);
       }
     });
 
     return () => unsubscribe();
-  }, [watch, getContacts, setContacts, setOffset]);
+  }, [watch, getTeams, setTeams, setOffset]);
 
   return (
     <form className="w-full">
       <Input
         name="value"
-        placeholder="Search your contact..."
+        placeholder="Search your team..."
         rightIcon={<HiMiniMagnifyingGlass className="text-md stroke-1" />}
       />
     </form>

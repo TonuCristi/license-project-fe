@@ -32,7 +32,7 @@ export const TeamsContext = createContext<TeamsContext>({
   members: [],
   pages: 0,
   offset: 0,
-  isTeamsLoading: true,
+  isTeamsLoading: false,
   isMembersLoading: false,
   setTeams: () => undefined,
   setMembers: () => undefined,
@@ -50,7 +50,7 @@ type Props = {
 export default function TeamsProvider({ children }: Props) {
   const [teams, setTeams] = useState<Team[]>([]);
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
-  const [isTeamsLoading, setIsTeamsLoading] = useState<boolean>(true);
+  const [isTeamsLoading, setIsTeamsLoading] = useState<boolean>(false);
   const [members, setMembers] = useState<Employee[]>([]);
   const [pages, setPages] = useState<number>(0);
   const [offset, setOffset] = useState<number>(0);

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -6,33 +6,31 @@ import Button from "../../Button";
 import TeamsSearchBar from "./TeamsSearchBar";
 
 import { Team } from "../../../types/team.type";
-import { TeamsContext } from "../../../contexts/TeamsContext";
 import { SearchBar } from "../../../types/searchBar.type";
 import { searchBarSchema } from "../../../schemas/searchBar.schema";
 import { useFetchTeams } from "../hooks/useFetchTeams";
 
 type Props = {
   onTeamSelection: (team: Team) => void;
-  offset: number;
-  setOffset: Dispatch<SetStateAction<number>>;
+  isAddToTeamLoading: boolean;
 };
 
 export default function TeamsList({
   onTeamSelection,
-  offset,
-  setOffset,
+  isAddToTeamLoading,
 }: Props) {
-  const { teams, isTeamsLoading } = useContext(TeamsContext);
-  const listRef = useRef<HTMLUListElement>(null);
-  const itemRef = useRef<HTMLLIElement>(null);
-  const controllerRef = useRef<AbortController>();
   const methods = useForm<SearchBar>({
     defaultValues: {
       value: "",
     },
     resolver: zodResolver(searchBarSchema),
   });
-  const { getTeams } = useFetchTeams();
+  const { getTeams, teams, isLoading, setTeams } = useFetchTeams();
+  const [offset, setOffset] = useState<number>(0);
+  const listRef = useRef<HTMLUListElement>(null);
+  const itemRef = useRef<HTMLLIElement>(null);
+  const controllerRef = useRef<AbortController>();
+
   const { watch } = methods;
 
   useEffect(() => {
@@ -43,7 +41,7 @@ export default function TeamsList({
     };
 
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && !isTeamsLoading) {
+      if (entries[0].isIntersecting && !isLoading) {
         if (controllerRef.current) {
           controllerRef.current.abort();
         }
@@ -64,7 +62,11 @@ export default function TeamsList({
   return (
     <FormProvider {...methods}>
       <div className="border-primary absolute top-full right-0 z-50 mt-1 flex max-h-64 w-full flex-col gap-2 rounded-xl border-2 bg-white p-2 transition-colors">
-        <TeamsSearchBar setOffset={setOffset} />
+        <TeamsSearchBar
+          getTeams={getTeams}
+          setTeams={setTeams}
+          setOffset={setOffset}
+        />
         <ul
           ref={listRef}
           className="scrollbar flex flex-col gap-2 overflow-y-auto pr-2"
@@ -73,6 +75,7 @@ export default function TeamsList({
             <li key={team.id}>
               <Button
                 variant="empty"
+                disabled={isAddToTeamLoading}
                 onClick={() => onTeamSelection(team)}
                 className="w-full rounded-xl bg-blue-100 p-2 text-left hover:bg-blue-200"
               >

@@ -13,6 +13,7 @@ export default function TeamsDropdown() {
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
   const { selectedTeam, setSelectedTeam } = useContext(TeamsContext);
+  const [offset, setOffset] = useState<number>(0);
 
   function handleTeamSelection(team: Team) {
     setSelectedTeam(team);
@@ -36,7 +37,13 @@ export default function TeamsDropdown() {
         />
       </button>
 
-      {isOpen && <TeamsList onTeamSelection={handleTeamSelection} />}
+      {isOpen && (
+        <TeamsList
+          onTeamSelection={handleTeamSelection}
+          offset={offset}
+          setOffset={setOffset}
+        />
+      )}
     </div>
   );
 }

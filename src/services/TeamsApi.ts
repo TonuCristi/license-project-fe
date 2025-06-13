@@ -14,9 +14,19 @@ export const TeamsApi = {
           data,
       );
   },
-  getTeams() {
+  getTeams(
+    search: string,
+    offset: number,
+    perPage: number,
+    controller: AbortController,
+  ) {
     return api
-      .get(`${URL}/retrieve-teams`)
+      .get(
+        `${URL}/retrieve-teams?search=${encodeURIComponent(search)}&offset=${offset}&perPage=${perPage}`,
+        {
+          signal: controller.signal,
+        },
+      )
       .then(({ data }: AxiosResponse<{ teams: TeamResponse[] }>) => data.teams);
   },
   getTeamMembers(
