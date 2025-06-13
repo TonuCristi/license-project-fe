@@ -20,7 +20,7 @@ export function useAddEmployee() {
     ])
       .then((res) => {
         const newEmployee = mapEmployee(res[0].newEmployee);
-        const pages = res[1];
+        const pages = res[1] - 1;
 
         if (pages === offset && employees.length < 9) {
           setEmployees((prev) => [...prev, { ...newEmployee, teams: [] }]);
