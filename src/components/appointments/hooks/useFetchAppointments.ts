@@ -8,13 +8,13 @@ export function useFetchAppointments() {
   const { setAppointments, setIsLoading } = useContext(AppointmentsContext);
 
   function getAppointments(
-    appointmentState: string,
+    state: string,
     year: string,
     month: string,
     day: string,
   ) {
     setIsLoading(true);
-    AppointmentsApi.getAppointments(appointmentState, year, month, day)
+    AppointmentsApi.getAppointments(state, year, month, day)
       .then((res) => {
         const mappedAppointments = res.map((appointment) =>
           mapAppointment(appointment),

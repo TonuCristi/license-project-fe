@@ -17,9 +17,9 @@ export default function TeamMembersSearchBar() {
   const { watch } = methods;
 
   useEffect(() => {
-    const { unsubscribe } = watch(({ value }) => {
+    const { unsubscribe } = watch(({ search }) => {
       if (selectedTeam) {
-        getTeamMembers(selectedTeam.id, value, 0, PER_PAGE);
+        getTeamMembers(selectedTeam.id, search, 0, PER_PAGE);
       }
     });
 
@@ -29,7 +29,7 @@ export default function TeamMembersSearchBar() {
   return (
     <form className="w-full">
       <Input
-        name="value"
+        name="search"
         placeholder="Search employees..."
         rightIcon={<HiMiniMagnifyingGlass className="text-md stroke-1" />}
       />

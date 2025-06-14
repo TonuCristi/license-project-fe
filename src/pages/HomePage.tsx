@@ -23,7 +23,7 @@ const stateOptions = [
 export default function HomePage() {
   const methods = useForm<AppointmentDateFilters>({
     defaultValues: {
-      appointmentState: "",
+      state: "",
       year: "",
       month: "",
       day: "",
@@ -45,7 +45,7 @@ export default function HomePage() {
               <>
                 <div className="w-full md:col-start-3">
                   <Select
-                    name="appointmentState"
+                    name="state"
                     placeholder="Select the state"
                     className="ml-auto w-full"
                     options={stateOptions}
@@ -63,7 +63,7 @@ export default function HomePage() {
             </p>
           )}
           {(!!room || user?.role !== "assistant") &&
-            (watch("appointmentState") ? (
+            (watch("state") ? (
               <div className="flex flex-col gap-3">
                 <AppointmentsDateFilters />
                 {watch("year") ? (

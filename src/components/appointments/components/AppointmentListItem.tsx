@@ -40,10 +40,9 @@ export default function AppointmentListItem({ appointment }: Props) {
       <div className="xs:items-center xs:flex-col flex flex-row justify-between gap-2">
         <div className="flex items-center gap-2">
           <DeleteAppointmentButton appointmentId={id} />
-          {watch("appointmentState") === "finished" ||
-            watch("appointmentState") === "progress" || (
-              <EditAppointmentButton appointment={appointment} />
-            )}
+          {watch("state") === "finished" || watch("state") === "progress" || (
+            <EditAppointmentButton appointment={appointment} />
+          )}
         </div>
 
         {note.length && (

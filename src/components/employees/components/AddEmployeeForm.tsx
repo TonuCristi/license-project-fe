@@ -66,7 +66,7 @@ export default function AddEmployeeForm() {
   const { isLoading: isEmployeesLoading } = useContext(EmployeesContext);
 
   const onSubmit: SubmitHandler<AddEmployee> = (data) =>
-    addEmployee(data, watch("value"));
+    addEmployee(data, watch("search"));
 
   const {
     handleSubmit,

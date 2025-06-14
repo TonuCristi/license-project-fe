@@ -31,7 +31,7 @@ export default function ContactsList() {
         }
 
         controllerRef.current = new AbortController();
-        getContacts(watch("value"), offset, PER_PAGE, controllerRef.current);
+        getContacts(watch("search"), offset, PER_PAGE, controllerRef.current);
         setOffset((prev) => prev + 1);
       }
     }, options);

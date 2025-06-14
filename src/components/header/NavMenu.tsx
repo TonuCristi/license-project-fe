@@ -10,6 +10,7 @@ import { useClickOutside } from "../../hooks/useClickOutside";
 const links = [
   { to: "employees", text: "Employees" },
   { to: "teams", text: "Teams" },
+  { to: "projects", text: "Projects" },
   { to: "meetings", text: "Meetings" },
 ];
 

@@ -21,7 +21,7 @@ export default function EmployeeTeamList({
 }: Props) {
   const methods = useForm<SearchBar>({
     defaultValues: {
-      value: "",
+      search: "",
     },
     resolver: zodResolver(searchBarSchema),
   });
@@ -47,7 +47,7 @@ export default function EmployeeTeamList({
         }
 
         controllerRef.current = new AbortController();
-        getTeams(watch("value"), offset, 5, controllerRef.current);
+        getTeams(watch("search"), offset, 5, controllerRef.current);
         setOffset((prev) => prev + 1);
       }
     }, options);

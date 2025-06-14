@@ -24,8 +24,8 @@ const stateOptions = [
 export default function MeetingsPage() {
   const methods = useForm<MeetingDateFilters>({
     defaultValues: {
-      meetingType: "",
-      meetingState: "",
+      type: "",
+      state: "",
       year: "",
       month: "",
       day: "",
@@ -44,18 +44,18 @@ export default function MeetingsPage() {
               <PageTitle>Meetings</PageTitle>
             </div>
             <Select
-              name="meetingType"
+              name="type"
               placeholder="Select the type"
               options={typeOptions}
             />
             <Select
-              name="meetingState"
+              name="state"
               placeholder="Select the state"
               options={stateOptions}
             />
           </div>
 
-          {watch("meetingType") && watch("meetingState") ? (
+          {watch("type") && watch("state") ? (
             <div className="flex flex-col gap-3">
               <MeetingsDateFilters />
               {watch("year") ? (

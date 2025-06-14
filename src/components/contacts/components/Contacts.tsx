@@ -13,7 +13,7 @@ export const PER_PAGE = 15;
 export default function Contacts() {
   const methods = useForm<SearchBar>({
     defaultValues: {
-      value: "",
+      search: "",
     },
     resolver: zodResolver(searchBarSchema),
   });
