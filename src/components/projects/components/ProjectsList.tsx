@@ -4,9 +4,9 @@ import { useFormContext } from "react-hook-form";
 import Pagination from "../../Pagination";
 import ProjectListItem from "./ProjectListItem";
 
-import { PER_PAGE } from "../../../pages/EmployeesPage";
 import { useFetchProjects } from "../hooks/useFetchProjects";
 import { ProjectsContext } from "../../../contexts/ProjectsContext";
+import { PER_PAGE } from "../../../pages/ProjectsPage";
 
 export default function ProjectsList() {
   const { projects, pages, offset, isLoading, setOffset } =
@@ -17,7 +17,7 @@ export default function ProjectsList() {
   const { watch } = methods;
 
   useEffect(() => {
-    getProjects(watch("search"), offset, PER_PAGE);
+    getProjects(watch("search"), watch("state"), offset, PER_PAGE);
   }, [getProjects, offset, watch]);
 
   return (

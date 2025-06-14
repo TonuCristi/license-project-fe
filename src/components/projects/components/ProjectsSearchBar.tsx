@@ -5,7 +5,7 @@ import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { useFetchProjects } from "../hooks/useFetchProjects";
-import { PER_PAGE } from "../../contacts/components/Contacts";
+import { PER_PAGE } from "../../../pages/ProjectsPage";
 
 export default function ProjectsSearchBar() {
   const { getProjects } = useFetchProjects();
@@ -14,8 +14,8 @@ export default function ProjectsSearchBar() {
   const { watch } = methods;
 
   useEffect(() => {
-    const { unsubscribe } = watch(({ search }) => {
-      getProjects(search, 0, PER_PAGE);
+    const { unsubscribe } = watch(({ search, state }) => {
+      getProjects(search, state, 0, PER_PAGE);
     });
 
     return () => unsubscribe();

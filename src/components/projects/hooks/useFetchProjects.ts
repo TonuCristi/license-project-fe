@@ -9,9 +9,9 @@ export function useFetchProjects() {
     useContext(ProjectsContext);
 
   const getProjects = useCallback(
-    function (search: string, offset: number, perPage: number) {
+    function (search: string, state: string, offset: number, perPage: number) {
       setIsLoading(true);
-      ProjectsApi.getProjects(search, offset, perPage)
+      ProjectsApi.getProjects(search, state, offset, perPage)
         .then((res) => {
           const projects = res.projects.map((project) => mapProject(project));
           setPages(res.pages);
