@@ -53,8 +53,8 @@ const selects = [
 export default function MeetingsDateFilters() {
   const { watch, reset } = useFormContext();
   const { isLoading: isMeetingYearsLoading } = useFetchMeetingsYears(
-    watch("meetingType"),
-    watch("meetingState"),
+    watch("type"),
+    watch("state"),
   );
   const { getMeetings } = useFetchMeetings();
   const {
@@ -73,8 +73,8 @@ export default function MeetingsDateFilters() {
 
     e.preventDefault();
     reset({
-      meetingType: watch("meetingType"),
-      meetingState: watch("meetingState"),
+      type: watch("type"),
+      state: watch("state"),
       year: "",
       month: "",
       day: "",
@@ -82,13 +82,11 @@ export default function MeetingsDateFilters() {
   }
 
   useEffect(() => {
-    const { unsubscribe } = watch(
-      ({ meetingType, meetingState, year, month, day }) => {
-        if (!(year === "" && month === "" && day === "")) {
-          getMeetings(meetingType, meetingState, year, month, day);
-        }
-      },
-    );
+    const { unsubscribe } = watch(({ type, state, year, month, day }) => {
+      if (!(year === "" && month === "" && day === "")) {
+        getMeetings(type, state, year, month, day);
+      }
+    });
 
     return () => unsubscribe();
   }, [watch, getMeetings]);

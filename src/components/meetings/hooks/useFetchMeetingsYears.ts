@@ -3,19 +3,17 @@ import { useContext, useEffect, useState } from "react";
 import { MeetingsApi } from "../../../services/MeetingsApi";
 import { MeetingsContext } from "../../../contexts/MeetingsContext";
 
-export function useFetchMeetingsYears(
-  meetingType: string,
-  meetingState: string,
-) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+export function useFetchMeetingsYears(type: string, state: string) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setMeetingsYears } = useContext(MeetingsContext);
 
   useEffect(() => {
-    MeetingsApi.getMeetingsYears(meetingType, meetingState)
+    setIsLoading(true);
+    MeetingsApi.getMeetingsYears(type, state)
       .then((res) => setMeetingsYears(res))
       .catch((error) => console.log(error.response.data.message))
       .finally(() => setIsLoading(false));
-  }, [meetingType, meetingState, setMeetingsYears]);
+  }, [setMeetingsYears, type, state]);
 
   return {
     isLoading,

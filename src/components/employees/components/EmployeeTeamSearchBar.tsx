@@ -27,7 +27,7 @@ export default function EmployeeTeamSearchBar({
   const { watch } = useFormContext();
 
   useEffect(() => {
-    const { unsubscribe } = watch(({ value }) => {
+    const { unsubscribe } = watch(({ search }) => {
       if (controllerRef.current) {
         controllerRef.current.abort();
       }
@@ -37,7 +37,7 @@ export default function EmployeeTeamSearchBar({
       setOffset(1);
       setTeams([]);
       if (controllerRef.current) {
-        getTeams(value, 0, 5, controllerRef.current);
+        getTeams(search, 0, 5, controllerRef.current);
       }
     });
 
@@ -47,7 +47,7 @@ export default function EmployeeTeamSearchBar({
   return (
     <form className="w-full">
       <Input
-        name="value"
+        name="search"
         placeholder="Search your team..."
         rightIcon={<HiMiniMagnifyingGlass className="text-md stroke-1" />}
       />

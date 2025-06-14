@@ -54,7 +54,7 @@ export default function AppointmentsDateFilters() {
   const { watch, reset } = useFormContext();
   const { getAppointments } = useFetchAppointments();
   const { isLoading: isAppointmentsYearsLoading } = useFetchAppointmentsYears(
-    watch("appointmentState"),
+    watch("state"),
   );
   const {
     isLoading: isAppointmentsLoading,
@@ -72,7 +72,7 @@ export default function AppointmentsDateFilters() {
 
     e.preventDefault();
     reset({
-      appointmentState: watch("appointmentState"),
+      state: watch("state"),
       year: "",
       month: "",
       day: "",
@@ -80,9 +80,9 @@ export default function AppointmentsDateFilters() {
   }
 
   useEffect(() => {
-    const { unsubscribe } = watch(({ appointmentState, year, month, day }) => {
+    const { unsubscribe } = watch(({ state, year, month, day }) => {
       if (!(year === "" && month === "" && day === "")) {
-        getAppointments(appointmentState, year, month, day);
+        getAppointments(state, year, month, day);
       }
     });
 

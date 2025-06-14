@@ -9,26 +9,24 @@ import {
 const URL = "/api/meetings";
 
 export const MeetingsApi = {
-  getMeetingsYears(meetingType: string, meetingState: string) {
+  getMeetingsYears(type: string, state: string) {
     return api
-      .get(
-        `${URL}/retrieve-meetings-years?meetingType=${meetingType}&meetingState=${meetingState}`,
-      )
+      .get(`${URL}/retrieve-meetings-years?type=${type}&state=${state}`)
       .then(
         ({ data }: AxiosResponse<{ meetingsYears: number[] }>) =>
           data.meetingsYears,
       );
   },
   getMeetings(
-    meetingType: string,
-    meetingState: string,
+    type: string,
+    state: string,
     year: string,
     month: string,
     day: string,
   ) {
     return api
       .get(
-        `${URL}/retrieve-meetings?meetingType=${meetingType}&meetingState=${meetingState}&year=${year}&month=${month}&day=${day}`,
+        `${URL}/retrieve-meetings?type=${type}&state=${state}&year=${year}&month=${month}&day=${day}`,
       )
       .then(
         ({ data }: AxiosResponse<{ meetings: MeetingResponse[] }>) =>

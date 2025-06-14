@@ -4,22 +4,22 @@ import { useEffect } from "react";
 import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
-import { useFetchEmployees } from "../hooks/useFetchEmployees";
-import { PER_PAGE } from "../../../pages/EmployeesPage";
+import { useFetchProjects } from "../hooks/useFetchProjects";
+import { PER_PAGE } from "../../contacts/components/Contacts";
 
-export default function EmployeesSearchBar() {
-  const { getEmployees } = useFetchEmployees();
+export default function ProjectsSearchBar() {
+  const { getProjects } = useFetchProjects();
   const methods = useFormContext();
 
   const { watch } = methods;
 
   useEffect(() => {
     const { unsubscribe } = watch(({ search }) => {
-      getEmployees(search, 0, PER_PAGE);
+      getProjects(search, 0, PER_PAGE);
     });
 
     return () => unsubscribe();
-  }, [watch, getEmployees]);
+  }, [watch, getProjects]);
 
   return (
     <form className="w-full">

@@ -12,7 +12,7 @@ export const PER_PAGE = 9;
 export default function SelectedTeamMembers() {
   const methods = useForm<SearchBar>({
     defaultValues: {
-      value: "",
+      search: "",
     },
     resolver: zodResolver(searchBarSchema),
   });

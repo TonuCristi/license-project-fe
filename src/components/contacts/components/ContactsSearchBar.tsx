@@ -16,7 +16,7 @@ export default function ContactsSearchBar() {
   const { watch } = useFormContext();
 
   useEffect(() => {
-    const { unsubscribe } = watch(({ value }) => {
+    const { unsubscribe } = watch(({ search }) => {
       if (controllerRef.current) {
         controllerRef.current.abort();
       }
@@ -26,7 +26,7 @@ export default function ContactsSearchBar() {
       setOffset(1);
       setContacts([]);
       if (controllerRef.current) {
-        getContacts(value, 0, PER_PAGE, controllerRef.current);
+        getContacts(search, 0, PER_PAGE, controllerRef.current);
       }
     });
 
@@ -36,7 +36,7 @@ export default function ContactsSearchBar() {
   return (
     <form className="w-full">
       <Input
-        name="value"
+        name="search"
         placeholder="Search your contact..."
         rightIcon={<HiMiniMagnifyingGlass className="text-md stroke-1" />}
       />
