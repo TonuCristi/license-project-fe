@@ -18,7 +18,7 @@ export function useDeleteMember() {
             ...prev.filter((members) => members.id !== employeeId),
           ]);
           setPages((prev) => prev - 1);
-          setOffset(pages - 2);
+          setOffset(pages - 2 < 0 ? 0 : pages - 2);
         }
 
         if (members.length > 1) {

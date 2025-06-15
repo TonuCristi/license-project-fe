@@ -11,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage.tsx";
 import EmployeesPage from "./pages/EmployeesPage.tsx";
 import TeamsPage from "./pages/TeamsPage.tsx";
 import ProjectsPage from "./pages/ProjectsPage.tsx";
+import ProjectPage from "./pages/ProjectPage.tsx";
 import MeetingsPage from "./pages/MeetingsPage.tsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router";
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
       { path: "/employees", element: <EmployeesPage /> },
       { path: "/teams", element: <TeamsPage /> },
       { path: "/projects", element: <ProjectsPage /> },
-      { path: "/projects/:projectId", element: <div>Project</div> },
+      { path: "/projects/:projectId", element: <ProjectPage /> },
       { path: "/meetings", element: <MeetingsPage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },

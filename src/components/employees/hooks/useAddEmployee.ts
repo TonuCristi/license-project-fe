@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 import { AddEmployee } from "../../../types/employee.type";
 import { EmployeesContext } from "../../../contexts/EmployeesContext";
@@ -12,28 +13,45 @@ export function useAddEmployee() {
     useContext(EmployeesContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  function addEmployee(employee: AddEmployee, search: string) {
+  async function addEmployee(project: AddEmployee, search: string) {
     setIsLoading(true);
-    Promise.all([
-      EmployeesApi.addEmployee(employee),
-      EmployeesApi.getEmployeesPages(search, PER_PAGE),
-    ])
-      .then((res) => {
-        const newEmployee = mapEmployee(res[0].newEmployee);
-        const pages = res[1] - 1;
 
-        if (pages === offset && employees.length < 9) {
-          setEmployees((prev) => [...prev, { ...newEmployee, teams: [] }]);
+    try {
+      const addEmployeeRes = await EmployeesApi.addEmployee(project);
+      const getPagesRes = await EmployeesApi.getEmployeesPages(
+        search,
+        PER_PAGE,
+      );
 
-          return toast.success(res[0].message);
+      const newEmployee = mapEmployee(addEmployeeRes.newEmployee);
+      const pages = getPagesRes;
+
+      if (employees.length === 0) {
+        setEmployees([{ ...newEmployee, teams: [] }]);
+      }
+
+      if (
+        pages - 1 === offset &&
+        employees.length >= 1 &&
+        employees.length < 9
+      ) {
+        setEmployees((prev) => [...prev, { ...newEmployee, teams: [] }]);
+      }
+
+      if (employees.length === 9) {
+        setOffset(pages - 1);
+      }
+
+      toast.success(addEmployeeRes.message);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          toast.error(error.response.data.message);
         }
+      }
+    }
 
-        setOffset(pages);
-
-        toast.success(res[0].message);
-      })
-      .catch((error) => toast.error(error.response.data.message))
-      .finally(() => setIsLoading(false));
+    setIsLoading(false);
   }
 
   return { addEmployee, isLoading };
