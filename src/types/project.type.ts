@@ -1,8 +1,10 @@
 import { z } from "zod";
 import { projectsFiltersSchema } from "../schemas/projectsFilters.schema";
-import { createProjectSchema } from "../schemas/projectForm.schema";
+import { projectFormSchema } from "../schemas/projectForm.schema";
 
-export type CreateProject = z.infer<typeof createProjectSchema>;
+export type CreateProject = z.infer<typeof projectFormSchema>;
+
+export type EditProject = z.infer<typeof projectFormSchema>;
 
 export type ProjectFilters = z.infer<typeof projectsFiltersSchema>;
 

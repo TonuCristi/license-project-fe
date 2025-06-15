@@ -1,21 +1,13 @@
-import { useContext } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  FormProvider,
-  SubmitHandler,
-  useForm,
-  useFormContext,
-} from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-import Input from "../../input/Input";
-import Label from "../../Label";
-import Message from "../../Message";
 import Button from "../../Button";
 import InputContainer from "../../input/InputContainer";
+import Label from "../../Label";
+import Input from "../../input/Input";
+import Message from "../../Message";
 
-import { EmployeesContext } from "../../../contexts/EmployeesContext";
-import { useCreateProject } from "../hooks/useCreateProject";
-import { CreateProject } from "../../../types/project.type";
+import { EditProject, Project } from "../../../types/project.type";
 import { projectFormSchema } from "../../../schemas/projectForm.schema";
 import Textarea from "../../Textarea";
 
@@ -43,25 +35,29 @@ const inputs = [
   },
 ] as const;
 
-export default function CreateProjectForm() {
-  const methods = useForm<CreateProject>({
+type Props = {
+  project: Project;
+  editProject: (projectId: string, newEditedProject: EditProject) => void;
+  isEditLoading: boolean;
+};
+
+export default function EditProjectForm({
+  project,
+  editProject,
+  isEditLoading,
+}: Props) {
+  const methods = useForm<EditProject>({
     defaultValues: {
-      name: "",
-      description: "",
-      startDate: "",
-      deadline: "",
+      name: project.name,
+      description: project.description,
+      startDate: project.startDate.split("T")[0],
+      deadline: project.deadline.split("T")[0],
     },
     resolver: zodResolver(projectFormSchema),
   });
 
-  const { watch } = useFormContext();
-
-  const { createProject, isLoading } = useCreateProject();
-  const { isLoading: isEmployeesLoading } = useContext(EmployeesContext);
-
-  const onSubmit: SubmitHandler<CreateProject> = (data) => {
-    createProject(data, watch("search"), watch("state"));
-  };
+  const onSubmit: SubmitHandler<EditProject> = (data) =>
+    editProject(project.id, data);
 
   const {
     handleSubmit,
@@ -72,9 +68,9 @@ export default function CreateProjectForm() {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-primary xxs:w-64 absolute top-full right-0 z-50 mt-3 flex w-52 flex-col rounded-xl border-2 bg-white p-3"
+        className="border-primary xxs:w-64 xxs:-translate-x-1/2 xs:-translate-x-0 xs:right-0 absolute top-full z-50 mt-3 flex w-52 -translate-x-3/5 flex-col rounded-xl border-2 bg-white p-3"
       >
-        <h2 className="mb-1 text-lg font-medium">Create project</h2>
+        <h2 className="mb-1 text-lg font-medium">Edit project</h2>
         <div className="mb-3 flex flex-col gap-3">
           {inputs.map(({ label, id, name, placeholder, type }) => (
             <InputContainer key={id}>
@@ -104,7 +100,7 @@ export default function CreateProjectForm() {
             )}
           </InputContainer>
         </div>
-        <Button disabled={isLoading || isEmployeesLoading}>Add</Button>
+        <Button disabled={isEditLoading}>Save</Button>
       </form>
     </FormProvider>
   );
