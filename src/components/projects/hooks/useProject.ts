@@ -46,7 +46,7 @@ export function useProject() {
         toast.success(res.message);
       })
       .catch((error) => toast.error(error.response.data.message))
-      .finally(() => setIsEditProgressLoading(false));
+      .finally(() => setIsEditStateLoading(false));
   }
 
   useEffect(() => {
