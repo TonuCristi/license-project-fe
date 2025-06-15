@@ -1,14 +1,74 @@
-import { useParams } from "react-router";
+import Loader from "../components/Loader";
 import PageTitle from "../components/PageTitle";
 
-export default function ProjectPage() {
-  const { projectId } = useParams();
+import Button from "../components/Button";
+import ProjectProgressBar from "../components/projects/components/ProjectProgressBar";
+import ProjectSection from "../components/projects/components/ProjectSection";
+import ProjectSectionTitle from "../components/projects/components/ProjectSectionTitle";
+import ProjectElapsedTime from "../components/projects/components/ProjectElapsedTime";
+import ProjectStateDropdown from "../components/projects/components/ProjectStateDropdown";
 
-  console.log(projectId);
+import { useProject } from "../components/projects/hooks/useProject";
+
+export default function ProjectPage() {
+  const {
+    editProgress,
+    editState,
+    project,
+    isLoading,
+    isEditProgressLoading,
+    isEditStateLoading,
+  } = useProject();
+
+  const { description, state, progress, startDate, deadline } = project;
+
+  if (isLoading) {
+    return (
+      <main className="border-primary m-auto flex h-screen w-full flex-col items-center justify-center gap-2 border-x-2 p-2 sm:p-4 lg:w-5xl">
+        <Loader />
+      </main>
+    );
+  }
 
   return (
-    <main className="border-primary scrollbar xs:gap-5 m-auto flex h-full w-full flex-col gap-2 overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">
-      <PageTitle>Projects</PageTitle>
+    <main className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-2 overflow-x-hidden overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">
+      <div className="flex flex-col gap-2">
+        <div className="flex w-full items-center justify-between gap-2">
+          <PageTitle>{`${project.name} project`}</PageTitle>
+          <ProjectStateDropdown
+            projectId={project.id}
+            state={state}
+            editState={editState}
+            isEditStateLoading={isEditStateLoading}
+          />
+        </div>
+        <div className="xxs:justify-end xxs:flex-row flex flex-col items-center gap-2">
+          <Button variant="reject" className="xxs:w-auto w-full">
+            Delete
+          </Button>
+          <Button className="xxs:w-auto w-full">Edit</Button>
+        </div>
+      </div>
+
+      <ProjectSection className="items-center">
+        <ProjectSectionTitle>Elapsed time</ProjectSectionTitle>
+        <ProjectElapsedTime startDate={startDate} deadline={deadline} />
+      </ProjectSection>
+
+      <ProjectSection className="xs:h-22 items-center">
+        <ProjectSectionTitle>Progress</ProjectSectionTitle>
+        <ProjectProgressBar
+          projectId={project.id}
+          progress={progress}
+          editProgress={editProgress}
+          isEditProgressLoading={isEditProgressLoading}
+        />
+      </ProjectSection>
+
+      <ProjectSection>
+        <ProjectSectionTitle>Description</ProjectSectionTitle>
+        <p>{description}</p>
+      </ProjectSection>
     </main>
   );
 }

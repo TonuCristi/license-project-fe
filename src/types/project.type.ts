@@ -25,7 +25,7 @@ export type ProjectResponse = {
   _id: string;
   name: string;
   description: string;
-  start_date: string;
+  startDate: string;
   deadline: string;
   state: ProjectState;
   progress: ProjectProgress;
