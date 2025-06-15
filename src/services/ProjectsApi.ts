@@ -1,6 +1,10 @@
 import { AxiosResponse } from "axios";
 import { api } from "../config/api";
-import { CreateProject, ProjectResponse } from "../types/project.type";
+import {
+  CreateProject,
+  ProjectProgress,
+  ProjectResponse,
+} from "../types/project.type";
 
 const URL = "/api/projects";
 
@@ -39,6 +43,18 @@ export const ProjectsApi = {
           data,
         }: AxiosResponse<{ newProject: ProjectResponse; message: string }>) =>
           data,
+      );
+  },
+  editProjectProgress(projectId: string, progress: ProjectProgress) {
+    return api
+      .put(`${URL}/edit-project-progress/${projectId}`, { progress })
+      .then(
+        ({
+          data,
+        }: AxiosResponse<{
+          editedProgress: ProjectProgress;
+          message: string;
+        }>) => data,
       );
   },
 };

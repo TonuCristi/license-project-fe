@@ -1,7 +1,14 @@
 import Loader from "../components/Loader";
 import PageTitle from "../components/PageTitle";
 
-import { useFetchProject } from "../components/projects/hooks/useFetchProject";
+import Button from "../components/Button";
+import ProjectProgressBar from "../components/projects/components/ProjectProgressBar";
+import ProjectSection from "../components/projects/components/ProjectSection";
+import ProjectSectionTitle from "../components/projects/components/ProjectSectionTitle";
+import ProjectElapsedTime from "../components/projects/components/ProjectElapsedTime";
+
+import { ProjectState } from "../types/project.type";
+import { useProject } from "../components/projects/hooks/useProject";
 
 const projectState = {
   pending: "Pending",
@@ -10,12 +17,20 @@ const projectState = {
 };
 
 export default function ProjectPage() {
-  const { project, isLoading } = useFetchProject();
+  const { editProgress, project, isLoading, isEditProgressLoading } =
+    useProject();
 
-  const { name, description, state, progress } = project;
+  const { description, state, progress } = project;
 
-  const startDate = new Date(project.startDate).toLocaleDateString();
-  const deadline = new Date(project.deadline).toLocaleDateString();
+  function getStatusColor(state: ProjectState) {
+    const states = {
+      pending: "bg-gray-500",
+      progress: "bg-primary",
+      finished: "bg-emerald-500",
+    };
+
+    return states[state];
+  }
 
   if (isLoading) {
     return (
@@ -26,30 +41,39 @@ export default function ProjectPage() {
   }
 
   return (
-    <main className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-2 overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">
-      <div className="flex items-center justify-between gap-2">
+    <main className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-2 overflow-x-hidden overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">
+      <div className="flex items-center gap-2">
         <PageTitle>{`${project.name} project`}</PageTitle>
-        <p className="bg-primary rounded-xl p-2 font-medium text-white">
+        <Button variant="reject" className="ml-auto">
+          Delete
+        </Button>
+        <Button>Edit</Button>
+        <p
+          className={`rounded-xl p-2 font-medium text-white ${getStatusColor(state)}`}
+        >
           {projectState[state]}
         </p>
       </div>
-      <div className="border-primary flex flex-col justify-between gap-1 border-t-2 pt-2 break-all">
-        <p>
-          <span className="font-medium">Name:</span> {name}
-        </p>
-        <p>
-          <span className="font-medium">Start date:</span> {startDate}
-        </p>
-        <p>
-          <span className="font-medium">Deadline:</span> {deadline}
-        </p>
-        <p>
-          <span className="font-medium">Description:</span> {description}
-        </p>
-        <p>
-          <span className="font-medium">Progress:</span> {progress}
-        </p>
-      </div>
+
+      <ProjectSection className="items-center">
+        <ProjectSectionTitle>Elapsed time</ProjectSectionTitle>
+        <ProjectElapsedTime project={project} />
+      </ProjectSection>
+
+      <ProjectSection className="items-center">
+        <ProjectSectionTitle>Progress</ProjectSectionTitle>
+        <ProjectProgressBar
+          projectId={project.id}
+          progress={progress}
+          editProgress={editProgress}
+          isEditProgressLoading={isEditProgressLoading}
+        />
+      </ProjectSection>
+
+      <ProjectSection>
+        <ProjectSectionTitle>Description</ProjectSectionTitle>
+        <p>{description}</p>
+      </ProjectSection>
     </main>
   );
 }
