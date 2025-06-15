@@ -4,7 +4,11 @@ import toast from "react-hot-toast";
 
 import { ProjectsApi } from "../../../services/ProjectsApi";
 import { mapProject } from "../../../utlis/mapProject";
-import { Project, ProjectProgress } from "../../../types/project.type";
+import {
+  Project,
+  ProjectProgress,
+  ProjectState,
+} from "../../../types/project.type";
 
 export function useProject() {
   const [project, setProject] = useState<Project>({
@@ -19,6 +23,7 @@ export function useProject() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isEditProgressLoading, setIsEditProgressLoading] =
     useState<boolean>(false);
+  const [isEditStateLoading, setIsEditStateLoading] = useState<boolean>(false);
   const { projectId } = useParams();
 
   function editProgress(projectId: string, progress: ProjectProgress) {
@@ -26,6 +31,18 @@ export function useProject() {
     ProjectsApi.editProjectProgress(projectId, progress)
       .then((res) => {
         setProject((prev) => ({ ...prev, progress: res.editedProgress }));
+        toast.success(res.message);
+      })
+      .catch((error) => toast.error(error.response.data.message))
+      .finally(() => setIsEditProgressLoading(false));
+  }
+
+  function editState(projectId: string, state: ProjectState, cb: () => void) {
+    setIsEditStateLoading(true);
+    ProjectsApi.editProjectState(projectId, state)
+      .then((res) => {
+        setProject((prev) => ({ ...prev, state: res.editedState }));
+        cb();
         toast.success(res.message);
       })
       .catch((error) => toast.error(error.response.data.message))
@@ -44,5 +61,12 @@ export function useProject() {
     }
   }, [projectId]);
 
-  return { editProgress, project, isLoading, isEditProgressLoading };
+  return {
+    editProgress,
+    editState,
+    project,
+    isLoading,
+    isEditProgressLoading,
+    isEditStateLoading,
+  };
 }

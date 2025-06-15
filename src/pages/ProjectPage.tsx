@@ -6,31 +6,21 @@ import ProjectProgressBar from "../components/projects/components/ProjectProgres
 import ProjectSection from "../components/projects/components/ProjectSection";
 import ProjectSectionTitle from "../components/projects/components/ProjectSectionTitle";
 import ProjectElapsedTime from "../components/projects/components/ProjectElapsedTime";
+import ProjectStateDropdown from "../components/projects/components/ProjectStateDropdown";
 
-import { ProjectState } from "../types/project.type";
 import { useProject } from "../components/projects/hooks/useProject";
 
-const projectState = {
-  pending: "Pending",
-  progress: "In progess",
-  finished: "Finished",
-};
-
 export default function ProjectPage() {
-  const { editProgress, project, isLoading, isEditProgressLoading } =
-    useProject();
+  const {
+    editProgress,
+    editState,
+    project,
+    isLoading,
+    isEditProgressLoading,
+    isEditStateLoading,
+  } = useProject();
 
-  const { description, state, progress } = project;
-
-  function getStatusColor(state: ProjectState) {
-    const states = {
-      pending: "bg-gray-500",
-      progress: "bg-primary",
-      finished: "bg-emerald-500",
-    };
-
-    return states[state];
-  }
+  const { description, state, progress, startDate, deadline } = project;
 
   if (isLoading) {
     return (
@@ -42,25 +32,30 @@ export default function ProjectPage() {
 
   return (
     <main className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-2 overflow-x-hidden overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">
-      <div className="flex items-center gap-2">
-        <PageTitle>{`${project.name} project`}</PageTitle>
-        <Button variant="reject" className="ml-auto">
-          Delete
-        </Button>
-        <Button>Edit</Button>
-        <p
-          className={`rounded-xl p-2 font-medium text-white ${getStatusColor(state)}`}
-        >
-          {projectState[state]}
-        </p>
+      <div className="flex flex-col gap-2">
+        <div className="flex w-full items-center justify-between gap-2">
+          <PageTitle>{`${project.name} project`}</PageTitle>
+          <ProjectStateDropdown
+            projectId={project.id}
+            state={state}
+            editState={editState}
+            isEditStateLoading={isEditStateLoading}
+          />
+        </div>
+        <div className="xxs:justify-end xxs:flex-row flex flex-col items-center gap-2">
+          <Button variant="reject" className="xxs:w-auto w-full">
+            Delete
+          </Button>
+          <Button className="xxs:w-auto w-full">Edit</Button>
+        </div>
       </div>
 
       <ProjectSection className="items-center">
         <ProjectSectionTitle>Elapsed time</ProjectSectionTitle>
-        <ProjectElapsedTime project={project} />
+        <ProjectElapsedTime startDate={startDate} deadline={deadline} />
       </ProjectSection>
 
-      <ProjectSection className="items-center">
+      <ProjectSection className="xs:h-22 items-center">
         <ProjectSectionTitle>Progress</ProjectSectionTitle>
         <ProjectProgressBar
           projectId={project.id}

@@ -1,6 +1,7 @@
 import { twMerge } from "tailwind-merge";
 
 import Button from "../../Button";
+
 import { ProjectProgress } from "../../../types/project.type";
 
 const progressValues: ProjectProgress[] = [
@@ -46,7 +47,7 @@ export default function ProjectProgressBar({
           key={value}
           style={{ left: `${value}%` }}
           className={twMerge(
-            "absolute top-full mt-3 -translate-x-1/2 -translate-y-1/2 text-xs font-medium text-nowrap",
+            "xs:block absolute top-full mt-3 hidden -translate-x-1/2 -translate-y-1/2 text-xs font-medium text-nowrap",
             value === progress && "text-sm font-bold",
           )}
         >

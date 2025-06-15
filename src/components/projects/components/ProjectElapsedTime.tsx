@@ -1,28 +1,25 @@
-import { Project } from "../../../types/project.type";
-
 type Props = {
-  project: Project;
+  startDate: string;
+  deadline: string;
 };
 
-export default function ProjectElapsedTime({ project }: Props) {
-  const startDate = new Date(project.startDate);
-  const deadline = new Date(project.deadline);
+export default function ProjectElapsedTime({ startDate, deadline }: Props) {
+  const startDateInMs = new Date(startDate).getTime();
+  const deadlineInMs = new Date(deadline).getTime();
   const todayDate = Date.now();
 
-  const elapsedTimeTotal = deadline.getTime() - startDate.getTime();
-  const elapsedTime = todayDate - startDate.getTime();
+  const elapsedTimeTotal = deadlineInMs - startDateInMs;
+  const elapsedTime = todayDate - startDateInMs;
 
   function getElapsedTime() {
     const elapsedTimePercent =
-      todayDate > startDate.getTime()
-        ? (elapsedTime * 100) / elapsedTimeTotal
-        : 0;
+      todayDate > startDateInMs ? (elapsedTime * 100) / elapsedTimeTotal : 0;
 
-    if (todayDate < startDate.getTime()) {
+    if (todayDate < startDateInMs) {
       return Number(0).toFixed(2);
     }
 
-    if (todayDate > deadline.getTime()) {
+    if (todayDate > deadlineInMs) {
       return Number(100).toFixed(2);
     }
 
@@ -43,8 +40,10 @@ export default function ProjectElapsedTime({ project }: Props) {
         </p>
       </div>
       <div className="flex items-center justify-between gap-2">
-        <p className="font-medium">{startDate.toLocaleDateString()}</p>
-        <p className="font-medium">{deadline.toLocaleDateString()}</p>
+        <p className="font-medium">
+          {new Date(startDate).toLocaleDateString()}
+        </p>
+        <p className="font-medium">{new Date(deadline).toLocaleDateString()}</p>
       </div>
     </div>
   );

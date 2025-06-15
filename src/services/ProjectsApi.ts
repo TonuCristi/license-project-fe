@@ -4,6 +4,7 @@ import {
   CreateProject,
   ProjectProgress,
   ProjectResponse,
+  ProjectState,
 } from "../types/project.type";
 
 const URL = "/api/projects";
@@ -56,5 +57,15 @@ export const ProjectsApi = {
           message: string;
         }>) => data,
       );
+  },
+  editProjectState(projectId: string, state: ProjectState) {
+    return api.put(`${URL}/edit-project-state/${projectId}`, { state }).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        editedState: ProjectState;
+        message: string;
+      }>) => data,
+    );
   },
 };
