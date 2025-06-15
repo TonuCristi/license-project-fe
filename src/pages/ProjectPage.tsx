@@ -1,13 +1,13 @@
 import Loader from "../components/Loader";
 import PageTitle from "../components/PageTitle";
 
-import Button from "../components/Button";
 import ProjectProgressBar from "../components/projects/components/ProjectProgressBar";
 import ProjectSection from "../components/projects/components/ProjectSection";
 import ProjectSectionTitle from "../components/projects/components/ProjectSectionTitle";
 import ProjectElapsedTime from "../components/projects/components/ProjectElapsedTime";
 import ProjectStateDropdown from "../components/projects/components/ProjectStateDropdown";
 import EditProjectButton from "../components/projects/components/EditProjectButton";
+import DeleteProjectButton from "../components/projects/components/DeleteProjectButton";
 
 import { useProject } from "../components/projects/hooks/useProject";
 
@@ -16,11 +16,13 @@ export default function ProjectPage() {
     editProject,
     editProgress,
     editState,
+    deleteProject,
     project,
     isLoading,
     isEditLoading,
     isEditProgressLoading,
     isEditStateLoading,
+    isDeleteLoading,
   } = useProject();
 
   const { description, state, progress, startDate, deadline } = project;
@@ -45,10 +47,12 @@ export default function ProjectPage() {
             isEditStateLoading={isEditStateLoading}
           />
         </div>
-        <div className="xxs:justify-end xxs:flex-row flex flex-col items-center gap-2">
-          <Button variant="reject" className="xxs:w-auto w-full">
-            Delete
-          </Button>
+        <div className="xs:grid-cols-2 grid grid-cols-1 items-center gap-2 sm:w-1/2 sm:self-end">
+          <DeleteProjectButton
+            projectId={project.id}
+            deleteProject={deleteProject}
+            isDeleteLoading={isDeleteLoading}
+          />
           <EditProjectButton
             project={project}
             editProject={editProject}

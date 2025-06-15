@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
 
 import { ProjectsApi } from "../../../services/ProjectsApi";
@@ -26,7 +26,9 @@ export function useProject() {
   const [isEditProgressLoading, setIsEditProgressLoading] =
     useState<boolean>(false);
   const [isEditStateLoading, setIsEditStateLoading] = useState<boolean>(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
   const { projectId } = useParams();
+  const navigate = useNavigate();
 
   function editProject(projectId: string, newEditedProject: EditProject) {
     setIsEditLoading(true);
@@ -63,6 +65,17 @@ export function useProject() {
       .finally(() => setIsEditStateLoading(false));
   }
 
+  function deleteProject(projectId: string) {
+    setIsDeleteLoading(true);
+    ProjectsApi.deleteProject(projectId)
+      .then((res) => {
+        navigate("/projects");
+        toast.success(res);
+      })
+      .catch((error) => toast.error(error.response.data.message))
+      .finally(() => setIsDeleteLoading(false));
+  }
+
   useEffect(() => {
     if (projectId) {
       ProjectsApi.getProject(projectId)
@@ -79,10 +92,12 @@ export function useProject() {
     editProject,
     editProgress,
     editState,
+    deleteProject,
     project,
     isLoading,
     isEditLoading,
     isEditProgressLoading,
     isEditStateLoading,
+    isDeleteLoading,
   };
 }
