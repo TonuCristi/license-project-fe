@@ -12,8 +12,7 @@ export default function ProjectElapsedTime({ startDate, deadline }: Props) {
   const elapsedTime = todayDate - startDateInMs;
 
   function getElapsedTime() {
-    const elapsedTimePercent =
-      todayDate > startDateInMs ? (elapsedTime * 100) / elapsedTimeTotal : 0;
+    const elapsedTimePercent = (elapsedTime * 100) / elapsedTimeTotal;
 
     if (todayDate < startDateInMs) {
       return Number(0).toFixed(2);

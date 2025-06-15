@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import { api } from "../config/api";
 import {
   CreateProject,
+  EditProject,
   ProjectProgress,
   ProjectResponse,
   ProjectState,
@@ -45,6 +46,16 @@ export const ProjectsApi = {
         }: AxiosResponse<{ newProject: ProjectResponse; message: string }>) =>
           data,
       );
+  },
+  editProject(projectId: string, newEditedProject: EditProject) {
+    return api.put(`${URL}/edit-project/${projectId}`, newEditedProject).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        editedProject: ProjectResponse;
+        message: string;
+      }>) => data,
+    );
   },
   editProjectProgress(projectId: string, progress: ProjectProgress) {
     return api

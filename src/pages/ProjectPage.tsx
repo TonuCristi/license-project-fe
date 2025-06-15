@@ -7,15 +7,18 @@ import ProjectSection from "../components/projects/components/ProjectSection";
 import ProjectSectionTitle from "../components/projects/components/ProjectSectionTitle";
 import ProjectElapsedTime from "../components/projects/components/ProjectElapsedTime";
 import ProjectStateDropdown from "../components/projects/components/ProjectStateDropdown";
+import EditProjectButton from "../components/projects/components/EditProjectButton";
 
 import { useProject } from "../components/projects/hooks/useProject";
 
 export default function ProjectPage() {
   const {
+    editProject,
     editProgress,
     editState,
     project,
     isLoading,
+    isEditLoading,
     isEditProgressLoading,
     isEditStateLoading,
   } = useProject();
@@ -46,7 +49,11 @@ export default function ProjectPage() {
           <Button variant="reject" className="xxs:w-auto w-full">
             Delete
           </Button>
-          <Button className="xxs:w-auto w-full">Edit</Button>
+          <EditProjectButton
+            project={project}
+            editProject={editProject}
+            isEditLoading={isEditLoading}
+          />
         </div>
       </div>
 
