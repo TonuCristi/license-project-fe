@@ -52,7 +52,7 @@ export default function ProjectStateDropdown({
     <div ref={containerRef} className="relative">
       <Button
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`flex items-center gap-2 rounded-xl p-2 font-medium text-white ${getStatusColor(state)}`}
+        className={`hover:bg-primary flex w-32 items-center gap-2 rounded-xl p-2 font-medium text-white ${getStatusColor(state)}`}
       >
         <p className="text-nowrap">{projectState[state]}</p>
         <HiMiniChevronDown
@@ -64,7 +64,7 @@ export default function ProjectStateDropdown({
       </Button>
 
       {isOpen && (
-        <ul className="border-primary absolute top-full right-0 z-50 mt-1 flex max-h-64 w-full flex-col gap-2 rounded-xl border-2 bg-white p-2 transition-colors">
+        <ul className="border-primary absolute top-full right-0 z-50 mt-1 flex w-full min-w-24 flex-col gap-2 rounded-xl border-2 bg-white p-2 transition-colors">
           {stateOptions.map(({ value, text }) => (
             <li key={value}>
               <Button

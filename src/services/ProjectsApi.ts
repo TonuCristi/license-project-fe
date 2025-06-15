@@ -79,4 +79,13 @@ export const ProjectsApi = {
       }>) => data,
     );
   },
+  deleteProject(projectId: string) {
+    return api.delete(`${URL}/delete-project/${projectId}`).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        message: string;
+      }>) => data.message,
+    );
+  },
 };
