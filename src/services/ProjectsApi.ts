@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { api } from "../config/api";
-import { ProjectResponse } from "../types/project.type";
+import { CreateProject, ProjectResponse } from "../types/project.type";
 
 const URL = "/api/projects";
 
@@ -14,6 +14,23 @@ export const ProjectsApi = {
         ({
           data,
         }: AxiosResponse<{ projects: ProjectResponse[]; pages: number }>) =>
+          data,
+      );
+  },
+  getProjectsPages(search: string, state: string, perPage: number) {
+    return api
+      .get(
+        `${URL}/retrieve-projects-pages?search=${search}&state=${state}&perPage=${perPage}`,
+      )
+      .then(({ data }: AxiosResponse<{ pages: number }>) => data.pages);
+  },
+  createProject(project: CreateProject) {
+    return api
+      .post(`${URL}/create-project`, project)
+      .then(
+        ({
+          data,
+        }: AxiosResponse<{ newProject: ProjectResponse; message: string }>) =>
           data,
       );
   },
