@@ -24,6 +24,13 @@ export const ProjectsApi = {
       )
       .then(({ data }: AxiosResponse<{ pages: number }>) => data.pages);
   },
+  getProject(projectId: string) {
+    return api
+      .get(`${URL}/retrieve-project/${projectId}`)
+      .then(
+        ({ data }: AxiosResponse<{ project: ProjectResponse }>) => data.project,
+      );
+  },
   createProject(project: CreateProject) {
     return api
       .post(`${URL}/create-project`, project)

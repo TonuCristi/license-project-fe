@@ -1,7 +1,7 @@
 import { ProjectResponse } from "../types/project.type";
 
 export function mapProject(project: ProjectResponse) {
-  const { _id: id, start_date: startDate, ...rest } = project;
+  const { _id: id, ...rest } = project;
 
-  return { id, startDate, ...rest };
+  return { id, ...rest };
 }
