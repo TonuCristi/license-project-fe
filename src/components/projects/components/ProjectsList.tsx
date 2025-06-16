@@ -11,10 +11,8 @@ import { PER_PAGE } from "../../../pages/ProjectsPage";
 export default function ProjectsList() {
   const { projects, pages, offset, isLoading, setOffset } =
     useContext(ProjectsContext);
-  const methods = useFormContext();
+  const { watch } = useFormContext();
   const { getProjects } = useFetchProjects();
-
-  const { watch } = methods;
 
   useEffect(() => {
     getProjects(watch("search"), watch("state"), offset, PER_PAGE);

@@ -9,7 +9,10 @@ export const TeamsApi = {
   createTeam(team: CreateTeam) {
     return api
       .post(`${URL}/create-team`, team)
-      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+      .then(
+        ({ data }: AxiosResponse<{ newTeam: TeamResponse; message: string }>) =>
+          data,
+      );
   },
   getTeams(
     search: string,
@@ -24,7 +27,15 @@ export const TeamsApi = {
           signal: controller.signal,
         },
       )
-      .then(({ data }: AxiosResponse<{ teams: TeamResponse[] }>) => data.teams);
+      .then(
+        ({ data }: AxiosResponse<{ teams: TeamResponse[]; pages: number }>) =>
+          data,
+      );
+  },
+  getTeamsPages(search: string, perPage: number) {
+    return api
+      .get(`${URL}/retrieve-teams-pages?search=${search}&perPage=${perPage}`)
+      .then(({ data }: AxiosResponse<{ pages: number }>) => data.pages);
   },
   getTeamMembers(
     teamId: string,

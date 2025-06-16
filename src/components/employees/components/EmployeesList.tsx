@@ -19,10 +19,8 @@ export default function EmployeesList({
 }: Props) {
   const { employees, pages, offset, isLoading, setOffset } =
     useContext(EmployeesContext);
-  const methods = useFormContext();
+  const { watch } = useFormContext();
   const { getEmployees } = useFetchEmployees();
-
-  const { watch } = methods;
 
   useEffect(() => {
     getEmployees(watch("search"), offset, PER_PAGE);

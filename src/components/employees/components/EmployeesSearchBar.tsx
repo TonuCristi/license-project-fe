@@ -9,9 +9,7 @@ import { PER_PAGE } from "../../../pages/EmployeesPage";
 
 export default function EmployeesSearchBar() {
   const { getEmployees } = useFetchEmployees();
-  const methods = useFormContext();
-
-  const { watch } = methods;
+  const { watch } = useFormContext();
 
   useEffect(() => {
     const { unsubscribe } = watch(({ search }) => {

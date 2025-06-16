@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
 import Input from "../../input/Input";
@@ -6,15 +6,12 @@ import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { useFetchTeams } from "../hooks/useFetchTeams";
 import { TeamsContext } from "../../../contexts/TeamsContext";
+import { PER_PAGE } from "../../../pages/TeamsPage";
 
-type Props = {
-  setOffset: Dispatch<SetStateAction<number>>;
-};
-
-export default function TeamsSearchBar({ setOffset }: Props) {
+export default function TeamsSearchBar() {
   const controllerRef = useRef<AbortController>();
   const { getTeams } = useFetchTeams();
-  const { setTeams } = useContext(TeamsContext);
+  const { setTeams, setOffset } = useContext(TeamsContext);
 
   const { watch } = useFormContext();
 
@@ -29,12 +26,12 @@ export default function TeamsSearchBar({ setOffset }: Props) {
       setOffset(1);
       setTeams([]);
       if (controllerRef.current) {
-        getTeams(search, 0, 5, controllerRef.current);
+        getTeams(search, 0, PER_PAGE, controllerRef.current);
       }
     });
 
     return () => unsubscribe();
-  }, [watch, getTeams, setTeams, setOffset]);
+  }, [getTeams, setOffset, setTeams, watch]);
 
   return (
     <form className="w-full">

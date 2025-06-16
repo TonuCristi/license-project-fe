@@ -8,24 +8,19 @@ import { mapTeam } from "../../../utlis/mapTeam";
 
 export function useEditTeam() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { selectedTeam, setSelectedTeam, setTeams } = useContext(TeamsContext);
+  const { setTeams } = useContext(TeamsContext);
 
-  function editTeam(newEditedTeam: EditTeam) {
-    if (!selectedTeam) {
-      return;
-    }
-
+  function editTeam(teamId: string, newEditedTeam: EditTeam) {
     setIsLoading(true);
-    TeamsApi.editTeam(selectedTeam.id, newEditedTeam)
+    TeamsApi.editTeam(teamId, newEditedTeam)
       .then((res) => {
         const editedTeam = mapTeam(res.editedTeam);
-        setSelectedTeam(editedTeam);
+
         setTeams((prev) => {
-          const teamIndex = prev.findIndex(
-            (team) => team.id === selectedTeam.id,
-          );
-          const firstHalf = prev.slice(0, teamIndex);
-          const secondHalf = prev.slice(teamIndex + 1, prev.length);
+          const editedTeamIndex = prev.findIndex((team) => team.id === teamId);
+
+          const firstHalf = prev.slice(0, editedTeamIndex);
+          const secondHalf = prev.slice(editedTeamIndex + 1, prev.length);
 
           return [...firstHalf, editedTeam, ...secondHalf];
         });

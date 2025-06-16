@@ -9,9 +9,7 @@ import { PER_PAGE } from "../../../pages/ProjectsPage";
 
 export default function ProjectsSearchBar() {
   const { getProjects } = useFetchProjects();
-  const methods = useFormContext();
-
-  const { watch } = methods;
+  const { watch } = useFormContext();
 
   useEffect(() => {
     const { unsubscribe } = watch(({ search, state }) => {

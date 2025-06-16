@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -8,22 +7,25 @@ import Label from "../../Label";
 import Input from "../../input/Input";
 import Message from "../../Message";
 
-import { TeamsContext } from "../../../contexts/TeamsContext";
-import { EditTeam } from "../../../types/team.type";
+import { EditTeam, Team } from "../../../types/team.type";
 import { teamFormSchema } from "../../../schemas/teamForm.schema";
 import { useEditTeam } from "../hooks/useEditTeam";
 
-export default function EditTeamForm() {
-  const { selectedTeam } = useContext(TeamsContext);
+type Props = {
+  team: Team;
+};
+
+export default function EditTeamForm({ team }: Props) {
   const methods = useForm<EditTeam>({
     defaultValues: {
-      name: selectedTeam ? selectedTeam.name : "",
+      ...team,
     },
     resolver: zodResolver(teamFormSchema),
   });
+
   const { editTeam, isLoading } = useEditTeam();
 
-  const onSubmit: SubmitHandler<EditTeam> = (data) => editTeam(data);
+  const onSubmit: SubmitHandler<EditTeam> = (data) => editTeam(team.id, data);
 
   const {
     handleSubmit,
@@ -36,11 +38,11 @@ export default function EditTeamForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="border-primary xxs:w-64 xxs:-translate-x-1/2 xs:-translate-x-0 xs:right-0 absolute top-full z-50 mt-3 flex w-52 -translate-x-3/5 flex-col rounded-xl border-2 bg-white p-3"
       >
-        <h2 className="mb-1 text-lg font-medium">Edit team</h2>
+        <h2 className="mb-1 text-lg font-medium">Edit employee</h2>
         <div className="mb-3 flex flex-col gap-3">
           <InputContainer>
             <Label htmlFor="name">Name</Label>
-            <Input id="name" name="name" placeholder="Name" />
+            <Input id="name" name="name" type="text" placeholder="Name" />
             {errors.name && (
               <Message variant="error">{errors.name.message}</Message>
             )}

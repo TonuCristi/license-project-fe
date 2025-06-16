@@ -1,34 +1,30 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import Button from "../../Button";
 import ConfirmationModal from "../../ConfirmationModal";
 
 import { useDeleteTeam } from "../hooks/useDeleteTeam";
-import { TeamsContext } from "../../../contexts/TeamsContext";
 
-export default function DeleteTeamButton() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+type Props = {
+  teamId: string;
+};
+
+export default function DeleteTeamButton({ teamId }: Props) {
   const { deleteTeam, isLoading } = useDeleteTeam();
-  const { isMembersLoading } = useContext(TeamsContext);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <>
-      <Button
-        variant="reject"
-        size="full"
-        disabled={isMembersLoading}
-        onClick={() => setIsOpen(true)}
-        className="text-nowrap"
-      >
-        Delete team
+      <Button variant="reject" onClick={() => setIsOpen(true)}>
+        Delete
       </Button>
       {isOpen && (
         <ConfirmationModal
-          onAprove={deleteTeam}
+          onAprove={() => deleteTeam(teamId)}
           onReject={() => setIsOpen(false)}
           isLoading={isLoading}
         >
-          Are you sure about deleting this team?
+          Are you sure about deleting this employee?
         </ConfirmationModal>
       )}
     </>

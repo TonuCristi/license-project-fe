@@ -13,11 +13,11 @@ export function useAddEmployee() {
     useContext(EmployeesContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  async function addEmployee(project: AddEmployee, search: string) {
+  async function addEmployee(employee: AddEmployee, search: string) {
     setIsLoading(true);
 
     try {
-      const addEmployeeRes = await EmployeesApi.addEmployee(project);
+      const addEmployeeRes = await EmployeesApi.addEmployee(employee);
       const getPagesRes = await EmployeesApi.getEmployeesPages(
         search,
         PER_PAGE,

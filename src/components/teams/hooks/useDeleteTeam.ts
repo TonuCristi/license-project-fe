@@ -6,22 +6,22 @@ import { TeamsContext } from "../../../contexts/TeamsContext";
 
 export function useDeleteTeam() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { selectedTeam, setSelectedTeam, setTeams, setMembers } =
+  const { teams, pages, setTeams, setPages, setOffset } =
     useContext(TeamsContext);
 
-  function deleteTeam() {
-    if (!selectedTeam) {
-      return;
-    }
-
+  function deleteTeam(teamId: string) {
     setIsLoading(true);
-    TeamsApi.deleteTeam(selectedTeam.id)
+    TeamsApi.deleteTeam(teamId)
       .then((res) => {
-        setTeams((prev) => [
-          ...prev.filter((team) => team.id !== selectedTeam.id),
-        ]);
-        setSelectedTeam(null);
-        setMembers([]);
+        if (teams.length === 1) {
+          setTeams((prev) => [...prev.filter((team) => team.id !== teamId)]);
+          setPages((prev) => prev - 1);
+          setOffset(pages - 2 < 0 ? 0 : pages - 2);
+        }
+
+        if (teams.length > 1) {
+          setTeams((prev) => [...prev.filter((team) => team.id !== teamId)]);
+        }
 
         toast.success(res);
       })

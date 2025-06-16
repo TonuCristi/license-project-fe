@@ -1,5 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useFormContext,
+} from "react-hook-form";
 
 import Input from "../../input/Input";
 import Label from "../../Label";
@@ -21,7 +26,10 @@ export default function CreateTeamForm() {
 
   const { createTeam, isLoading } = useCreateTeam();
 
-  const onSubmit: SubmitHandler<CreateTeam> = (data) => createTeam(data);
+  const { watch } = useFormContext();
+
+  const onSubmit: SubmitHandler<CreateTeam> = (data) =>
+    createTeam(data, watch("search"));
 
   const {
     handleSubmit,
