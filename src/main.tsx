@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import EmployeesPage from "./pages/EmployeesPage.tsx";
 import TeamsPage from "./pages/TeamsPage.tsx";
+import TeamPage from "./pages/TeamPage.tsx";
 import ProjectsPage from "./pages/ProjectsPage.tsx";
 import ProjectPage from "./pages/ProjectPage.tsx";
 import MeetingsPage from "./pages/MeetingsPage.tsx";
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <ProfilePage /> },
       { path: "/employees", element: <EmployeesPage /> },
       { path: "/teams", element: <TeamsPage /> },
+      { path: "/teams/:teamId", element: <TeamPage /> },
       { path: "/projects", element: <ProjectsPage /> },
       { path: "/projects/:projectId", element: <ProjectPage /> },
       { path: "/meetings", element: <MeetingsPage /> },

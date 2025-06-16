@@ -9,21 +9,20 @@ import Message from "../../Message";
 
 import { EditTeam, Team } from "../../../types/team.type";
 import { teamFormSchema } from "../../../schemas/teamForm.schema";
-import { useEditTeam } from "../hooks/useEditTeam";
 
 type Props = {
   team: Team;
+  editTeam: (teamId: string, newEditedTeam: EditTeam) => void;
+  isEditLoading: boolean;
 };
 
-export default function EditTeamForm({ team }: Props) {
+export default function EditTeamForm({ team, editTeam, isEditLoading }: Props) {
   const methods = useForm<EditTeam>({
     defaultValues: {
       ...team,
     },
     resolver: zodResolver(teamFormSchema),
   });
-
-  const { editTeam, isLoading } = useEditTeam();
 
   const onSubmit: SubmitHandler<EditTeam> = (data) => editTeam(team.id, data);
 
@@ -48,7 +47,7 @@ export default function EditTeamForm({ team }: Props) {
             )}
           </InputContainer>
         </div>
-        <Button disabled={isLoading}>Save</Button>
+        <Button disabled={isEditLoading}>Save</Button>
       </form>
     </FormProvider>
   );

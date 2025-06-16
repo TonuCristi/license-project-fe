@@ -4,13 +4,19 @@ import EditTeamForm from "./EditTeamForm";
 import Button from "../../Button";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
-import { Team } from "../../../types/team.type";
+import { EditTeam, Team } from "../../../types/team.type";
 
 type Props = {
   team: Team;
+  editTeam: (teamId: string, newEditedTeam: EditTeam) => void;
+  isEditLoading: boolean;
 };
 
-export default function EditTeamButton({ team }: Props) {
+export default function EditTeamButton({
+  team,
+  editTeam,
+  isEditLoading,
+}: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
@@ -19,7 +25,13 @@ export default function EditTeamButton({ team }: Props) {
     <div ref={containerRef} className="relative">
       <Button onClick={() => setIsOpen((prev) => !prev)}>Edit</Button>
 
-      {isOpen && <EditTeamForm team={team} />}
+      {isOpen && (
+        <EditTeamForm
+          team={team}
+          editTeam={editTeam}
+          isEditLoading={isEditLoading}
+        />
+      )}
     </div>
   );
 }

@@ -3,14 +3,17 @@ import { useState } from "react";
 import Button from "../../Button";
 import ConfirmationModal from "../../ConfirmationModal";
 
-import { useDeleteTeam } from "../hooks/useDeleteTeam";
-
 type Props = {
   teamId: string;
+  deleteTeam: (teamId: string) => void;
+  isDeleteLoading: boolean;
 };
 
-export default function DeleteTeamButton({ teamId }: Props) {
-  const { deleteTeam, isLoading } = useDeleteTeam();
+export default function DeleteTeamButton({
+  teamId,
+  deleteTeam,
+  isDeleteLoading,
+}: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -22,7 +25,7 @@ export default function DeleteTeamButton({ teamId }: Props) {
         <ConfirmationModal
           onAprove={() => deleteTeam(teamId)}
           onReject={() => setIsOpen(false)}
-          isLoading={isLoading}
+          isLoading={isDeleteLoading}
         >
           Are you sure about deleting this employee?
         </ConfirmationModal>

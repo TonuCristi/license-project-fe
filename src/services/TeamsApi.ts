@@ -32,6 +32,11 @@ export const TeamsApi = {
           data,
       );
   },
+  getTeam(teamId: string) {
+    return api
+      .get(`${URL}/retrieve-team/${teamId}`)
+      .then(({ data }: AxiosResponse<{ team: TeamResponse }>) => data.team);
+  },
   getTeamsPages(search: string, perPage: number) {
     return api
       .get(`${URL}/retrieve-teams-pages?search=${search}&perPage=${perPage}`)

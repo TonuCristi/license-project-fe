@@ -25,7 +25,7 @@ export default function ProjectPage() {
     isDeleteLoading,
   } = useProject();
 
-  const { description, state, progress, startDate, deadline } = project;
+  const { name, description, state, progress, startDate, deadline } = project;
 
   if (isLoading) {
     return (
@@ -39,7 +39,7 @@ export default function ProjectPage() {
     <main className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-2 overflow-x-hidden overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">
       <div className="flex flex-col gap-2">
         <div className="flex w-full items-center justify-between gap-2">
-          <PageTitle>{`${project.name} project`}</PageTitle>
+          <PageTitle>{`${name} project`}</PageTitle>
           <ProjectStateDropdown
             projectId={project.id}
             state={state}
