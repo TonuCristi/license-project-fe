@@ -8,9 +8,10 @@ import ProjectElapsedTime from "../components/projects/components/ProjectElapsed
 import ProjectStateDropdown from "../components/projects/components/ProjectStateDropdown";
 import EditProjectButton from "../components/projects/components/EditProjectButton";
 import DeleteProjectButton from "../components/projects/components/DeleteProjectButton";
+import CreateProjectMeetingButton from "../components/projects/components/CreateProjectMeetingButton";
+import ProjectTeams from "../components/projects/components/ProjectTeams";
 
 import { useProject } from "../components/projects/hooks/useProject";
-import CreateProjectMeetingButton from "../components/projects/components/CreateProjectMeetingButton";
 
 export default function ProjectPage() {
   const {
@@ -68,7 +69,7 @@ export default function ProjectPage() {
         <ProjectElapsedTime startDate={startDate} deadline={deadline} />
       </ProjectSection>
 
-      <ProjectSection className="xs:h-22 items-center">
+      <ProjectSection className="xs:min-h-22 items-center">
         <ProjectSectionTitle>Progress</ProjectSectionTitle>
         <ProjectProgressBar
           projectId={project.id}
@@ -81,6 +82,11 @@ export default function ProjectPage() {
       <ProjectSection>
         <ProjectSectionTitle>Description</ProjectSectionTitle>
         <p>{description}</p>
+      </ProjectSection>
+
+      <ProjectSection>
+        <ProjectSectionTitle>Teams</ProjectSectionTitle>
+        <ProjectTeams projectId={project.id} />
       </ProjectSection>
     </main>
   );

@@ -7,7 +7,7 @@ import { TeamsApi } from "../../../services/TeamsApi";
 import { mapTeam } from "../../../utlis/mapTeam";
 
 export function useTeam() {
-  const [team, setTeam] = useState<Team>({
+  const [team, setTeam] = useState<Omit<Team, "projectTeamId">>({
     id: "",
     name: "",
   });

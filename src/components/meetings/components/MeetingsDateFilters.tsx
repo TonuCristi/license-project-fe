@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { SyntheticEvent, useContext, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 import InputContainer from "../../input/InputContainer";
@@ -68,7 +68,7 @@ export default function MeetingsDateFilters() {
     text: String(year),
   }));
 
-  function handleResetFilters(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleResetFilters(e: SyntheticEvent) {
     setMeetings([]);
 
     e.preventDefault();

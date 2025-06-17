@@ -3,20 +3,20 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import Button from "../../Button";
-import EmployeeTeamSearchBar from "./EmployeeTeamSearchBar";
+import TeamProjectSearchBar from "./TeamProjectSearchBar";
 
 import { SearchBar } from "../../../types/searchBar.type";
 import { searchBarSchema } from "../../../schemas/searchBar.schema";
-import { useFetchEmployeeTeams } from "../hooks/useFetchEmployeeTeams";
+import { useFetchTeamProjects } from "../hooks/useFetchTeamProjects";
 
 type Props = {
-  onTeamSelection: (teamId: string) => void;
-  isAddToTeamLoading: boolean;
+  onProjectSelection: (projectId: string) => void;
+  isAddToProjectLoading: boolean;
 };
 
-export default function EmployeeTeamList({
-  onTeamSelection,
-  isAddToTeamLoading,
+export default function TeamProjectList({
+  onProjectSelection,
+  isAddToProjectLoading,
 }: Props) {
   const methods = useForm<SearchBar>({
     defaultValues: {
@@ -24,7 +24,8 @@ export default function EmployeeTeamList({
     },
     resolver: zodResolver(searchBarSchema),
   });
-  const { getTeams, teams, isLoading, setTeams } = useFetchEmployeeTeams();
+  const { getProjects, projects, isLoading, setProjects } =
+    useFetchTeamProjects();
   const [offset, setOffset] = useState<number>(0);
   const listRef = useRef<HTMLUListElement>(null);
   const itemRef = useRef<HTMLLIElement>(null);
@@ -46,7 +47,7 @@ export default function EmployeeTeamList({
         }
 
         controllerRef.current = new AbortController();
-        getTeams(watch("search"), offset, 5, controllerRef.current);
+        getProjects(watch("search"), offset, 5, controllerRef.current);
         setOffset((prev) => prev + 1);
       }
     }, options);
@@ -56,29 +57,29 @@ export default function EmployeeTeamList({
     }
 
     return () => observer.disconnect();
-  }, [teams.length, watch, getTeams]);
+  }, [projects.length, watch, getProjects]);
 
   return (
     <FormProvider {...methods}>
       <div className="border-primary absolute top-full right-0 z-50 mt-1 flex max-h-64 w-full flex-col gap-2 rounded-xl border-2 bg-white p-2 transition-colors">
-        <EmployeeTeamSearchBar
-          getTeams={getTeams}
-          setTeams={setTeams}
+        <TeamProjectSearchBar
+          getProjects={getProjects}
+          setProjects={setProjects}
           setOffset={setOffset}
         />
         <ul
           ref={listRef}
           className="scrollbar flex flex-col gap-2 overflow-y-auto pr-2"
         >
-          {teams.map((team) => (
-            <li key={team.id}>
+          {projects.map((project) => (
+            <li key={project.id}>
               <Button
                 variant="empty"
-                disabled={isAddToTeamLoading}
-                onClick={() => onTeamSelection(team.id)}
+                disabled={isAddToProjectLoading}
+                onClick={() => onProjectSelection(project.id)}
                 className="w-full rounded-xl bg-blue-100 p-2 text-left hover:bg-blue-200"
               >
-                {team.name}
+                {project.name}
               </Button>
             </li>
           ))}

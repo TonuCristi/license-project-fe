@@ -4,6 +4,7 @@ import CreateTeamMeetingButton from "../components/teams/components/CreateTeamMe
 import DeleteTeamButton from "../components/teams/components/DeleteTeamButton";
 import EditTeamButton from "../components/teams/components/EditTeamButton";
 import TeamMembers from "../components/teams/components/TeamMembers";
+import AddToProjectDropdown from "../components/teams/components/AddToProjectDropdown";
 
 import { useTeam } from "../components/teams/hooks/useTeam";
 
@@ -45,6 +46,7 @@ export default function TeamPage() {
           <CreateTeamMeetingButton teamId={team.id} />
         </div>
       </div>
+      <AddToProjectDropdown teamId={team.id} />
       <TeamMembers teamId={team.id} />
     </main>
   );

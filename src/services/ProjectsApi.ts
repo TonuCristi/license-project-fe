@@ -7,6 +7,7 @@ import {
   ProjectResponse,
   ProjectState,
 } from "../types/project.type";
+import { TeamResponse } from "../types/team.type";
 
 const URL = "/api/projects";
 
@@ -21,6 +22,26 @@ export const ProjectsApi = {
     return api
       .get(
         `${URL}/retrieve-projects?search=${search}&state=${state}&offset=${offset}&perPage=${perPage}`,
+        {
+          signal: controller.signal,
+        },
+      )
+      .then(
+        ({
+          data,
+        }: AxiosResponse<{ projects: ProjectResponse[]; pages: number }>) =>
+          data,
+      );
+  },
+  getTeamProjects(
+    search: string,
+    offset: number,
+    perPage: number,
+    controller: AbortController,
+  ) {
+    return api
+      .get(
+        `${URL}/retrieve-team-projects?search=${search}&offset=${offset}&perPage=${perPage}`,
         {
           signal: controller.signal,
         },
@@ -96,5 +117,32 @@ export const ProjectsApi = {
         message: string;
       }>) => data.message,
     );
+  },
+  addToProject(projectId: string, teamId: string) {
+    return api
+      .post(`${URL}/add-to-project/${projectId}`, { teamId })
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+  },
+  getProjectTeams(
+    projectId: string,
+    search: string,
+    offset: number,
+    perPage: number,
+    controller: AbortController,
+  ) {
+    return api
+      .get(
+        `${URL}/retrieve-project-teams/${projectId}?search=${search}&offset=${offset}&perPage=${perPage}`,
+        { signal: controller.signal },
+      )
+      .then(
+        ({ data }: AxiosResponse<{ teams: TeamResponse[]; pages: number }>) =>
+          data,
+      );
+  },
+  deleteProjectTeam(projectTeamId: string) {
+    return api
+      .delete(`${URL}/delete-project-team/${projectTeamId}`)
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
 };
