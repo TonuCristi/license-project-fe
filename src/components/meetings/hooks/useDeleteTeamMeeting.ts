@@ -4,11 +4,11 @@ import toast from "react-hot-toast";
 import { MeetingsApi } from "../../../services/MeetingsApi";
 import { MeetingsContext } from "../../../contexts/MeetingsContext";
 
-export function useDeleteMeeting() {
+export function useDeleteTeamMeeting() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setMeetings } = useContext(MeetingsContext);
 
-  function deleteMeeting(meetingId: string) {
+  function deleteTeamMeeting(meetingId: string) {
     setIsLoading(true);
     MeetingsApi.deleteTeamMeeting(meetingId)
       .then((res) => {
@@ -22,5 +22,5 @@ export function useDeleteMeeting() {
       .finally(() => setIsLoading(false));
   }
 
-  return { deleteMeeting, isLoading };
+  return { deleteTeamMeeting, isLoading };
 }

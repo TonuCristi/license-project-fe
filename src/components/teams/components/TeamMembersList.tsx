@@ -1,37 +1,74 @@
-import { useContext, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
-import TeamMemberListItem from "./TeamMemberListItem";
 import Pagination from "../../Pagination";
 
-import { TeamsContext } from "../../../contexts/TeamsContext";
-import { useFetchTeamMembers } from "../hooks/useFetchTeamMembers";
-import { PER_PAGE } from "./SelectedTeamMembers";
+import { Employee } from "../../../types/employee.type";
+import { PER_PAGE } from "./TeamMembers";
+import TeamMemberListItem from "./TeamMemberListItem";
 
-export default function TeamMembersList() {
-  const { selectedTeam, members, pages, offset, isMembersLoading, setOffset } =
-    useContext(TeamsContext);
-  const methods = useFormContext();
+type Props = {
+  teamId: string;
+  deleteMember: (membershipId: string, employeeId: string) => void;
+  getMembers: (
+    teamId: string,
+    search: string,
+    offset: number,
+    perPage: number,
+    controller: AbortController,
+  ) => void;
+  members: Employee[];
+  pages: number;
+  offset: number;
+  isMembersLoading: boolean;
+  isDeleteLoading: boolean;
+  setOffset: Dispatch<SetStateAction<number>>;
+};
 
-  const { getTeamMembers } = useFetchTeamMembers();
-
-  const { watch } = methods;
+export default function TeamMembersList({
+  teamId,
+  deleteMember,
+  getMembers,
+  members,
+  pages,
+  offset,
+  isMembersLoading,
+  isDeleteLoading,
+  setOffset,
+}: Props) {
+  const controllerRef = useRef<AbortController>();
+  const { watch } = useFormContext();
 
   useEffect(() => {
-    if (selectedTeam) {
-      getTeamMembers(selectedTeam.id, "", offset, PER_PAGE);
+    if (controllerRef.current) {
+      controllerRef.current.abort();
     }
-  }, [getTeamMembers, watch, selectedTeam, offset]);
+
+    controllerRef.current = new AbortController();
+
+    if (controllerRef.current) {
+      getMembers(
+        teamId,
+        watch("search"),
+        offset,
+        PER_PAGE,
+        controllerRef.current,
+      );
+    }
+  }, [getMembers, watch, offset, teamId]);
 
   return (
     <div className="xs:gap-8 flex flex-col items-center gap-4">
-      {members.length > 0 && (
-        <ul className="flex w-full flex-col gap-2">
-          {members.map((member) => (
-            <TeamMemberListItem key={member.id} member={member} />
-          ))}
-        </ul>
-      )}
+      <ul className="flex w-full flex-col gap-2">
+        {members.map((member) => (
+          <TeamMemberListItem
+            key={member.id}
+            deleteMember={deleteMember}
+            member={member}
+            isDeleteLoading={isDeleteLoading}
+          />
+        ))}
+      </ul>
       {pages > 1 && (
         <Pagination
           isLoading={isMembersLoading}

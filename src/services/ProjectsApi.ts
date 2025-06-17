@@ -11,10 +11,19 @@ import {
 const URL = "/api/projects";
 
 export const ProjectsApi = {
-  getProjects(search: string, state: string, offset: number, perPage: number) {
+  getProjects(
+    search: string,
+    state: string,
+    offset: number,
+    perPage: number,
+    controller: AbortController,
+  ) {
     return api
       .get(
         `${URL}/retrieve-projects?search=${search}&state=${state}&offset=${offset}&perPage=${perPage}`,
+        {
+          signal: controller.signal,
+        },
       )
       .then(
         ({

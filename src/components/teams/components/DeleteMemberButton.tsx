@@ -3,16 +3,20 @@ import { useState } from "react";
 import Button from "../../Button";
 import ConfirmationModal from "../../ConfirmationModal";
 
-import { useDeleteMember } from "../hooks/useDeleteMember";
-
 type Props = {
+  deleteMember: (membershipId: string, employeeId: string) => void;
+  membershipId: string;
   memberId: string;
-  employeeId: string;
+  isDeleteLoading: boolean;
 };
 
-export default function DeleteMemberButton({ memberId, employeeId }: Props) {
+export default function DeleteMemberButton({
+  deleteMember,
+  membershipId,
+  memberId,
+  isDeleteLoading,
+}: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { deleteMember, isLoading } = useDeleteMember();
 
   return (
     <>
@@ -21,9 +25,9 @@ export default function DeleteMemberButton({ memberId, employeeId }: Props) {
       </Button>
       {isOpen && (
         <ConfirmationModal
-          onAprove={() => deleteMember(memberId, employeeId)}
+          onAprove={() => deleteMember(membershipId, memberId)}
           onReject={() => setIsOpen(false)}
-          isLoading={isLoading}
+          isLoading={isDeleteLoading}
         >
           Are you sure about deleting this member?
         </ConfirmationModal>

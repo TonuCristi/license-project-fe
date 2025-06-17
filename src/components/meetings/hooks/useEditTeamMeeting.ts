@@ -28,9 +28,15 @@ export function useEditMeeting() {
 
   const { getValues } = useFormContext();
 
+  function getEditMeeting(meetingId: string, newEditedMeeting: EditMeeting) {
+    return getValues().type === "team"
+      ? MeetingsApi.editTeamMeeting(meetingId, newEditedMeeting)
+      : MeetingsApi.editProjectMeeting(meetingId, newEditedMeeting);
+  }
+
   function editMeeting(meetingId: string, newEditedMeeting: EditMeeting) {
     setIsLoading(true);
-    MeetingsApi.editTeamMeeting(meetingId, newEditedMeeting)
+    getEditMeeting(meetingId, newEditedMeeting)
       .then((res) => {
         const editedMeeting = mapMeeting(res.editedMeeting);
 

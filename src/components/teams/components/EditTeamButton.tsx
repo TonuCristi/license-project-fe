@@ -23,7 +23,9 @@ export default function EditTeamButton({
 
   return (
     <div ref={containerRef} className="relative">
-      <Button onClick={() => setIsOpen((prev) => !prev)}>Edit</Button>
+      <Button size="full" onClick={() => setIsOpen((prev) => !prev)}>
+        Edit
+      </Button>
 
       {isOpen && (
         <EditTeamForm

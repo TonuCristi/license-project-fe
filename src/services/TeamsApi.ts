@@ -22,7 +22,7 @@ export const TeamsApi = {
   ) {
     return api
       .get(
-        `${URL}/retrieve-teams?search=${encodeURIComponent(search)}&offset=${offset}&perPage=${perPage}`,
+        `${URL}/retrieve-teams?search=${search}&offset=${offset}&perPage=${perPage}`,
         {
           signal: controller.signal,
         },
@@ -47,10 +47,12 @@ export const TeamsApi = {
     search: string,
     offset: number,
     perPage: number,
+    controller: AbortController,
   ) {
     return api
       .get(
         `${URL}/retrieve-team-members/${teamId}?search=${search}&offset=${offset}&perPage=${perPage}`,
+        { signal: controller.signal },
       )
       .then(
         ({
@@ -59,9 +61,9 @@ export const TeamsApi = {
           data,
       );
   },
-  deleteMember(memberId: string) {
+  deleteMember(membershipId: string) {
     return api
-      .delete(`${URL}/delete-member/${memberId}`)
+      .delete(`${URL}/delete-member/${membershipId}`)
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
   deleteTeam(teamId: string) {

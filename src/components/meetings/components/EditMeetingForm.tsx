@@ -1,10 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  FormProvider,
-  SubmitHandler,
-  useForm,
-  // useFormContext,
-} from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import Button from "../../Button";
 import InputContainer from "../../input/InputContainer";
@@ -16,7 +11,7 @@ import Select from "../../Select";
 
 import { meetingFormSchema } from "../../../schemas/meetingForm.schema";
 import { EditMeeting, Meeting } from "../../../types/meeting.type";
-import { useEditMeeting } from "../hooks/useEditMeeting";
+import { useEditMeeting } from "../hooks/useEditTeamMeeting";
 
 const durationOptions = [
   { value: "1", text: "1" },
@@ -54,8 +49,6 @@ export default function EditMeetingForm({ meeting }: Props) {
     const date = data.date + ":00Z";
     editMeeting(meeting.id, { ...data, date });
   };
-
-  // const { watch } = useFormContext();
 
   const {
     handleSubmit,

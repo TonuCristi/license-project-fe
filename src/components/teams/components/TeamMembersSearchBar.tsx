@@ -1,36 +1,58 @@
 import { useFormContext } from "react-hook-form";
-import { useContext, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 
 import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
-import { TeamsContext } from "../../../contexts/TeamsContext";
-import { useFetchTeamMembers } from "../hooks/useFetchTeamMembers";
-import { PER_PAGE } from "./SelectedTeamMembers";
+import { PER_PAGE } from "./TeamMembers";
+import { Employee } from "../../../types/employee.type";
 
-export default function TeamMembersSearchBar() {
-  const { selectedTeam } = useContext(TeamsContext);
-  const methods = useFormContext();
+type Props = {
+  teamId: string;
+  getMembers: (
+    teamId: string,
+    search: string,
+    offset: number,
+    perPage: number,
+    controller: AbortController,
+  ) => void;
+  setMembers: Dispatch<SetStateAction<Employee[]>>;
+  setOffset: Dispatch<SetStateAction<number>>;
+};
 
-  const { getTeamMembers } = useFetchTeamMembers();
+export default function TeamMembersSearchBar({
+  teamId,
+  getMembers,
+  setMembers,
+  setOffset,
+}: Props) {
+  const controllerRef = useRef<AbortController>();
 
-  const { watch } = methods;
+  const { watch } = useFormContext();
 
   useEffect(() => {
     const { unsubscribe } = watch(({ search }) => {
-      if (selectedTeam) {
-        getTeamMembers(selectedTeam.id, search, 0, PER_PAGE);
+      if (controllerRef.current) {
+        controllerRef.current.abort();
+      }
+
+      controllerRef.current = new AbortController();
+
+      setOffset(0);
+      setMembers([]);
+      if (controllerRef.current) {
+        getMembers(teamId, search, 0, PER_PAGE, controllerRef.current);
       }
     });
 
     return () => unsubscribe();
-  }, [watch, getTeamMembers, selectedTeam]);
+  }, [getMembers, setOffset, setMembers, watch, teamId]);
 
   return (
     <form className="w-full">
       <Input
         name="search"
-        placeholder="Search employees..."
+        placeholder="Search members..."
         rightIcon={<HiMiniMagnifyingGlass className="text-md stroke-1" />}
       />
     </form>

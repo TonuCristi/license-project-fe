@@ -10,9 +10,9 @@ export default function TeamListItem({ team }: Props) {
     <li>
       <Link
         to={`/teams/${team.id}`}
-        className="border-primary flex items-center gap-2 rounded-xl border-2 p-2"
+        className="border-primary block rounded-xl border-2 p-2 font-medium transition-colors hover:bg-blue-200"
       >
-        <p className="font-medium">{team.name}</p>
+        {team.name}
       </Link>
     </li>
   );

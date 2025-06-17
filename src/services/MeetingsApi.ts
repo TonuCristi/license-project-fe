@@ -59,4 +59,30 @@ export const MeetingsApi = {
       }>) => data,
     );
   },
+  createProjectMeeting(projectId: string, meeting: CreateMeeting) {
+    return api
+      .post(`${URL}/create-project-meeting/${projectId}`, meeting)
+      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+  },
+  editProjectMeeting(meetingId: string, newEditedMeeting: EditMeeting) {
+    return api
+      .put(`${URL}/edit-project-meeting/${meetingId}`, newEditedMeeting)
+      .then(
+        ({
+          data,
+        }: AxiosResponse<{
+          editedMeeting: MeetingResponse;
+          message: string;
+        }>) => data,
+      );
+  },
+  deleteProjectMeeting(meetingId: string) {
+    return api.delete(`${URL}/delete-project-meeting/${meetingId}`).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        message: string;
+      }>) => data,
+    );
+  },
 };

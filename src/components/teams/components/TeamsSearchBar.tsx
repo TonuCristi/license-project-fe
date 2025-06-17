@@ -23,7 +23,7 @@ export default function TeamsSearchBar() {
 
       controllerRef.current = new AbortController();
 
-      setOffset(1);
+      setOffset(0);
       setTeams([]);
       if (controllerRef.current) {
         getTeams(search, 0, PER_PAGE, controllerRef.current);

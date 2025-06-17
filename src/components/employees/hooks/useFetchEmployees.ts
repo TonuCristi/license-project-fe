@@ -9,9 +9,14 @@ export function useFetchEmployees() {
     useContext(EmployeesContext);
 
   const getEmployees = useCallback(
-    function (search: string, offset: number, perPage: number) {
+    function (
+      search: string,
+      offset: number,
+      perPage: number,
+      controller: AbortController,
+    ) {
       setIsLoading(true);
-      EmployeesApi.getEmployees(search, offset, perPage)
+      EmployeesApi.getEmployees(search, offset, perPage, controller)
         .then((res) => {
           const employees = res.employees.map((employee) =>
             mapEmployee(employee),
@@ -19,7 +24,13 @@ export function useFetchEmployees() {
           setPages(res.pages);
           setEmployees(employees);
         })
-        .catch((error) => console.log(error.response.data.message))
+        .catch((error) => {
+          if (error.name === "CanceledError") {
+            return;
+          }
+
+          console.log(error.response.data.message);
+        })
         .finally(() => setIsLoading(false));
     },
     [setEmployees, setPages, setIsLoading],

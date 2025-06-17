@@ -9,10 +9,16 @@ import {
 const URL = "/api/employees";
 
 export const EmployeesApi = {
-  getEmployees(search: string, offset: number, perPage: number) {
+  getEmployees(
+    search: string,
+    offset: number,
+    perPage: number,
+    controller: AbortController,
+  ) {
     return api
       .get(
         `${URL}/retrieve-employees?search=${search}&offset=${offset}&perPage=${perPage}`,
+        { signal: controller.signal },
       )
       .then(
         ({

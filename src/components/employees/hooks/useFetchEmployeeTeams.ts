@@ -18,7 +18,7 @@ export function useFetchEmployeeTeams() {
       setIsLoading(true);
       TeamsApi.getTeams(search, offset, perPage, controller)
         .then((res) => {
-          const teams = res.map((team) => mapTeam(team));
+          const teams = res.teams.map((team) => mapTeam(team));
 
           setTeams((prev) => [...prev, ...teams]);
         })

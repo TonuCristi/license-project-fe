@@ -10,6 +10,7 @@ import EditProjectButton from "../components/projects/components/EditProjectButt
 import DeleteProjectButton from "../components/projects/components/DeleteProjectButton";
 
 import { useProject } from "../components/projects/hooks/useProject";
+import CreateProjectMeetingButton from "../components/projects/components/CreateProjectMeetingButton";
 
 export default function ProjectPage() {
   const {
@@ -47,7 +48,7 @@ export default function ProjectPage() {
             isEditStateLoading={isEditStateLoading}
           />
         </div>
-        <div className="xs:grid-cols-2 grid grid-cols-1 items-center gap-2 sm:w-1/2 sm:self-end">
+        <div className="xs:grid-cols-3 grid grid-cols-1 items-center gap-2">
           <DeleteProjectButton
             projectId={project.id}
             deleteProject={deleteProject}
@@ -58,6 +59,7 @@ export default function ProjectPage() {
             editProject={editProject}
             isEditLoading={isEditLoading}
           />
+          <CreateProjectMeetingButton projectId={project.id} />
         </div>
       </div>
 
