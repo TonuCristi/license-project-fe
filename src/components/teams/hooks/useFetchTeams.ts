@@ -5,7 +5,7 @@ import { TeamsApi } from "../../../services/TeamsApi";
 import { mapTeam } from "../../../utlis/mapTeam";
 
 export function useFetchTeams() {
-  const { setTeams, setIsTeamsLoading } = useContext(TeamsContext);
+  const { setTeams, setPages, setIsLoading } = useContext(TeamsContext);
 
   const getTeams = useCallback(
     function (
@@ -14,17 +14,23 @@ export function useFetchTeams() {
       perPage: number,
       controller: AbortController,
     ) {
-      setIsTeamsLoading(true);
+      setIsLoading(true);
       TeamsApi.getTeams(search, offset, perPage, controller)
         .then((res) => {
-          const teams = res.map((team) => mapTeam(team));
-
-          setTeams((prev) => [...prev, ...teams]);
+          const teams = res.teams.map((team) => mapTeam(team));
+          setTeams(teams);
+          setPages(res.pages);
         })
-        .catch((error) => console.log(error.response.data.message))
-        .finally(() => setIsTeamsLoading(false));
+        .catch((error) => {
+          if (error.name === "CanceledError") {
+            return;
+          }
+
+          console.log(error.response.data.message);
+        })
+        .finally(() => setIsLoading(false));
     },
-    [setTeams, setIsTeamsLoading],
+    [setTeams, setPages, setIsLoading],
   );
 
   return { getTeams };

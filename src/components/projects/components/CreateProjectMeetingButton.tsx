@@ -1,15 +1,15 @@
 import { useRef, useState } from "react";
 
-import CreateTeamMeetingForm from "./CreateTeamMeetingForm";
+import CreateProjectMeetingForm from "./CreateProjectMeetingForm";
 import Button from "../../Button";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
 
 type Props = {
-  teamId: string;
+  projectId: string;
 };
 
-export default function CreateTeamMeetingButton({ teamId }: Props) {
+export default function CreateProjectMeetingButton({ projectId }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setIsOpen(false));
@@ -24,7 +24,7 @@ export default function CreateTeamMeetingButton({ teamId }: Props) {
         Create meeting
       </Button>
 
-      {isOpen && <CreateTeamMeetingForm teamId={teamId} />}
+      {isOpen && <CreateProjectMeetingForm projectId={projectId} />}
     </div>
   );
 }

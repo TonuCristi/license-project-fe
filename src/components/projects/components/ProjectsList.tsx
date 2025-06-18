@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
 import Pagination from "../../Pagination";
@@ -11,13 +11,26 @@ import { PER_PAGE } from "../../../pages/ProjectsPage";
 export default function ProjectsList() {
   const { projects, pages, offset, isLoading, setOffset } =
     useContext(ProjectsContext);
-  const methods = useFormContext();
+  const { watch } = useFormContext();
   const { getProjects } = useFetchProjects();
-
-  const { watch } = methods;
+  const controllerRef = useRef<AbortController>();
 
   useEffect(() => {
-    getProjects(watch("search"), watch("state"), offset, PER_PAGE);
+    if (controllerRef.current) {
+      controllerRef.current.abort();
+    }
+
+    controllerRef.current = new AbortController();
+
+    if (controllerRef.current) {
+      getProjects(
+        watch("search"),
+        watch("state"),
+        offset,
+        PER_PAGE,
+        controllerRef.current,
+      );
+    }
   }, [getProjects, offset, watch]);
 
   return (

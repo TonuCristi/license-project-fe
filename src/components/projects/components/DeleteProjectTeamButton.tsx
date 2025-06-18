@@ -4,14 +4,16 @@ import Button from "../../Button";
 import ConfirmationModal from "../../ConfirmationModal";
 
 type Props = {
+  deleteProjectTeam: (projectTeamId: string, teamId: string) => void;
+  projectTeamId: string;
   teamId: string;
-  deleteTeam: (teamId: string) => void;
   isDeleteLoading: boolean;
 };
 
-export default function DeleteTeamButton({
+export default function DeleteProjectTeamButton({
+  deleteProjectTeam,
+  projectTeamId,
   teamId,
-  deleteTeam,
   isDeleteLoading,
 }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -23,11 +25,11 @@ export default function DeleteTeamButton({
       </Button>
       {isOpen && (
         <ConfirmationModal
-          onAprove={() => deleteTeam(teamId)}
+          onAprove={() => deleteProjectTeam(projectTeamId, teamId)}
           onReject={() => setIsOpen(false)}
           isLoading={isDeleteLoading}
         >
-          Are you sure about deleting this employee?
+          Are you sure about deleting this member?
         </ConfirmationModal>
       )}
     </>

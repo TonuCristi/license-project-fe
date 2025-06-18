@@ -1,25 +1,36 @@
 import { useFormContext } from "react-hook-form";
-import { useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 
 import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { useFetchEmployees } from "../hooks/useFetchEmployees";
 import { PER_PAGE } from "../../../pages/EmployeesPage";
+import { EmployeesContext } from "../../../contexts/EmployeesContext";
 
 export default function EmployeesSearchBar() {
   const { getEmployees } = useFetchEmployees();
-  const methods = useFormContext();
-
-  const { watch } = methods;
+  const { setEmployees, setOffset } = useContext(EmployeesContext);
+  const { watch } = useFormContext();
+  const controllerRef = useRef<AbortController>();
 
   useEffect(() => {
     const { unsubscribe } = watch(({ search }) => {
-      getEmployees(search, 0, PER_PAGE);
+      if (controllerRef.current) {
+        controllerRef.current.abort();
+      }
+
+      controllerRef.current = new AbortController();
+
+      setOffset(0);
+      setEmployees([]);
+      if (controllerRef.current) {
+        getEmployees(search, 0, PER_PAGE, controllerRef.current);
+      }
     });
 
     return () => unsubscribe();
-  }, [watch, getEmployees]);
+  }, [watch, getEmployees, setEmployees, setOffset]);
 
   return (
     <form className="w-full">

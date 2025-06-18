@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useEffect } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
 import EmployeeListItem from "./EmployeeListItem";
@@ -19,13 +19,20 @@ export default function EmployeesList({
 }: Props) {
   const { employees, pages, offset, isLoading, setOffset } =
     useContext(EmployeesContext);
-  const methods = useFormContext();
+  const { watch } = useFormContext();
   const { getEmployees } = useFetchEmployees();
-
-  const { watch } = methods;
+  const controllerRef = useRef<AbortController>();
 
   useEffect(() => {
-    getEmployees(watch("search"), offset, PER_PAGE);
+    if (controllerRef.current) {
+      controllerRef.current.abort();
+    }
+
+    controllerRef.current = new AbortController();
+
+    if (controllerRef.current) {
+      getEmployees(watch("search"), offset, PER_PAGE, controllerRef.current);
+    }
   }, [getEmployees, offset, watch]);
 
   return (

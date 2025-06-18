@@ -3,14 +3,14 @@ import { useState } from "react";
 import Button from "../../Button";
 import ConfirmationModal from "../../ConfirmationModal";
 
-import { useDeleteMeeting } from "../hooks/useDeleteMeeting";
+import { useDeleteTeamMeeting } from "../hooks/useDeleteTeamMeeting";
 
 type Props = {
   meetingId: string;
 };
 
 export default function DeleteMeetingButton({ meetingId }: Props) {
-  const { deleteMeeting, isLoading } = useDeleteMeeting();
+  const { deleteTeamMeeting, isLoading } = useDeleteTeamMeeting();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -21,7 +21,7 @@ export default function DeleteMeetingButton({ meetingId }: Props) {
 
       {isOpen && (
         <ConfirmationModal
-          onAprove={() => deleteMeeting(meetingId)}
+          onAprove={() => deleteTeamMeeting(meetingId)}
           onReject={() => setIsOpen(false)}
           isLoading={isLoading}
         >

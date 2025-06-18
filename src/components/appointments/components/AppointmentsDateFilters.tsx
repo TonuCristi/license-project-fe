@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { SyntheticEvent, useContext, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 import InputContainer from "../../input/InputContainer";
@@ -67,7 +67,7 @@ export default function AppointmentsDateFilters() {
     text: String(year),
   }));
 
-  function handleReset(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleReset(e: SyntheticEvent) {
     setAppointments([]);
 
     e.preventDefault();

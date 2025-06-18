@@ -8,6 +8,8 @@ import ProjectElapsedTime from "../components/projects/components/ProjectElapsed
 import ProjectStateDropdown from "../components/projects/components/ProjectStateDropdown";
 import EditProjectButton from "../components/projects/components/EditProjectButton";
 import DeleteProjectButton from "../components/projects/components/DeleteProjectButton";
+import CreateProjectMeetingButton from "../components/projects/components/CreateProjectMeetingButton";
+import ProjectTeams from "../components/projects/components/ProjectTeams";
 
 import { useProject } from "../components/projects/hooks/useProject";
 
@@ -25,7 +27,7 @@ export default function ProjectPage() {
     isDeleteLoading,
   } = useProject();
 
-  const { description, state, progress, startDate, deadline } = project;
+  const { name, description, state, progress, startDate, deadline } = project;
 
   if (isLoading) {
     return (
@@ -39,7 +41,7 @@ export default function ProjectPage() {
     <main className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-2 overflow-x-hidden overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">
       <div className="flex flex-col gap-2">
         <div className="flex w-full items-center justify-between gap-2">
-          <PageTitle>{`${project.name} project`}</PageTitle>
+          <PageTitle>{`${name} project`}</PageTitle>
           <ProjectStateDropdown
             projectId={project.id}
             state={state}
@@ -47,7 +49,7 @@ export default function ProjectPage() {
             isEditStateLoading={isEditStateLoading}
           />
         </div>
-        <div className="xs:grid-cols-2 grid grid-cols-1 items-center gap-2 sm:w-1/2 sm:self-end">
+        <div className="xs:grid-cols-3 grid grid-cols-1 items-center gap-2">
           <DeleteProjectButton
             projectId={project.id}
             deleteProject={deleteProject}
@@ -58,6 +60,7 @@ export default function ProjectPage() {
             editProject={editProject}
             isEditLoading={isEditLoading}
           />
+          <CreateProjectMeetingButton projectId={project.id} />
         </div>
       </div>
 
@@ -66,7 +69,7 @@ export default function ProjectPage() {
         <ProjectElapsedTime startDate={startDate} deadline={deadline} />
       </ProjectSection>
 
-      <ProjectSection className="xs:h-22 items-center">
+      <ProjectSection className="xs:min-h-22 items-center">
         <ProjectSectionTitle>Progress</ProjectSectionTitle>
         <ProjectProgressBar
           projectId={project.id}
@@ -79,6 +82,11 @@ export default function ProjectPage() {
       <ProjectSection>
         <ProjectSectionTitle>Description</ProjectSectionTitle>
         <p>{description}</p>
+      </ProjectSection>
+
+      <ProjectSection>
+        <ProjectSectionTitle>Teams</ProjectSectionTitle>
+        <ProjectTeams projectId={project.id} />
       </ProjectSection>
     </main>
   );

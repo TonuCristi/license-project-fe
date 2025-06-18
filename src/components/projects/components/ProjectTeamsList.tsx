@@ -2,37 +2,37 @@ import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
 import Pagination from "../../Pagination";
+import ProjectTeamListItem from "./ProjectTeamListItem";
 
-import { Employee } from "../../../types/employee.type";
-import { PER_PAGE } from "./TeamMembers";
-import TeamMemberListItem from "./TeamMemberListItem";
+import { PER_PAGE } from "./ProjectTeams";
+import { Team } from "../../../types/team.type";
 
 type Props = {
-  teamId: string;
-  deleteMember: (membershipId: string, employeeId: string) => void;
-  getMembers: (
-    teamId: string,
+  projectId: string;
+  deleteProjectTeam: (projectTeamId: string, teamId: string) => void;
+  getTeams: (
+    projectId: string,
     search: string,
     offset: number,
     perPage: number,
     controller: AbortController,
   ) => void;
-  members: Employee[];
+  teams: Team[];
   pages: number;
   offset: number;
-  isMembersLoading: boolean;
+  isTeamsLoading: boolean;
   isDeleteLoading: boolean;
   setOffset: Dispatch<SetStateAction<number>>;
 };
 
-export default function TeamMembersList({
-  teamId,
-  deleteMember,
-  getMembers,
-  members,
+export default function ProjectTeamsList({
+  projectId,
+  deleteProjectTeam,
+  getTeams,
+  teams,
   pages,
   offset,
-  isMembersLoading,
+  isTeamsLoading,
   isDeleteLoading,
   setOffset,
 }: Props) {
@@ -47,31 +47,31 @@ export default function TeamMembersList({
     controllerRef.current = new AbortController();
 
     if (controllerRef.current) {
-      getMembers(
-        teamId,
+      getTeams(
+        projectId,
         watch("search"),
         offset,
         PER_PAGE,
         controllerRef.current,
       );
     }
-  }, [getMembers, watch, offset, teamId]);
+  }, [getTeams, watch, offset, projectId]);
 
   return (
     <div className="xs:gap-8 flex flex-col items-center gap-4">
       <ul className="flex w-full flex-col gap-2">
-        {members.map((member) => (
-          <TeamMemberListItem
-            key={member.id}
-            deleteMember={deleteMember}
-            member={member}
+        {teams.map((team) => (
+          <ProjectTeamListItem
+            key={team.id}
+            deleteProjectTeam={deleteProjectTeam}
+            team={team}
             isDeleteLoading={isDeleteLoading}
           />
         ))}
       </ul>
       {pages > 1 && (
         <Pagination
-          isLoading={isMembersLoading}
+          isLoading={isTeamsLoading}
           pages={pages}
           offset={offset}
           setOffset={setOffset}

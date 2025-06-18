@@ -4,26 +4,26 @@ import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
-import { PER_PAGE } from "./TeamMembers";
-import { Employee } from "../../../types/employee.type";
+import { PER_PAGE } from "./ProjectTeams";
+import { Team } from "../../../types/team.type";
 
 type Props = {
-  teamId: string;
-  getMembers: (
-    teamId: string,
+  projectId: string;
+  getTeams: (
+    projectId: string,
     search: string,
     offset: number,
     perPage: number,
     controller: AbortController,
   ) => void;
-  setMembers: Dispatch<SetStateAction<Employee[]>>;
+  setTeams: Dispatch<SetStateAction<Team[]>>;
   setOffset: Dispatch<SetStateAction<number>>;
 };
 
-export default function TeamMembersSearchBar({
-  teamId,
-  getMembers,
-  setMembers,
+export default function ProjectTeamsSearchBar({
+  projectId,
+  getTeams,
+  setTeams,
   setOffset,
 }: Props) {
   const controllerRef = useRef<AbortController>();
@@ -39,20 +39,20 @@ export default function TeamMembersSearchBar({
       controllerRef.current = new AbortController();
 
       setOffset(0);
-      setMembers([]);
+      setTeams([]);
       if (controllerRef.current) {
-        getMembers(teamId, search, 0, PER_PAGE, controllerRef.current);
+        getTeams(projectId, search, 0, PER_PAGE, controllerRef.current);
       }
     });
 
     return () => unsubscribe();
-  }, [getMembers, setOffset, setMembers, watch, teamId]);
+  }, [getTeams, setOffset, setTeams, watch, projectId]);
 
   return (
     <form className="w-full">
       <Input
         name="search"
-        placeholder="Search members..."
+        placeholder="Search teams..."
         rightIcon={<HiMiniMagnifyingGlass className="text-md stroke-1" />}
       />
     </form>

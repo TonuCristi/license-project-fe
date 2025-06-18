@@ -11,7 +11,7 @@ import Textarea from "../../Textarea";
 
 import { meetingFormSchema } from "../../../schemas/meetingForm.schema";
 import { CreateMeeting } from "../../../types/meeting.type";
-import { useCreateTeamMeeting } from "../hooks/useCreateTeamMeeting";
+import { useCreateProjectMeeting } from "../hooks/useCreateProjectMeeting";
 
 const durationOptions = [
   { value: "1", text: "1" },
@@ -31,10 +31,10 @@ const durationOptions = [
 ];
 
 type Props = {
-  teamId: string;
+  projectId: string;
 };
 
-export default function CreateTeamMeetingForm({ teamId }: Props) {
+export default function CreateProjectMeetingForm({ projectId }: Props) {
   const methods = useForm<CreateMeeting>({
     defaultValues: {
       date: "",
@@ -43,7 +43,7 @@ export default function CreateTeamMeetingForm({ teamId }: Props) {
     },
     resolver: zodResolver(meetingFormSchema),
   });
-  const { createTeamMeeting, isLoading } = useCreateTeamMeeting();
+  const { createProjectMeeting, isLoading } = useCreateProjectMeeting();
 
   const {
     handleSubmit,
@@ -52,7 +52,7 @@ export default function CreateTeamMeetingForm({ teamId }: Props) {
 
   const onSubmit: SubmitHandler<CreateMeeting> = (data) => {
     const date = data.date + ":00Z";
-    createTeamMeeting(teamId, { ...data, date });
+    createProjectMeeting(projectId, { ...data, date });
   };
 
   return (

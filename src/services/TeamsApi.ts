@@ -9,7 +9,10 @@ export const TeamsApi = {
   createTeam(team: CreateTeam) {
     return api
       .post(`${URL}/create-team`, team)
-      .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
+      .then(
+        ({ data }: AxiosResponse<{ newTeam: TeamResponse; message: string }>) =>
+          data,
+      );
   },
   getTeams(
     search: string,
@@ -19,22 +22,37 @@ export const TeamsApi = {
   ) {
     return api
       .get(
-        `${URL}/retrieve-teams?search=${encodeURIComponent(search)}&offset=${offset}&perPage=${perPage}`,
+        `${URL}/retrieve-teams?search=${search}&offset=${offset}&perPage=${perPage}`,
         {
           signal: controller.signal,
         },
       )
-      .then(({ data }: AxiosResponse<{ teams: TeamResponse[] }>) => data.teams);
+      .then(
+        ({ data }: AxiosResponse<{ teams: TeamResponse[]; pages: number }>) =>
+          data,
+      );
+  },
+  getTeam(teamId: string) {
+    return api
+      .get(`${URL}/retrieve-team/${teamId}`)
+      .then(({ data }: AxiosResponse<{ team: TeamResponse }>) => data.team);
+  },
+  getTeamsPages(search: string, perPage: number) {
+    return api
+      .get(`${URL}/retrieve-teams-pages?search=${search}&perPage=${perPage}`)
+      .then(({ data }: AxiosResponse<{ pages: number }>) => data.pages);
   },
   getTeamMembers(
     teamId: string,
     search: string,
     offset: number,
     perPage: number,
+    controller: AbortController,
   ) {
     return api
       .get(
         `${URL}/retrieve-team-members/${teamId}?search=${search}&offset=${offset}&perPage=${perPage}`,
+        { signal: controller.signal },
       )
       .then(
         ({
@@ -43,9 +61,9 @@ export const TeamsApi = {
           data,
       );
   },
-  deleteMember(memberId: string) {
+  deleteMember(membershipId: string) {
     return api
-      .delete(`${URL}/delete-member/${memberId}`)
+      .delete(`${URL}/delete-member/${membershipId}`)
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
   deleteTeam(teamId: string) {

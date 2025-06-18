@@ -30,9 +30,7 @@ export default function AddToTeam({ employeesList, setEmployeesList }: Props) {
       >
         Clear list
       </Button>
-      <div className={twMerge(isLoading && "pointer-events-none")}>
-        <AddToTeamDropdown employeesList={employeesList} />
-      </div>
+      <AddToTeamDropdown employeesList={employeesList} />
     </div>
   );
 }

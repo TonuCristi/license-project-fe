@@ -8,9 +8,11 @@ export type EditTeam = z.infer<typeof teamFormSchema>;
 export type TeamResponse = {
   _id: string;
   name: string;
+  projectTeam_id: string;
 };
 
 export type Team = {
   id: string;
   name: string;
+  projectTeamId: string;
 };
