@@ -4,10 +4,10 @@ import EditTeamForm from "./EditTeamForm";
 import Button from "../../Button";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
-import { EditTeam, Team } from "../../../types/team.type";
+import { EditTeam, TeamWithoutProjectTeamId } from "../../../types/team.type";
 
 type Props = {
-  team: Team;
+  team: TeamWithoutProjectTeamId;
   editTeam: (teamId: string, newEditedTeam: EditTeam) => void;
   isEditLoading: boolean;
 };

@@ -13,7 +13,7 @@ export function useChangeUsername() {
     UserApi.changeUsername(username)
       .then((res) => {
         setUser((prev) =>
-          prev ? { ...prev, username: res.newUsername } : null,
+          prev ? { ...prev, username: res.newUsername } : undefined,
         );
         toast.success(res.message);
       })

@@ -6,7 +6,7 @@ import { AddEmployee } from "../../../types/employee.type";
 import { EmployeesContext } from "../../../contexts/EmployeesContext";
 import { EmployeesApi } from "../../../services/EmployeesApi";
 import { mapEmployee } from "../../../utlis/mapEmployee";
-import { PER_PAGE } from "../../../pages/EmployeesPage";
+import { PER_PAGE } from "../../../constants/employees";
 
 export function useAddEmployee() {
   const { employees, offset, setEmployees, setOffset } =

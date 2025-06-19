@@ -5,8 +5,8 @@ import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { useFetchEmployees } from "../hooks/useFetchEmployees";
-import { PER_PAGE } from "../../../pages/EmployeesPage";
 import { EmployeesContext } from "../../../contexts/EmployeesContext";
+import { PER_PAGE } from "../../../constants/employees";
 
 export default function EmployeesSearchBar() {
   const { getEmployees } = useFetchEmployees();

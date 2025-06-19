@@ -10,8 +10,6 @@ import TeamsProvider from "../contexts/TeamsContext";
 import { SearchBar } from "../types/searchBar.type";
 import { searchBarSchema } from "../schemas/searchBar.schema";
 
-export const PER_PAGE = 9;
-
 export default function TeamsPage() {
   const methods = useForm<SearchBar>({
     defaultValues: {

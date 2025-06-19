@@ -12,9 +12,9 @@ export function useFetchRoom() {
   useEffect(() => {
     RoomsApi.getRoom()
       .then((res) => {
-        const room = res.room ? mapRoom(res.room) : null;
-        const assistant = res.assistant ? mapUser(res.assistant) : null;
-        const chief = res.chief ? mapUser(res.chief) : null;
+        const room = mapRoom(res.room);
+        const assistant = mapUser(res.assistant);
+        const chief = mapUser(res.chief);
         setRoom(room);
         setAssistant(assistant);
         setChief(chief);

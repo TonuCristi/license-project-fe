@@ -11,8 +11,8 @@ import Select from "../components/Select";
 import { UserContext } from "../contexts/UserContext";
 import { RoomContext } from "../contexts/RoomContext";
 import { appointmentsFiltersSchema } from "../schemas/appointmentsFilters.schema";
-import AppointmentsProvider from "../contexts/AppointmentsContext";
 import { AppointmentDateFilters } from "../types/appointment.type";
+import AppointmentsProvider from "../contexts/AppointmentsContext";
 
 const stateOptions = [
   { value: "upcoming", text: "Upcoming" },

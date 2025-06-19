@@ -6,7 +6,7 @@ import Pagination from "../../Pagination";
 
 import { EmployeesContext } from "../../../contexts/EmployeesContext";
 import { useFetchEmployees } from "../hooks/useFetchEmployees";
-import { PER_PAGE } from "../../../pages/EmployeesPage";
+import { PER_PAGE } from "../../../constants/employees";
 
 type Props = {
   employeesList: string[];
@@ -19,9 +19,10 @@ export default function EmployeesList({
 }: Props) {
   const { employees, pages, offset, isLoading, setOffset } =
     useContext(EmployeesContext);
-  const { watch } = useFormContext();
   const { getEmployees } = useFetchEmployees();
   const controllerRef = useRef<AbortController>();
+
+  const { watch } = useFormContext();
 
   useEffect(() => {
     if (controllerRef.current) {

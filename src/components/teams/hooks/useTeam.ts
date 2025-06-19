@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
 
-import { EditTeam, Team } from "../../../types/team.type";
+import { EditTeam, TeamWithoutProjectTeamId } from "../../../types/team.type";
 import { TeamsApi } from "../../../services/TeamsApi";
 import { mapTeam } from "../../../utlis/mapTeam";
 
 export function useTeam() {
-  const [team, setTeam] = useState<Omit<Team, "projectTeamId">>({
+  const [team, setTeam] = useState<TeamWithoutProjectTeamId>({
     id: "",
     name: "",
   });

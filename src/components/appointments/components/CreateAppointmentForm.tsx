@@ -12,10 +12,11 @@ import Textarea from "../../Textarea";
 import { CreateAppointment } from "../../../types/appointment.type";
 import { useCreateAppointment } from "../hooks/useCreateAppointment";
 import { appointmentFormSchema } from "../../../schemas/appointmentForm.schema";
+import { DURATION_OPTIONS } from "../../../constants/appointments";
 
 const inputs = [
   {
-    label: "Attendeee",
+    label: "Attendee",
     id: "attendee",
     name: "attendee",
     placeholder: "Attendee...",
@@ -33,23 +34,6 @@ const inputs = [
     placeholder: "Location...",
   },
 ] as const;
-
-const durationOptions = [
-  { value: "1", text: "1" },
-  { value: "2", text: "2" },
-  { value: "3", text: "3" },
-  { value: "4", text: "4" },
-  { value: "5", text: "5" },
-  { value: "6", text: "6" },
-  { value: "7", text: "7" },
-  { value: "8", text: "8" },
-  { value: "9", text: "9" },
-  { value: "10", text: "10" },
-  { value: "11", text: "11" },
-  { value: "12", text: "12" },
-  { value: "13", text: "13" },
-  { value: "14", text: "14" },
-];
 
 export default function CreateAppointmentForm() {
   const methods = useForm<CreateAppointment>({
@@ -109,7 +93,7 @@ export default function CreateAppointmentForm() {
             <Select
               name="duration"
               placeholder="Select the duration"
-              options={durationOptions}
+              options={DURATION_OPTIONS}
             />
             {errors.duration && (
               <Message variant="error">{errors.duration.message}</Message>

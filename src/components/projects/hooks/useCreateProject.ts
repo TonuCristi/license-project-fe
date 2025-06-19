@@ -2,11 +2,11 @@ import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-import { PER_PAGE } from "../../../pages/EmployeesPage";
 import { ProjectsContext } from "../../../contexts/ProjectsContext";
 import { mapProject } from "../../../utlis/mapProject";
 import { ProjectsApi } from "../../../services/ProjectsApi";
 import { CreateProject, ProjectState } from "../../../types/project.type";
+import { PER_PAGE } from "../../../constants/employees";
 
 export function useCreateProject() {
   const { projects, offset, setProjects, setOffset } =

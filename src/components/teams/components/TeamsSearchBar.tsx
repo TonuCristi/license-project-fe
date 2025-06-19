@@ -6,12 +6,12 @@ import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { useFetchTeams } from "../hooks/useFetchTeams";
 import { TeamsContext } from "../../../contexts/TeamsContext";
-import { PER_PAGE } from "../../../pages/TeamsPage";
+import { PER_PAGE } from "../../../constants/teams";
 
 export default function TeamsSearchBar() {
-  const controllerRef = useRef<AbortController>();
-  const { getTeams } = useFetchTeams();
   const { setTeams, setOffset } = useContext(TeamsContext);
+  const { getTeams } = useFetchTeams();
+  const controllerRef = useRef<AbortController>();
 
   const { watch } = useFormContext();
 

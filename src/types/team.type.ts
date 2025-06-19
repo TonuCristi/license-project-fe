@@ -16,3 +16,5 @@ export type Team = {
   name: string;
   projectTeamId: string;
 };
+
+export type TeamWithoutProjectTeamId = Omit<Team, "projectTeamId">;

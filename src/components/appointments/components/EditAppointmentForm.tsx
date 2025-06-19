@@ -12,6 +12,7 @@ import Textarea from "../../Textarea";
 import { Appointment, EditAppointment } from "../../../types/appointment.type";
 import { useEditAppointment } from "../hooks/useEditAppointment";
 import { appointmentFormSchema } from "../../../schemas/appointmentForm.schema";
+import { DURATION_OPTIONS } from "../../../constants/appointments";
 
 const inputs = [
   {
@@ -33,23 +34,6 @@ const inputs = [
     placeholder: "Location...",
   },
 ] as const;
-
-const durationOptions = [
-  { value: "1", text: "1" },
-  { value: "2", text: "2" },
-  { value: "3", text: "3" },
-  { value: "4", text: "4" },
-  { value: "5", text: "5" },
-  { value: "6", text: "6" },
-  { value: "7", text: "7" },
-  { value: "8", text: "8" },
-  { value: "9", text: "9" },
-  { value: "10", text: "10" },
-  { value: "11", text: "11" },
-  { value: "12", text: "12" },
-  { value: "13", text: "13" },
-  { value: "14", text: "14" },
-];
 
 type Props = {
   appointment: Appointment;
@@ -112,7 +96,7 @@ export default function EditAppointmentForm({ appointment }: Props) {
             <Select
               name="duration"
               placeholder="Select the duration"
-              options={durationOptions}
+              options={DURATION_OPTIONS}
             />
             {errors.duration && (
               <Message variant="error">{errors.duration.message}</Message>

@@ -1,16 +1,16 @@
 import { useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 
-import { UserContext } from "../../../contexts/UserContext";
 import { NotificationsContext } from "../../../contexts/NotificationsContext";
 import { mapNotification } from "../../../utlis/mapNotification";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 export function useSSE() {
-  const { user } = useContext(UserContext);
-  const { setNotifications } = useContext(NotificationsContext);
+  const { isLogged } = useContext(AuthContext);
+  const { setNotificationsCount } = useContext(NotificationsContext);
 
   useEffect(() => {
-    if (!user) return;
+    if (!isLogged) return;
 
     const sse = new EventSource(
       `http://localhost:8000/api/events?token=${localStorage.getItem("token")}`,
@@ -19,9 +19,9 @@ export function useSSE() {
     sse.addEventListener("message", ({ data }) => {
       const notification = mapNotification(JSON.parse(data));
 
-      setNotifications((prev) => [notification, ...prev]);
+      setNotificationsCount((prev) => prev + 1);
 
       toast.success(notification.content);
     });
-  }, [user, setNotifications]);
+  }, [isLogged, setNotificationsCount]);
 }

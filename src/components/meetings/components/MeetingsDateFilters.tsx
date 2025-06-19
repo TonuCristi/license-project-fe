@@ -9,59 +9,35 @@ import Button from "../../Button";
 import { useFetchMeetingsYears } from "../hooks/useFetchMeetingsYears";
 import { useFetchMeetings } from "../hooks/useFetchMeetings";
 import { MeetingsContext } from "../../../contexts/MeetingsContext";
-
-const monthOptions = [
-  { value: "0", text: "January" },
-  { value: "1", text: "February" },
-  { value: "2", text: "March" },
-  { value: "3", text: "April" },
-  { value: "4", text: "May" },
-  { value: "5", text: "June" },
-  { value: "6", text: "July" },
-  { value: "7", text: "August" },
-  { value: "8", text: "September" },
-  { value: "9", text: "October" },
-  { value: "10", text: "November" },
-  { value: "11", text: "December" },
-];
-
-const dayOptions = [
-  { value: "0", text: "Monday" },
-  { value: "1", text: "Tuesday" },
-  { value: "2", text: "Wednesday" },
-  { value: "3", text: "Thrusday" },
-  { value: "4", text: "Friday" },
-  { value: "5", text: "Saturday" },
-  { value: "6", text: "Sunday" },
-];
+import { DAY_OPTIONS, MONTH_OPTIONS } from "../../../constants/filters";
 
 const selects = [
   {
     label: "Month",
     name: "month",
     placeholder: "Select a month",
-    options: monthOptions,
+    options: MONTH_OPTIONS,
   },
   {
     label: "Day",
     name: "day",
     placeholder: "Select a day",
-    options: dayOptions,
+    options: DAY_OPTIONS,
   },
 ];
 
 export default function MeetingsDateFilters() {
-  const { watch, reset } = useFormContext();
-  const { isLoading: isMeetingYearsLoading } = useFetchMeetingsYears(
-    watch("type"),
-    watch("state"),
-  );
-  const { getMeetings } = useFetchMeetings();
   const {
     meetingsYears,
     setMeetings,
     isLoading: isMeetingsLoading,
   } = useContext(MeetingsContext);
+  const { getMeetings } = useFetchMeetings();
+  const { watch, reset } = useFormContext();
+  const { isLoading: isMeetingYearsLoading } = useFetchMeetingsYears(
+    watch("type"),
+    watch("state"),
+  );
 
   const yearOptions = meetingsYears.map((year) => ({
     value: String(year),

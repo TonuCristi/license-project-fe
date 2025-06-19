@@ -27,9 +27,9 @@ export const RoomsApi = {
       ({
         data,
       }: AxiosResponse<{
-        room: RoomResponse | null;
-        assistant: UserResponse | null;
-        chief: UserResponse | null;
+        room: RoomResponse;
+        assistant: UserResponse;
+        chief: UserResponse;
       }>) => data,
     );
   },

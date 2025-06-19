@@ -6,14 +6,15 @@ import TeamListItem from "./TeamListItem";
 
 import { TeamsContext } from "../../../contexts/TeamsContext";
 import { useFetchTeams } from "../hooks/useFetchTeams";
-import { PER_PAGE } from "../../../pages/TeamsPage";
+import { PER_PAGE } from "../../../constants/teams";
 
 export default function TeamsList() {
   const { teams, pages, offset, isLoading, setOffset } =
     useContext(TeamsContext);
-  const { watch } = useFormContext();
-  const controllerRef = useRef<AbortController>();
   const { getTeams } = useFetchTeams();
+  const controllerRef = useRef<AbortController>();
+
+  const { watch } = useFormContext();
 
   useEffect(() => {
     if (controllerRef.current) {

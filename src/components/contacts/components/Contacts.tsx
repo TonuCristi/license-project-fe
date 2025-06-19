@@ -1,14 +1,13 @@
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import ContactsList from "./ContactsList";
 import ContactsSearchBar from "./ContactsSearchBar";
 import CreateContactButton from "./CreateContactButton";
 
-import { FormProvider, useForm } from "react-hook-form";
 import { SearchBar } from "../../../types/searchBar.type";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { searchBarSchema } from "../../../schemas/searchBar.schema";
 import ContactsProvider from "../../../contexts/ContactsContext";
-
-export const PER_PAGE = 15;
 
 export default function Contacts() {
   const methods = useForm<SearchBar>({

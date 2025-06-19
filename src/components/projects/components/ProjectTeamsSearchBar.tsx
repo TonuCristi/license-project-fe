@@ -4,8 +4,8 @@ import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
-import { PER_PAGE } from "./ProjectTeams";
 import { Team } from "../../../types/team.type";
+import { PER_PAGE } from "../../../constants/teams";
 
 type Props = {
   projectId: string;

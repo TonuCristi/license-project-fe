@@ -17,8 +17,6 @@ const stateOptions = [
   { value: "finished", text: "Finished" },
 ];
 
-export const PER_PAGE = 9;
-
 export default function ProjectsPage() {
   const methods = useForm<ProjectFilters>({
     defaultValues: {

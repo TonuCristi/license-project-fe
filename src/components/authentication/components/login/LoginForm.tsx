@@ -9,9 +9,9 @@ import HidePasswordInput from "../../../input/HidePasswordInput";
 import Button from "../../../Button";
 import { Link } from "react-router";
 
-import { loginSchema } from "../../../../schemas/login.schema";
 import { useLogin } from "../../hooks/useLogin";
 import { Login } from "../../../../types/user.type";
+import { loginFormSchema } from "../../../../schemas/loginForm.schema";
 
 export default function LoginForm() {
   const methods = useForm<Login>({
@@ -19,7 +19,7 @@ export default function LoginForm() {
       email: "andrei.ionescu@mail.com",
       password: "P@rola1234",
     },
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginFormSchema),
   });
   const { login, isLoading } = useLogin();
 
@@ -54,7 +54,7 @@ export default function LoginForm() {
           Forgot password?
         </Link>
 
-        <Button className="mt-2" disabled={isLoading}>
+        <Button disabled={isLoading} className="mt-2">
           Login
         </Button>
 

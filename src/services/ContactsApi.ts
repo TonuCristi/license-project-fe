@@ -28,14 +28,15 @@ export const ContactsApi = {
       );
   },
   createContact(contact: CreateContact) {
-    return api
-      .post(`${URL}/create-contact`, contact)
-      .then(
-        ({
-          data,
-        }: AxiosResponse<{ newContact: ContactResponse; message: string }>) =>
-          data,
-      );
+    return api.post(`${URL}/create-contact`, contact).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        newContact: ContactResponse;
+        contactsCount: number;
+        message: string;
+      }>) => data,
+    );
   },
   deleteContact(contactId: string) {
     return api

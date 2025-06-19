@@ -10,18 +10,38 @@ import HidePasswordInput from "../../../input/HidePasswordInput";
 import Select from "../../../Select";
 import Button from "../../../Button";
 
-import { registerSchema } from "../../../../schemas/register.schema";
 import { useRegister } from "../../hooks/useRegister";
 import { Register } from "../../../../types/user.type";
+import { registerFormSchema } from "../../../../schemas/registerForm.schema";
 
 const options = [
   { value: "chief", text: "Chief" },
   { value: "assistant", text: "Assistant" },
 ];
 
+const inputs = [
+  {
+    label: "Username",
+    id: "username",
+    name: "username",
+    placeholder: "Username...",
+  },
+  {
+    label: "Email",
+    id: "email",
+    name: "email",
+    placeholder: "Email...",
+  },
+] as const;
+
 export default function RegisterForm() {
   const methods = useForm<Register>({
-    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(registerFormSchema),
   });
   const { register, isLoading } = useRegister();
 
@@ -35,21 +55,15 @@ export default function RegisterForm() {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-        <InputContainer>
-          <Label htmlFor="username">Username</Label>
-          <Input id="username" name="username" placeholder="Username..." />
-          {errors.username && (
-            <Message variant="error">{errors.username.message}</Message>
-          )}
-        </InputContainer>
-
-        <InputContainer>
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" name="email" placeholder="Email..." />
-          {errors.email && (
-            <Message variant="error">{errors.email.message}</Message>
-          )}
-        </InputContainer>
+        {inputs.map(({ label, id, name, placeholder }) => (
+          <InputContainer key={id}>
+            <Label htmlFor={id}>{label}</Label>
+            <Input id={id} name={name} placeholder={placeholder} />
+            {errors[name] && (
+              <Message variant="error">{errors[name].message}</Message>
+            )}
+          </InputContainer>
+        ))}
 
         <HidePasswordInput
           id="password"
@@ -67,9 +81,12 @@ export default function RegisterForm() {
             placeholder="Select your role"
             options={options}
           />
+          {errors.role && (
+            <Message variant="error">{errors.role.message}</Message>
+          )}
         </InputContainer>
 
-        <Button className="mt-2" disabled={isLoading}>
+        <Button disabled={isLoading} className="mt-2">
           Register
         </Button>
 

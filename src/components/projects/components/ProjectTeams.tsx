@@ -8,8 +8,6 @@ import { SearchBar } from "../../../types/searchBar.type";
 import { searchBarSchema } from "../../../schemas/searchBar.schema";
 import { useProjectTeams } from "../hooks/useProjectTeams";
 
-export const PER_PAGE = 9;
-
 type Props = {
   projectId: string;
 };

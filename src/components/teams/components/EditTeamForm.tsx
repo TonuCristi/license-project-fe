@@ -7,11 +7,11 @@ import Label from "../../Label";
 import Input from "../../input/Input";
 import Message from "../../Message";
 
-import { EditTeam, Team } from "../../../types/team.type";
+import { EditTeam, TeamWithoutProjectTeamId } from "../../../types/team.type";
 import { teamFormSchema } from "../../../schemas/teamForm.schema";
 
 type Props = {
-  team: Team;
+  team: TeamWithoutProjectTeamId;
   editTeam: (teamId: string, newEditedTeam: EditTeam) => void;
   isEditLoading: boolean;
 };

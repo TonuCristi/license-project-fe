@@ -5,8 +5,8 @@ import axios from "axios";
 import { TeamsContext } from "../../../contexts/TeamsContext";
 import { CreateTeam } from "../../../types/team.type";
 import { TeamsApi } from "../../../services/TeamsApi";
-import { PER_PAGE } from "../../../pages/TeamsPage";
 import { mapTeam } from "../../../utlis/mapTeam";
+import { PER_PAGE } from "../../../constants/teams";
 
 export function useCreateTeam() {
   const { teams, offset, setTeams, setOffset } = useContext(TeamsContext);

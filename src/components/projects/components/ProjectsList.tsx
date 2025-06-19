@@ -6,14 +6,15 @@ import ProjectListItem from "./ProjectListItem";
 
 import { useFetchProjects } from "../hooks/useFetchProjects";
 import { ProjectsContext } from "../../../contexts/ProjectsContext";
-import { PER_PAGE } from "../../../pages/ProjectsPage";
+import { PER_PAGE } from "../../../constants/projects";
 
 export default function ProjectsList() {
   const { projects, pages, offset, isLoading, setOffset } =
     useContext(ProjectsContext);
-  const { watch } = useFormContext();
   const { getProjects } = useFetchProjects();
   const controllerRef = useRef<AbortController>();
+
+  const { watch } = useFormContext();
 
   useEffect(() => {
     if (controllerRef.current) {

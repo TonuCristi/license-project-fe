@@ -14,10 +14,10 @@ export function useDeleteRoom() {
     setIsLoading(true);
     RoomsApi.deleteRoom()
       .then((res) => {
-        setUser((prev) => (prev ? { ...prev, roomId: "" } : null));
-        setRoom(null);
-        setAssistant(null);
-        setChief(null);
+        setUser((prev) => (prev ? { ...prev, roomId: "" } : undefined));
+        setRoom(undefined);
+        setAssistant(undefined);
+        setChief(undefined);
         toast.success(res);
       })
       .catch((error) => toast.error(error.response.data.message))

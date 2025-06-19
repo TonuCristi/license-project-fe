@@ -20,16 +20,16 @@ const projectState = {
 };
 
 type Props = {
+  editState: (projectId: string, state: ProjectState, cb: () => void) => void;
   projectId: string;
   state: ProjectState;
-  editState: (projectId: string, state: ProjectState, cb: () => void) => void;
   isEditStateLoading: boolean;
 };
 
 export default function ProjectStateDropdown({
+  editState,
   projectId,
   state,
-  editState,
   isEditStateLoading,
 }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);

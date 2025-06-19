@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 import AppLayout from "./components/AppLayout";
 import AuthLayout from "./components/AuthLayout";
@@ -8,7 +9,6 @@ import RoomProvider from "./contexts/RoomContext";
 import NotificationsProvider from "./contexts/NotificationsContext";
 import UserProvider from "./contexts/UserContext";
 import { useLogout } from "./hooks/useLogout";
-import { jwtDecode } from "jwt-decode";
 
 function App() {
   const { isLogged, token } = useContext(AuthContext);

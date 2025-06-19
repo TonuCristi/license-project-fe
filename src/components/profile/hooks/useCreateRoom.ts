@@ -22,7 +22,7 @@ export function useCreateRoom() {
         setRoom(room);
         setAssistant(assistant);
         setChief(chief);
-        setUser((prev) => (prev ? { ...prev, roomId: room.id } : null));
+        setUser((prev) => (prev ? { ...prev, roomId: room.id } : undefined));
         toast.success(res.message);
       })
       .catch((error) => toast.error(error.response.data.message))

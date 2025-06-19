@@ -10,20 +10,20 @@ import { Room } from "../types/room.type";
 import { User } from "../types/user.type";
 
 type RoomContext = {
-  room: Room | null;
-  assistant: User | null;
-  chief: User | null;
+  room: Room | undefined;
+  assistant: User | undefined;
+  chief: User | undefined;
   isLoading: boolean;
-  setRoom: Dispatch<SetStateAction<Room | null>>;
-  setAssistant: Dispatch<SetStateAction<User | null>>;
-  setChief: Dispatch<SetStateAction<User | null>>;
+  setRoom: Dispatch<SetStateAction<Room | undefined>>;
+  setAssistant: Dispatch<SetStateAction<User | undefined>>;
+  setChief: Dispatch<SetStateAction<User | undefined>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 export const RoomContext = createContext<RoomContext>({
-  room: null,
-  assistant: null,
-  chief: null,
+  room: undefined,
+  assistant: undefined,
+  chief: undefined,
   isLoading: true,
   setRoom: () => undefined,
   setAssistant: () => undefined,
@@ -36,9 +36,9 @@ type Props = {
 };
 
 export default function RoomProvider({ children }: Props) {
-  const [room, setRoom] = useState<Room | null>(null);
-  const [assistant, setAssistant] = useState<User | null>(null);
-  const [chief, setChief] = useState<User | null>(null);
+  const [room, setRoom] = useState<Room | undefined>(undefined);
+  const [assistant, setAssistant] = useState<User | undefined>(undefined);
+  const [chief, setChief] = useState<User | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   return (

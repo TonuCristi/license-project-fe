@@ -5,13 +5,14 @@ import Input from "../../input/Input";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { useFetchProjects } from "../hooks/useFetchProjects";
-import { PER_PAGE } from "../../../pages/ProjectsPage";
 import { ProjectsContext } from "../../../contexts/ProjectsContext";
+import { PER_PAGE } from "../../../constants/projects";
 
 export default function ProjectsSearchBar() {
-  const { getProjects } = useFetchProjects();
   const { setProjects, setOffset } = useContext(ProjectsContext);
+  const { getProjects } = useFetchProjects();
   const controllerRef = useRef<AbortController>();
+
   const { watch } = useFormContext();
 
   useEffect(() => {

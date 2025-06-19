@@ -10,8 +10,6 @@ import { SearchBar } from "../types/searchBar.type";
 import { searchBarSchema } from "../schemas/searchBar.schema";
 import EmployeesProvider from "../contexts/EmployeesContext";
 
-export const PER_PAGE = 9;
-
 export default function EmployeesPage() {
   const methods = useForm<SearchBar>({
     defaultValues: {

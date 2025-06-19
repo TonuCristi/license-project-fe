@@ -6,7 +6,7 @@ import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { useFetchContacts } from "../hooks/useFetchContacts";
 import { ContactsContext } from "../../../contexts/ContactsContext";
-import { PER_PAGE } from "./Contacts";
+import { PER_PAGE } from "../../../constants/contacts";
 
 export default function ContactsSearchBar() {
   const { getContacts } = useFetchContacts();

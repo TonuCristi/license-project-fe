@@ -4,8 +4,8 @@ import { useFormContext } from "react-hook-form";
 import Pagination from "../../Pagination";
 import ProjectTeamListItem from "./ProjectTeamListItem";
 
-import { PER_PAGE } from "./ProjectTeams";
 import { Team } from "../../../types/team.type";
+import { PER_PAGE } from "../../../constants/teams";
 
 type Props = {
   projectId: string;
