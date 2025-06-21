@@ -16,10 +16,28 @@ import { CreateTeam } from "../../../types/team.type";
 import { teamFormSchema } from "../../../schemas/teamForm.schema";
 import { useCreateTeam } from "../hooks/useCreateTeam";
 
+const inputs = [
+  {
+    label: "Name",
+    id: "name",
+    name: "name",
+    placeholder: "Name...",
+    type: "text",
+  },
+  {
+    label: "Leader email",
+    id: "leaderEmail",
+    name: "leaderEmail",
+    placeholder: "Leader email...",
+    type: "text",
+  },
+] as const;
+
 export default function CreateTeamForm() {
   const methods = useForm<CreateTeam>({
     defaultValues: {
       name: "",
+      leaderEmail: "",
     },
     resolver: zodResolver(teamFormSchema),
   });
@@ -44,13 +62,20 @@ export default function CreateTeamForm() {
       >
         <h2 className="mb-1 text-lg font-medium">Create team</h2>
         <div className="mb-3 flex flex-col gap-3">
-          <InputContainer>
-            <Label htmlFor="name">Team name</Label>
-            <Input id="name" name="name" placeholder="Team name" />
-            {errors.name && (
-              <Message variant="error">{errors.name.message}</Message>
-            )}
-          </InputContainer>
+          {inputs.map(({ label, id, name, placeholder, type }) => (
+            <InputContainer key={id}>
+              <Label htmlFor={id}>{label}</Label>
+              <Input
+                id={id}
+                name={name}
+                type={type}
+                placeholder={placeholder}
+              />
+              {errors[name] && (
+                <Message variant="error">{errors[name].message}</Message>
+              )}
+            </InputContainer>
+          ))}
         </div>
         <Button disabled={isLoading}>Create</Button>
       </form>

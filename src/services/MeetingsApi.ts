@@ -5,6 +5,7 @@ import {
   EditMeeting,
   MeetingResponse,
 } from "../types/meeting.type";
+import { MeetingPresenceResponse } from "../types/meetingAttendance.type";
 
 const URL = "/api/meetings";
 
@@ -32,6 +33,16 @@ export const MeetingsApi = {
         ({ data }: AxiosResponse<{ meetings: MeetingResponse[] }>) =>
           data.meetings,
       );
+  },
+  getMeeting(meetingId: string) {
+    return api.get(`${URL}/retrieve-meeting/${meetingId}`).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        meeting: MeetingResponse;
+        attendance: MeetingPresenceResponse[];
+      }>) => data,
+    );
   },
   createTeamMeeting(teamId: string, meeting: CreateMeeting) {
     return api

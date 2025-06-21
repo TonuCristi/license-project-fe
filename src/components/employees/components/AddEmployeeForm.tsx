@@ -27,17 +27,24 @@ const inputs = [
     type: "text",
   },
   {
-    label: "Phone number",
-    id: "phoneNumber",
-    name: "phoneNumber",
-    placeholder: "Phone number...",
-    type: "text",
-  },
-  {
     label: "Email",
     id: "email",
     name: "email",
     placeholder: "Email...",
+    type: "text",
+  },
+  {
+    label: "Position",
+    id: "position",
+    name: "position",
+    placeholder: "Position...",
+    type: "text",
+  },
+  {
+    label: "Phone number",
+    id: "phoneNumber",
+    name: "phoneNumber",
+    placeholder: "Phone number...",
     type: "text",
   },
   {
@@ -54,6 +61,7 @@ export default function AddEmployeeForm() {
     defaultValues: {
       fullName: "",
       email: "",
+      position: "",
       phoneNumber: "",
       hireDate: "",
     },

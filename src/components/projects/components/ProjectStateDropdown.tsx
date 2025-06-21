@@ -52,7 +52,7 @@ export default function ProjectStateDropdown({
     <div ref={containerRef} className="relative">
       <Button
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`hover:bg-primary flex w-32 items-center gap-2 rounded-xl p-2 font-medium text-white ${getStatusColor(state)}`}
+        className={`flex w-32 items-center gap-2 rounded-xl p-2 font-medium text-white hover:bg-[${getStatusColor(state)}] ${getStatusColor(state)}`}
       >
         <p className="text-nowrap">{projectState[state]}</p>
         <HiMiniChevronDown

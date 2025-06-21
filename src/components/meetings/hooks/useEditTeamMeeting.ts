@@ -39,7 +39,6 @@ export function useEditMeeting() {
     getEditMeeting(meetingId, newEditedMeeting)
       .then((res) => {
         const editedMeeting = mapMeeting(res.editedMeeting);
-        console.log(editedMeeting);
 
         const editedMeetingYear = new Date(
           editedMeeting.startTime,

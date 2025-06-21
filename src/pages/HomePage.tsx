@@ -41,7 +41,7 @@ export default function HomePage() {
         <main className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-5 overflow-hidden overflow-y-auto border-x-2 p-2 pr-2 sm:p-4 lg:w-5xl">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:grid-cols-4">
             <PageTitle>Appointments</PageTitle>
-            {(!!room || user?.role !== "assistant") && (
+            {(!!room || user?.role === "chief") && (
               <>
                 <div className="w-full md:col-start-3">
                   <Select
@@ -62,7 +62,7 @@ export default function HomePage() {
               You should be part of a room to access appointments!
             </p>
           )}
-          {(!!room || user?.role !== "assistant") &&
+          {(!!room || user?.role === "chief") &&
             (watch("state") ? (
               <div className="flex flex-col gap-3">
                 <AppointmentsDateFilters />

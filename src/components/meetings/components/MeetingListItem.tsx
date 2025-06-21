@@ -5,6 +5,8 @@ import DeleteMeetingButton from "./DeleteMeetingButton";
 import { formatDate } from "../../../utlis/formatDate";
 import { Meeting } from "../../../types/meeting.type";
 import { useFormContext } from "react-hook-form";
+import { Link } from "react-router";
+import Button from "../../Button";
 
 type Props = {
   meeting: Meeting;
@@ -42,6 +44,9 @@ export default function MeetingListItem({ meeting }: Props) {
           {watch("state") === "finished" || watch("state") === "progress" || (
             <EditMeetingButton meeting={meeting} />
           )}
+          <Link to={`/meetings/${meeting.id}`}>
+            <Button className="text-nowrap">View meeting</Button>
+          </Link>
         </div>
 
         {note.length && (

@@ -47,6 +47,9 @@ export default function EmployeeListItem({
           <span className="font-medium">Email:</span> {employee.email}
         </p>
         <p>
+          <span className="font-medium">Position:</span> {employee.position}
+        </p>
+        <p>
           <span className="font-medium">Hire date:</span> {hireDate}
         </p>
         <p>

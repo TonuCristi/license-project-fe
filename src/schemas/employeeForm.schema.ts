@@ -5,6 +5,12 @@ import { emailSchema } from "./email.schema";
 export const employeeFormSchema = z.object({
   fullName: usernameSchema,
   email: emailSchema,
+  position: z
+    .string()
+    .min(1, { message: "This field should't be empty!" })
+    .max(30, {
+      message: "The position name should't be longer than 30 characters!",
+    }),
   hireDate: z.string().refine(
     (val) => {
       return val ? val + ":00Z" : false;

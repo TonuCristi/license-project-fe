@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Toaster } from "react-hot-toast";
 import "./index.css";
 import App from "./App.tsx";
 
@@ -14,9 +15,9 @@ import TeamPage from "./pages/TeamPage.tsx";
 import ProjectsPage from "./pages/ProjectsPage.tsx";
 import ProjectPage from "./pages/ProjectPage.tsx";
 import MeetingsPage from "./pages/MeetingsPage.tsx";
+import MeetingPage from "./pages/MeetingPage.tsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router";
-import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "/projects", element: <ProjectsPage /> },
       { path: "/projects/:projectId", element: <ProjectPage /> },
       { path: "/meetings", element: <MeetingsPage /> },
+      { path: "/meetings/:meetingId", element: <MeetingPage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
     ],

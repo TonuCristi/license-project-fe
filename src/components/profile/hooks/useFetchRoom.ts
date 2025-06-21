@@ -19,7 +19,9 @@ export function useFetchRoom() {
         setAssistant(assistant);
         setChief(chief);
       })
-      .catch((error) => console.log(error.response.data.message))
+      .catch((error) => {
+        console.log(error.response.data.message);
+      })
       .finally(() => setIsLoading(false));
   }, [setRoom, setAssistant, setChief, setIsLoading]);
 

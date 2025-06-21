@@ -10,6 +10,7 @@ export function useTeam() {
   const [team, setTeam] = useState<TeamWithoutProjectTeamId>({
     id: "",
     name: "",
+    leaderEmail: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isEditLoading, setIsEditLoading] = useState<boolean>(false);

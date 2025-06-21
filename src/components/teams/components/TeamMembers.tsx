@@ -35,26 +35,23 @@ export default function TeamMembers({ teamId }: Props) {
 
   return (
     <FormProvider {...methods}>
-      <div className="flex flex-col gap-2">
-        <h2 className="text-md font-medium">Team members</h2>
-        <TeamMembersSearchBar
-          teamId={teamId}
-          getMembers={getMembers}
-          setMembers={setMembers}
-          setOffset={setOffset}
-        />
-        <TeamMembersList
-          teamId={teamId}
-          deleteMember={deleteMember}
-          getMembers={getMembers}
-          members={members}
-          pages={pages}
-          offset={offset}
-          isMembersLoading={isMembersLoading}
-          isDeleteLoading={isDeleteLoading}
-          setOffset={setOffset}
-        />
-      </div>
+      <TeamMembersSearchBar
+        teamId={teamId}
+        getMembers={getMembers}
+        setMembers={setMembers}
+        setOffset={setOffset}
+      />
+      <TeamMembersList
+        teamId={teamId}
+        deleteMember={deleteMember}
+        getMembers={getMembers}
+        members={members}
+        pages={pages}
+        offset={offset}
+        isMembersLoading={isMembersLoading}
+        isDeleteLoading={isDeleteLoading}
+        setOffset={setOffset}
+      />
     </FormProvider>
   );
 }

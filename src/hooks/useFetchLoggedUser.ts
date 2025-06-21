@@ -13,6 +13,7 @@ export function useFetchLoggedUser() {
         const user = mapUser(res);
         setUser(user);
       })
+      .catch((error) => console.log(error.response.data.message))
       .finally(() => setIsLoading(false));
   }, [setUser, setIsLoading]);
 

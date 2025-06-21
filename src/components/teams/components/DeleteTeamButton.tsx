@@ -27,7 +27,7 @@ export default function DeleteTeamButton({
           onReject={() => setIsOpen(false)}
           isLoading={isDeleteLoading}
         >
-          Are you sure about deleting this employee?
+          Are you sure about deleting this team?
         </ConfirmationModal>
       )}
     </>

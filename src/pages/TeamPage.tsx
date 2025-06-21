@@ -18,7 +18,7 @@ export default function TeamPage() {
     isDeleteLoading,
   } = useTeam();
 
-  const { name } = team;
+  const { name, leaderEmail } = team;
 
   if (isLoading) {
     return (
@@ -30,7 +30,7 @@ export default function TeamPage() {
 
   return (
     <main className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-2 overflow-x-hidden overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">
-      <div className="xs:flex-row xs:items-center mb-4 flex w-full flex-col justify-between gap-2">
+      <div className="xs:flex-row xs:items-center flex w-full flex-col justify-between gap-2">
         <PageTitle>{`${name} team`}</PageTitle>
         <div className="xxs:grid-cols-[auto_auto_auto] grid grid-cols-1 gap-2">
           <DeleteTeamButton
@@ -46,8 +46,20 @@ export default function TeamPage() {
           <CreateTeamMeetingButton teamId={team.id} />
         </div>
       </div>
-      <AddToProjectDropdown teamId={team.id} />
-      <TeamMembers teamId={team.id} />
+
+      <p className="mb-2 break-all">
+        <span className="font-medium">Leader:</span> {leaderEmail}
+      </p>
+
+      <div className="flex flex-col gap-2">
+        <h2 className="text-md font-medium">Add to project</h2>
+        <AddToProjectDropdown teamId={team.id} />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <h2 className="text-md font-medium">Team members</h2>
+        <TeamMembers teamId={team.id} />
+      </div>
     </main>
   );
 }
