@@ -31,6 +31,7 @@ const inputs = [
 
 export default function ChangePasswordForm() {
   const methods = useForm<ChangePassword>({
+    defaultValues: { newPassword: "", newRepeatPassword: "", oldPassword: "" },
     resolver: zodResolver(changePasswordSchema),
   });
   const { changePasword, isLoading } = useChangePassword();

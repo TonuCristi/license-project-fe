@@ -44,6 +44,13 @@ export const MeetingsApi = {
       }>) => data,
     );
   },
+  getAttendanceExcel(meetingId: string) {
+    return api
+      .get(`${URL}/retrieve-attendance-excel/${meetingId}`, {
+        responseType: "blob",
+      })
+      .then(({ data }) => data);
+  },
   createTeamMeeting(teamId: string, meeting: CreateMeeting) {
     return api
       .post(`${URL}/create-team-meeting/${teamId}`, meeting)

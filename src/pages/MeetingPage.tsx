@@ -5,7 +5,13 @@ import Attendance from "../components/meetings/components/Attendance";
 import { useMeeting } from "../components/meetings/hooks/useMeeting";
 
 export default function MeetingPage() {
-  const { meeting, attendance, isLoading } = useMeeting();
+  const {
+    meeting,
+    attendance,
+    attendendanceExcelURL,
+    isLoading,
+    isAttendendanceExcelURLLoading,
+  } = useMeeting();
 
   const { note, teamName, projectName } = meeting;
 
@@ -27,7 +33,7 @@ export default function MeetingPage() {
     0,
   );
 
-  if (isLoading) {
+  if (isLoading || isAttendendanceExcelURLLoading) {
     return (
       <main className="border-primary m-auto flex h-screen w-full flex-col items-center justify-center gap-2 border-x-2 p-2 sm:p-4 lg:w-5xl">
         <Loader />
@@ -54,9 +60,18 @@ export default function MeetingPage() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-md font-medium">
-          Attendance {`${presenceCount}/${attendance.length}`}
-        </h2>
+        <div className="xs:flex-row xs:items-center flex flex-col justify-between gap-2">
+          <h2 className="text-md font-medium">
+            Attendance {`${presenceCount}/${attendance.length}`}
+          </h2>
+          <a
+            href={attendendanceExcelURL}
+            download="attendance.xlsx"
+            className="font-medium"
+          >
+            Download attendance
+          </a>
+        </div>
         <Attendance attendance={attendance} />
       </div>
     </main>

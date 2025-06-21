@@ -1,9 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "react-hot-toast";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import "./index.css";
-import App from "./App.tsx";
 
+import App from "./App.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import AuthProvider from "./contexts/AuthContext.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
@@ -16,8 +17,9 @@ import ProjectsPage from "./pages/ProjectsPage.tsx";
 import ProjectPage from "./pages/ProjectPage.tsx";
 import MeetingsPage from "./pages/MeetingsPage.tsx";
 import MeetingPage from "./pages/MeetingPage.tsx";
-
-import { createBrowserRouter, RouterProvider } from "react-router";
+import CheckPresencePage from "./pages/CheckPresencePage.tsx";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage.tsx";
+import ResetPasswordPage from "./pages/ResetPasswordPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,18 @@ const router = createBrowserRouter([
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
     ],
+  },
+  {
+    path: "/check-presence",
+    element: <CheckPresencePage />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPasswordPage />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPasswordPage />,
   },
 ]);
 

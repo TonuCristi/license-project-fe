@@ -16,8 +16,28 @@ export function useMeeting() {
     note: "",
   });
   const [attendance, setAttendance] = useState<MeetingPresence[]>([]);
+  const [attendendanceExcelURL, setAttendendanceExcelURL] =
+    useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isAttendendanceExcelURLLoading, setAttendendanceExcelURLIsLoading] =
+    useState<boolean>(true);
   const { meetingId } = useParams();
+
+  useEffect(() => {
+    if (meetingId) {
+      MeetingsApi.getAttendanceExcel(meetingId)
+        .then((res) => {
+          const blob = new Blob([res], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          });
+          const url = window.URL.createObjectURL(blob);
+
+          setAttendendanceExcelURL(url);
+        })
+        .catch((error) => console.log(error.response.data.message))
+        .finally(() => setAttendendanceExcelURLIsLoading(false));
+    }
+  }, [meetingId]);
 
   useEffect(() => {
     if (meetingId) {
@@ -36,5 +56,11 @@ export function useMeeting() {
     }
   }, [meetingId]);
 
-  return { meeting, attendance, isLoading };
+  return {
+    meeting,
+    attendance,
+    attendendanceExcelURL,
+    isLoading,
+    isAttendendanceExcelURLLoading,
+  };
 }

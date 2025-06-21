@@ -10,7 +10,7 @@ import { useSSE } from "./notifications/hooks/useSSE";
 import { useFetchNotificationsCount } from "./notifications/hooks/useFetchNotificationsCount";
 
 export default function AppLayout() {
-  const { isLoading: isLoggedUserLoading } = useFetchLoggedUser();
+  const { user, isLoading: isLoggedUserLoading } = useFetchLoggedUser();
   const { isLoading: isRoomLoading } = useFetchRoom();
   const { isLoading: isNotificationsCountLoading } =
     useFetchNotificationsCount();
@@ -18,19 +18,30 @@ export default function AppLayout() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const pathnames =
+  const authPathnames =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
-    location.pathname === "/forgot-password";
+    location.pathname === "/forgot-password" ||
+    location.pathname === "/reset-password";
+
+  const assistantRestrictedPathnames =
+    location.pathname.includes("employees") ||
+    location.pathname.includes("teams") ||
+    location.pathname.includes("projects") ||
+    location.pathname.includes("meetings");
 
   useEffect(() => {
-    if (pathnames) {
+    if (
+      authPathnames ||
+      (user?.role === "assistant" && assistantRestrictedPathnames)
+    ) {
       navigate("/");
     }
-  }, [navigate, pathnames]);
+  }, [navigate, authPathnames, user?.role, assistantRestrictedPathnames]);
 
   if (
-    pathnames ||
+    authPathnames ||
+    (user?.role === "assistant" && assistantRestrictedPathnames) ||
     isLoggedUserLoading ||
     isRoomLoading ||
     isNotificationsCountLoading

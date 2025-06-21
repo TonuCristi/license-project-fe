@@ -39,7 +39,7 @@ export default function MeetingListItem({ meeting }: Props) {
         </p>
       </div>
       <div className="xs:items-center xs:flex-col flex flex-row justify-between gap-2">
-        <div className="flex items-center gap-2">
+        <div className="xxs:flex-nowrap flex flex-wrap items-center gap-2">
           <DeleteMeetingButton meetingId={id} />
           {watch("state") === "finished" || watch("state") === "progress" || (
             <EditMeetingButton meeting={meeting} />

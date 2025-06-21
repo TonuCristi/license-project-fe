@@ -33,7 +33,7 @@ export default function LoginForm() {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-        <InputContainer key="email">
+        <InputContainer>
           <Label htmlFor="email">Email</Label>
           <Input id="email" name="email" placeholder="Email..." />
           {errors.email && (

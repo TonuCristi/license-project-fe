@@ -5,7 +5,7 @@ import { UserContext } from "../contexts/UserContext";
 import { mapUser } from "../utlis/mapUser";
 
 export function useFetchLoggedUser() {
-  const { isLoading, setUser, setIsLoading } = useContext(UserContext);
+  const { user, isLoading, setUser, setIsLoading } = useContext(UserContext);
 
   useEffect(() => {
     UserApi.getLoggedUser()
@@ -17,5 +17,5 @@ export function useFetchLoggedUser() {
       .finally(() => setIsLoading(false));
   }, [setUser, setIsLoading]);
 
-  return { isLoading };
+  return { user, isLoading };
 }
