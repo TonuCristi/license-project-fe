@@ -10,6 +10,23 @@ import Message from "../../Message";
 import { EditTeam, TeamWithoutProjectTeamId } from "../../../types/team.type";
 import { teamFormSchema } from "../../../schemas/teamForm.schema";
 
+const inputs = [
+  {
+    label: "Name",
+    id: "name",
+    name: "name",
+    placeholder: "Name...",
+    type: "text",
+  },
+  {
+    label: "Leader email",
+    id: "leaderEmail",
+    name: "leaderEmail",
+    placeholder: "Leader email...",
+    type: "text",
+  },
+] as const;
+
 type Props = {
   team: TeamWithoutProjectTeamId;
   editTeam: (teamId: string, newEditedTeam: EditTeam) => void;
@@ -39,13 +56,20 @@ export default function EditTeamForm({ team, editTeam, isEditLoading }: Props) {
       >
         <h2 className="mb-1 text-lg font-medium">Edit employee</h2>
         <div className="mb-3 flex flex-col gap-3">
-          <InputContainer>
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" name="name" type="text" placeholder="Name" />
-            {errors.name && (
-              <Message variant="error">{errors.name.message}</Message>
-            )}
-          </InputContainer>
+          {inputs.map(({ label, id, name, placeholder, type }) => (
+            <InputContainer key={id}>
+              <Label htmlFor={id}>{label}</Label>
+              <Input
+                id={id}
+                name={name}
+                type={type}
+                placeholder={placeholder}
+              />
+              {errors[name] && (
+                <Message variant="error">{errors[name].message}</Message>
+              )}
+            </InputContainer>
+          ))}
         </div>
         <Button disabled={isEditLoading}>Save</Button>
       </form>

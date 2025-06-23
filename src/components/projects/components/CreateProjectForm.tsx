@@ -104,7 +104,7 @@ export default function CreateProjectForm() {
             )}
           </InputContainer>
         </div>
-        <Button disabled={isLoading || isEmployeesLoading}>Add</Button>
+        <Button disabled={isLoading || isEmployeesLoading}>Create</Button>
       </form>
     </FormProvider>
   );

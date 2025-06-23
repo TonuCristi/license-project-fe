@@ -4,11 +4,11 @@ import toast from "react-hot-toast";
 
 import { HiMiniChevronDown } from "react-icons/hi2";
 import EmployeeTeamList from "./EmployeeTeamList";
+import Button from "../../Button";
 
 import { useClickOutside } from "../../../hooks/useClickOutside";
 import { useAddToTeam } from "../hooks/useAddToTeam";
 import { EmployeesContext } from "../../../contexts/EmployeesContext";
-import Button from "../../Button";
 
 type Props = {
   employeesList: string[];
