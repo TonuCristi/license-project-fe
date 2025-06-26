@@ -22,7 +22,7 @@ export default function MeetingPage() {
     }
 
     if (projectName) {
-      return `${projectName} Project`;
+      return `${projectName} Project `;
     }
   }
 
@@ -30,6 +30,8 @@ export default function MeetingPage() {
     (acc, presence) => acc + (presence.attended ? 1 : 0),
     0,
   );
+
+  const downloadName = `${getMeetingName()} Meeting Attendance.xlsx`;
 
   if (isLoading || isAttendendanceExcelURLLoading) {
     return (
@@ -66,7 +68,7 @@ export default function MeetingPage() {
           </h2>
           <a
             href={attendendanceExcelURL}
-            download="attendance.xlsx"
+            download={downloadName}
             className="font-medium"
           >
             Download attendance
