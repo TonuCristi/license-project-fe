@@ -29,7 +29,7 @@ export default function DeleteProjectTeamButton({
           onReject={() => setIsOpen(false)}
           isLoading={isDeleteLoading}
         >
-          Are you sure about deleting this member?
+          Are you sure about deleting this team?
         </ConfirmationModal>
       )}
     </>

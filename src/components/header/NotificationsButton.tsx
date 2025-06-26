@@ -15,7 +15,6 @@ export default function NotificationsButton() {
 
   useEffect(() => {
     if (notifications.length && !isOpen) {
-      console.log(notifications.length, !isOpen);
       setNotifications([]);
       setOffset(0);
     }

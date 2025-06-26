@@ -22,7 +22,7 @@ export default function MeetingPage() {
     }
 
     if (projectName) {
-      return `${projectName} Project `;
+      return `${projectName} Project`;
     }
   }
 
@@ -31,7 +31,7 @@ export default function MeetingPage() {
     0,
   );
 
-  const downloadName = `${getMeetingName()} Meeting Attendance.xlsx`;
+  const downloadName = `${getMeetingName()}Meeting Attendance.xlsx`;
 
   if (isLoading || isAttendendanceExcelURLLoading) {
     return (

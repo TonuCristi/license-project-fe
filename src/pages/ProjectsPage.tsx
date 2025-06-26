@@ -46,9 +46,7 @@ export default function ProjectsPage() {
           </div>
           {watch("state") ? (
             <div className="flex flex-col gap-3">
-              <div className="xxs:grid-cols-[80fr_20fr] grid grid-cols-1 items-center gap-2">
-                <ProjectsSearchBar />
-              </div>
+              <ProjectsSearchBar />
               <ProjectsList />
             </div>
           ) : (

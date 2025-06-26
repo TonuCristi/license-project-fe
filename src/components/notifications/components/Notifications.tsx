@@ -25,7 +25,6 @@ export default function Notifications() {
 
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && !isLoading) {
-        console.log(entries[0].isIntersecting && !isLoading);
         if (controllerRef.current) {
           controllerRef.current.abort();
         }
