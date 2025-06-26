@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Button from "../Button";
 import Notifications from "../notifications/components/Notifications";
@@ -10,7 +10,16 @@ import { NotificationsContext } from "../../contexts/NotificationsContext";
 
 export default function NotificationsButton() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { notificationsCount } = useContext(NotificationsContext);
+  const { notificationsCount, notifications, setNotifications, setOffset } =
+    useContext(NotificationsContext);
+
+  useEffect(() => {
+    if (notifications.length && !isOpen) {
+      console.log(notifications.length, !isOpen);
+      setNotifications([]);
+      setOffset(0);
+    }
+  }, [isOpen, notifications, setNotifications, setOffset]);
 
   return (
     <div className="relative">

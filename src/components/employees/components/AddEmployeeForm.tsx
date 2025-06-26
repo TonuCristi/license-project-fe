@@ -85,7 +85,7 @@ export default function AddEmployeeForm() {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-primary xxs:w-64 absolute top-full right-0 z-50 mt-3 flex w-52 flex-col rounded-xl border-2 bg-white p-3"
+        className="border-primary xxs:w-64 absolute top-full right-0 z-50 mt-3 flex w-full flex-col rounded-xl border-2 bg-white p-3"
       >
         <h2 className="mb-1 text-lg font-medium">Add employee</h2>
         <div className="mb-3 flex flex-col gap-3">

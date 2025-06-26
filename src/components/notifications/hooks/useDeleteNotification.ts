@@ -4,13 +4,15 @@ import { NotificationsContext } from "../../../contexts/NotificationsContext";
 import { NotificationsApi } from "../../../services/NotificationsApi";
 
 export function useDeleteNotification() {
-  const { setNotifications } = useContext(NotificationsContext);
+  const { setNotifications, setNotificationsCount } =
+    useContext(NotificationsContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function deleteNotification(notificationId: string) {
     setIsLoading(true);
     NotificationsApi.deleteNotification(notificationId)
       .then(() => {
+        setNotificationsCount((prev) => prev - 1);
         setNotifications((prev) => [
           ...prev.filter((notification) => notification.id !== notificationId),
         ]);

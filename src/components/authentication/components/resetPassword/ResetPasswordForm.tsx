@@ -5,9 +5,9 @@ import { Link, useSearchParams } from "react-router";
 import HidePasswordInput from "../../../input/HidePasswordInput";
 import Button from "../../../Button";
 
-import { ChangePassword } from "../../../../types/user.type";
+import { ResetPassword } from "../../../../types/user.type";
 import { useResetPassword } from "../../hooks/useResetPassword";
-import { changePasswordSchema } from "../../../../schemas/changePasword.schema";
+import { resetPasswordSchema } from "../../../../schemas/resetPasword.schema";
 
 const inputs = [
   {
@@ -22,18 +22,12 @@ const inputs = [
     name: "newRepeatPassword",
     placeholder: "Repeat new password...",
   },
-  {
-    label: "Old password",
-    id: "oldPassword",
-    name: "oldPassword",
-    placeholder: "Old password...",
-  },
 ] as const;
 
 export default function ResetPasswordForm() {
-  const methods = useForm<ChangePassword>({
-    defaultValues: { newPassword: "", newRepeatPassword: "", oldPassword: "" },
-    resolver: zodResolver(changePasswordSchema),
+  const methods = useForm<ResetPassword>({
+    defaultValues: { newPassword: "", newRepeatPassword: "" },
+    resolver: zodResolver(resetPasswordSchema),
   });
   const [searchParams] = useSearchParams();
 
@@ -41,7 +35,7 @@ export default function ResetPasswordForm() {
 
   const { resetPassword, isLoading } = useResetPassword();
 
-  const onSubmit: SubmitHandler<ChangePassword> = (data) => {
+  const onSubmit: SubmitHandler<ResetPassword> = (data) => {
     if (token) {
       resetPassword(token, data, () => methods.reset());
     }

@@ -8,7 +8,7 @@ import { useFetchNotifications } from "../hooks/useFetchNotifications";
 const PER_PAGE = 10;
 
 export default function Notifications() {
-  const { notifications, offset, isLoading, setOffset, setIsLoading } =
+  const { notifications, offset, isLoading, setOffset } =
     useContext(NotificationsContext);
   const { getNotifications } = useFetchNotifications();
 
@@ -23,9 +23,9 @@ export default function Notifications() {
       threshold: 0.1,
     };
 
-    setIsLoading(false);
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && !isLoading) {
+        console.log(entries[0].isIntersecting && !isLoading);
         if (controllerRef.current) {
           controllerRef.current.abort();
         }
@@ -40,8 +40,10 @@ export default function Notifications() {
       observer.observe(itemRef.current);
     }
 
-    return () => observer.disconnect();
-  }, [notifications.length]);
+    return () => {
+      observer.disconnect();
+    };
+  }, [notifications.length, setOffset]);
 
   return (
     <div className="border-primary flex h-full w-full flex-col gap-2 rounded-lg border-2 bg-blue-50 p-3">

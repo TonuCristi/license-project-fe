@@ -2,14 +2,14 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import { AuthApi } from "../../../services/AuthApi";
-import { ChangePassword } from "../../../types/user.type";
+import { ResetPassword } from "../../../types/user.type";
 
 export function useResetPassword() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function resetPassword(
     token: string,
-    passwords: ChangePassword,
+    passwords: ResetPassword,
     cb: () => void,
   ) {
     setIsLoading(true);

@@ -32,19 +32,22 @@ export default function ProjectsPage() {
     <ProjectsProvider>
       <FormProvider {...methods}>
         <main className="border-primary scrollbar xs:gap-5 m-auto flex h-full w-full flex-col gap-2 overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">
-          <div className="xxs:flex-row xs:items-center flex flex-col justify-between gap-4">
+          <div className="xs:flex-row xs:items-center flex flex-col justify-between gap-2">
             <PageTitle>Projects</PageTitle>
-            <Select
-              name="state"
-              placeholder="Select the state"
-              options={stateOptions}
-            />
+            <div className="xs:ml-auto">
+              <Select
+                name="state"
+                placeholder="Select the state"
+                options={stateOptions}
+                className="xs:w-auto w-full"
+              />
+            </div>
+            <CreateProjectButton />
           </div>
           {watch("state") ? (
             <div className="flex flex-col gap-3">
               <div className="xxs:grid-cols-[80fr_20fr] grid grid-cols-1 items-center gap-2">
                 <ProjectsSearchBar />
-                <CreateProjectButton />
               </div>
               <ProjectsList />
             </div>

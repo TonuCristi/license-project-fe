@@ -6,6 +6,7 @@ import { ContactsContext } from "../../../contexts/ContactsContext";
 import { useFetchContacts } from "../hooks/useFetchContacts";
 import { useFormContext } from "react-hook-form";
 import { PER_PAGE } from "../../../constants/contacts";
+import CreateContactButton from "./CreateContactButton";
 
 export default function ContactsList() {
   const { contacts, offset, isLoading, setOffset } =
@@ -44,14 +45,14 @@ export default function ContactsList() {
   }, [contacts.length, watch, setOffset, getContacts]);
 
   return (
-    <ul
-      ref={listRef}
-      className="scrollbar flex h-full flex-col gap-2 overflow-y-auto pr-2"
-    >
-      {contacts.map((contact, i) => (
-        <ContactListItem key={contact.id} index={i} contact={contact} />
-      ))}
-      <li ref={itemRef} className="p-0.5"></li>
-    </ul>
+    <div className="scrollbar flex h-full flex-col gap-2 overflow-y-auto pr-2">
+      <CreateContactButton />
+      <ul ref={listRef} className="flex flex-col gap-2">
+        {contacts.map((contact, i) => (
+          <ContactListItem key={contact.id} index={i} contact={contact} />
+        ))}
+        <li ref={itemRef} className="p-0.5"></li>
+      </ul>
+    </div>
   );
 }

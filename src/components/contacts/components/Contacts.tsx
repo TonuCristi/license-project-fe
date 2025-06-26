@@ -3,7 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import ContactsList from "./ContactsList";
 import ContactsSearchBar from "./ContactsSearchBar";
-import CreateContactButton from "./CreateContactButton";
 
 import { SearchBar } from "../../../types/searchBar.type";
 import { searchBarSchema } from "../../../schemas/searchBar.schema";
@@ -24,7 +23,6 @@ export default function Contacts() {
           <h2 className="text-lg font-medium">Contacts</h2>
           <div className="flex w-full items-center gap-2">
             <ContactsSearchBar />
-            <CreateContactButton />
           </div>
           <ContactsList />
         </div>

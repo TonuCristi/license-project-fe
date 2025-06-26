@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 
-import { HiMiniPlusSmall } from "react-icons/hi2";
 import Button from "../../Button";
 import CreateContactForm from "./CreateContactForm";
 
@@ -14,11 +13,11 @@ export default function CreateContactButton() {
   return (
     <div ref={containerRef} className="relative">
       <Button
-        variant="empty"
+        size="full"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center justify-center"
+        className="text-nowrap"
       >
-        <HiMiniPlusSmall className="text-primary stroke-1 text-2xl" />
+        Add contact
       </Button>
 
       {isOpen && <CreateContactForm />}

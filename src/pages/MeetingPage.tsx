@@ -3,6 +3,7 @@ import PageTitle from "../components/PageTitle";
 import Attendance from "../components/meetings/components/Attendance";
 
 import { useMeeting } from "../components/meetings/hooks/useMeeting";
+import { formatDate } from "../utlis/formatDate";
 
 export default function MeetingPage() {
   const {
@@ -25,9 +26,6 @@ export default function MeetingPage() {
     }
   }
 
-  const startTime = new Date(meeting.startTime).toLocaleString();
-  const endTime = new Date(meeting.endTime).toLocaleString();
-
   const presenceCount = attendance.reduce(
     (acc, presence) => acc + (presence.attended ? 1 : 0),
     0,
@@ -48,10 +46,12 @@ export default function MeetingPage() {
 
         <div className="flex flex-col gap-1 break-all">
           <p>
-            <span className="font-medium">Start time:</span> {startTime}
+            <span className="font-medium">Start time:</span>{" "}
+            {formatDate(meeting.startTime)}
           </p>
           <p>
-            <span className="font-medium">End time:</span> {endTime}
+            <span className="font-medium">End time:</span>{" "}
+            {formatDate(meeting.endTime)}
           </p>
           <p>
             <span className="font-medium">Note:</span> {note}

@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { api } from "../config/api";
-import { ChangePassword, Login, Register } from "../types/user.type";
+import { Login, Register, ResetPassword } from "../types/user.type";
 
 const URL = "/api/auth";
 
@@ -20,7 +20,7 @@ export const AuthApi = {
       .post(`${URL}/forgot-password`, { email })
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
-  resetPassword(token: string, passwords: ChangePassword) {
+  resetPassword(token: string, passwords: ResetPassword) {
     return api
       .post(`${URL}/reset-password?token=${token}`, passwords)
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);

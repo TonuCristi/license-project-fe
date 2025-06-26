@@ -10,6 +10,7 @@ import InputContainer from "../../input/InputContainer";
 import { contactFormSchema } from "../../../schemas/contactForm.schema";
 import { CreateContact } from "../../../types/contact.type";
 import { useCreateContact } from "../hooks/useCreateContact";
+import Textarea from "../../Textarea";
 
 const inputs = [
   {
@@ -23,12 +24,6 @@ const inputs = [
     id: "phoneNumber",
     name: "phoneNumber",
     placeholder: "Phone number...",
-  },
-  {
-    label: "Description",
-    id: "description",
-    name: "description",
-    placeholder: "Description...",
   },
 ] as const;
 
@@ -54,7 +49,7 @@ export default function CreateContactForm() {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-primary xxs:w-64 absolute top-full right-0 z-50 mt-3 flex w-52 flex-col rounded-xl border-2 bg-white p-3"
+        className="border-primary absolute top-full right-0 z-50 mt-3 flex w-full flex-col rounded-xl border-2 bg-white p-3"
       >
         <h2 className="mb-1 text-lg font-medium">Create contact</h2>
         <div className="mb-3 flex flex-col gap-3">
@@ -67,6 +62,19 @@ export default function CreateContactForm() {
               )}
             </InputContainer>
           ))}
+          <InputContainer>
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              id="description"
+              name="description"
+              rows={4}
+              placeholder="Description..."
+              className="scrollbar"
+            />
+            {errors.description && (
+              <Message variant="error">{errors.description.message}</Message>
+            )}
+          </InputContainer>
         </div>
         <Button disabled={isLoading}>Create</Button>
       </form>

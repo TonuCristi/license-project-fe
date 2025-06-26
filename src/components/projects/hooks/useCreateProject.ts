@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { useFormContext } from "react-hook-form";
 import axios from "axios";
 
 import { ProjectsContext } from "../../../contexts/ProjectsContext";
@@ -12,6 +13,8 @@ export function useCreateProject() {
   const { projects, offset, setProjects, setOffset } =
     useContext(ProjectsContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { getValues } = useFormContext();
 
   async function createProject(
     project: CreateProject,
@@ -28,19 +31,27 @@ export function useCreateProject() {
         PER_PAGE,
       );
 
-      const newProject = mapProject(createProjectRes.newProject);
-      const pages = getPagesRes;
+      if (getValues().state === "pending") {
+        const newProject = mapProject(createProjectRes.newProject);
+        const pages = getPagesRes;
 
-      if (projects.length === 0) {
-        setProjects([newProject]);
-      }
+        console.log(newProject);
 
-      if (pages - 1 === offset && projects.length >= 1 && projects.length < 9) {
-        setProjects((prev) => [...prev, newProject]);
-      }
+        if (projects.length === 0) {
+          setProjects([newProject]);
+        }
 
-      if (projects.length === 9) {
-        setOffset(pages - 1);
+        if (
+          pages - 1 === offset &&
+          projects.length >= 1 &&
+          projects.length < 9
+        ) {
+          setProjects((prev) => [...prev, newProject]);
+        }
+
+        if (projects.length === 9) {
+          setOffset(pages - 1);
+        }
       }
 
       toast.success(createProjectRes.message);
