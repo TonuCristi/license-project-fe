@@ -56,20 +56,18 @@ export const MeetingsApi = {
       .post(`${URL}/create-team-meeting/${teamId}`, meeting)
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
   },
-  editTeamMeeting(meetingId: string, newEditedMeeting: EditMeeting) {
-    return api
-      .put(`${URL}/edit-team-meeting/${meetingId}`, newEditedMeeting)
-      .then(
-        ({
-          data,
-        }: AxiosResponse<{
-          editedMeeting: MeetingResponse;
-          message: string;
-        }>) => data,
-      );
+  editMeeting(meetingId: string, newEditedMeeting: EditMeeting) {
+    return api.put(`${URL}/edit-meeting/${meetingId}`, newEditedMeeting).then(
+      ({
+        data,
+      }: AxiosResponse<{
+        editedMeeting: MeetingResponse;
+        message: string;
+      }>) => data,
+    );
   },
-  deleteTeamMeeting(meetingId: string) {
-    return api.delete(`${URL}/delete-team-meeting/${meetingId}`).then(
+  deleteMeeting(meetingId: string) {
+    return api.delete(`${URL}/delete-meeting/${meetingId}`).then(
       ({
         data,
       }: AxiosResponse<{
@@ -81,26 +79,5 @@ export const MeetingsApi = {
     return api
       .post(`${URL}/create-project-meeting/${projectId}`, meeting)
       .then(({ data }: AxiosResponse<{ message: string }>) => data.message);
-  },
-  editProjectMeeting(meetingId: string, newEditedMeeting: EditMeeting) {
-    return api
-      .put(`${URL}/edit-project-meeting/${meetingId}`, newEditedMeeting)
-      .then(
-        ({
-          data,
-        }: AxiosResponse<{
-          editedMeeting: MeetingResponse;
-          message: string;
-        }>) => data,
-      );
-  },
-  deleteProjectMeeting(meetingId: string) {
-    return api.delete(`${URL}/delete-project-meeting/${meetingId}`).then(
-      ({
-        data,
-      }: AxiosResponse<{
-        message: string;
-      }>) => data,
-    );
   },
 };

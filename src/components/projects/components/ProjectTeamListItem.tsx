@@ -16,17 +16,19 @@ export default function ProjectTeamListItem({
   isDeleteLoading,
 }: Props) {
   return (
-    <li className="border-primary flex items-center gap-2 rounded-xl border-2 p-2">
+    <li className="border-primary xs:flex-row xs:items-center flex flex-col gap-2 rounded-xl border-2 p-2">
       <p className="font-medium">{team.name}</p>
-      <Link to={`/teams/${team.id}`} className="ml-auto">
-        <Button>View team</Button>
-      </Link>
-      <DeleteProjectTeamButton
-        deleteProjectTeam={deleteProjectTeam}
-        projectTeamId={team.projectTeamId}
-        teamId={team.id}
-        isDeleteLoading={isDeleteLoading}
-      />
+      <div className="xs:ml-auto flex flex-wrap items-center gap-2">
+        <Link to={`/teams/${team.id}`}>
+          <Button>View team</Button>
+        </Link>
+        <DeleteProjectTeamButton
+          deleteProjectTeam={deleteProjectTeam}
+          projectTeamId={team.projectTeamId}
+          teamId={team.id}
+          isDeleteLoading={isDeleteLoading}
+        />
+      </div>
     </li>
   );
 }

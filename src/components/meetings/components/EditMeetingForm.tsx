@@ -11,7 +11,6 @@ import Select from "../../Select";
 
 import { meetingFormSchema } from "../../../schemas/meetingForm.schema";
 import { EditMeeting, Meeting } from "../../../types/meeting.type";
-import { useEditMeeting } from "../hooks/useEditTeamMeeting";
 
 const durationOptions = [
   { value: "1", text: "1" },
@@ -31,10 +30,16 @@ const durationOptions = [
 ];
 
 type Props = {
+  editMeeting: (meetingId: string, newEditedMeeting: EditMeeting) => void;
   meeting: Meeting;
+  isEditLoading: boolean;
 };
 
-export default function EditMeetingForm({ meeting }: Props) {
+export default function EditMeetingForm({
+  editMeeting,
+  meeting,
+  isEditLoading,
+}: Props) {
   const methods = useForm<EditMeeting>({
     defaultValues: {
       ...meeting,
@@ -43,7 +48,6 @@ export default function EditMeetingForm({ meeting }: Props) {
     },
     resolver: zodResolver(meetingFormSchema),
   });
-  const { editMeeting, isLoading } = useEditMeeting();
 
   const onSubmit: SubmitHandler<EditMeeting> = (data) => {
     const date = data.date + ":00Z";
@@ -102,7 +106,7 @@ export default function EditMeetingForm({ meeting }: Props) {
             </InputContainer>
           </div>
         </div>
-        <Button disabled={isLoading}>Save</Button>
+        <Button disabled={isEditLoading}>Save</Button>
       </form>
     </FormProvider>
   );

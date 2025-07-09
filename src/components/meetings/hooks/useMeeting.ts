@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import toast from "react-hot-toast";
 
-import { Meeting } from "../../../types/meeting.type";
+import { EditMeeting, Meeting } from "../../../types/meeting.type";
 import { MeetingsApi } from "../../../services/MeetingsApi";
 import { mapMeeting } from "../../../utlis/mapMeeting";
 import { MeetingPresence } from "../../../types/meetingAttendance.type";
@@ -19,9 +20,38 @@ export function useMeeting() {
   const [attendendanceExcelURL, setAttendendanceExcelURL] =
     useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isEditLoading, setIsEditLoading] = useState<boolean>(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
   const [isAttendendanceExcelURLLoading, setAttendendanceExcelURLIsLoading] =
     useState<boolean>(true);
   const { meetingId } = useParams();
+  const navigate = useNavigate();
+
+  function editMeeting(meetingId: string, newEditedMeeting: EditMeeting) {
+    setIsEditLoading(true);
+    MeetingsApi.editMeeting(meetingId, newEditedMeeting)
+      .then((res) => {
+        const editedMeeting = mapMeeting(res.editedMeeting);
+
+        setMeeting(editedMeeting);
+
+        toast.success(res.message);
+      })
+      .catch((error) => toast.error(error.response.data.message))
+      .finally(() => setIsEditLoading(false));
+  }
+
+  function deleteMeeting(meetingId: string) {
+    setIsDeleteLoading(true);
+    MeetingsApi.deleteMeeting(meetingId)
+      .then((res) => {
+        navigate("/meetings");
+
+        toast.success(res.message);
+      })
+      .catch((error) => toast.error(error.response.data.message))
+      .finally(() => setIsDeleteLoading(false));
+  }
 
   useEffect(() => {
     if (meetingId) {
@@ -57,10 +87,14 @@ export function useMeeting() {
   }, [meetingId]);
 
   return {
+    editMeeting,
+    deleteMeeting,
     meeting,
     attendance,
     attendendanceExcelURL,
     isLoading,
+    isEditLoading,
+    isDeleteLoading,
     isAttendendanceExcelURLLoading,
   };
 }

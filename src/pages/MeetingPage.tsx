@@ -1,20 +1,26 @@
 import Loader from "../components/Loader";
 import PageTitle from "../components/PageTitle";
 import Attendance from "../components/meetings/components/Attendance";
+import DeleteMeetingButton from "../components/meetings/components/DeleteMeetingButton";
+import EditMeetingButton from "../components/meetings/components/EditMeetingButton";
 
 import { useMeeting } from "../components/meetings/hooks/useMeeting";
 import { formatDate } from "../utlis/formatDate";
 
 export default function MeetingPage() {
   const {
+    editMeeting,
+    deleteMeeting,
     meeting,
     attendance,
     attendendanceExcelURL,
     isLoading,
+    isEditLoading,
+    isDeleteLoading,
     isAttendendanceExcelURLLoading,
   } = useMeeting();
 
-  const { note, teamName, projectName } = meeting;
+  const { id, note, teamName, projectName } = meeting;
 
   function getMeetingName() {
     if (teamName) {
@@ -31,7 +37,7 @@ export default function MeetingPage() {
     0,
   );
 
-  const downloadName = `${getMeetingName()}Meeting Attendance.xlsx`;
+  const downloadName = `${getMeetingName()} Meeting Attendance.xlsx`;
 
   if (isLoading || isAttendendanceExcelURLLoading) {
     return (
@@ -44,7 +50,19 @@ export default function MeetingPage() {
   return (
     <main className="border-primary scrollbar m-auto flex h-full w-full flex-col gap-6 overflow-x-hidden overflow-y-auto border-x-2 p-2 sm:p-4 lg:w-5xl">
       <div className="flex flex-col gap-2">
-        <PageTitle>{`${getMeetingName()} Meeting`}</PageTitle>
+        <div className="xs:grid-cols-[50fr_25fr_25fr] grid grid-cols-1 items-center gap-2">
+          <PageTitle>{`${getMeetingName()} Meeting`}</PageTitle>
+          <DeleteMeetingButton
+            meetingId={id}
+            deleteMeeting={deleteMeeting}
+            isDeleteLoading={isDeleteLoading}
+          />
+          <EditMeetingButton
+            meeting={meeting}
+            editMeeting={editMeeting}
+            isEditLoading={isEditLoading}
+          />
+        </div>
 
         <div className="flex flex-col gap-1 break-all">
           <p>
