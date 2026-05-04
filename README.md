@@ -1,4 +1,4 @@
-# 🗂️ Management System (Frontend)
+# 🗂️ Company Management System (Frontend)
 
 Frontend application for a management system where a Chief user can manage appointments, contacts, employees, teams, projects, and meetings, while Assistant users have restricted access.
 
